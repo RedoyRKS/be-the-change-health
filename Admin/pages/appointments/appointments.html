@@ -17,9 +17,24 @@
       position: relative;
       z-index: 30;
     }
-    #busyTimeModal .dropdown-row-provider {
-      position: relative;
-      z-index: 20;
+    #busyTimeModal #busyTitleInput {
+      height: 46px;
+      min-height: 46px;
+      line-height: 1.5;
+      font-size: 0.88rem;
+      border-radius: 9px;
+      border: 1px solid rgba(0, 48, 72, 0.16);
+      color: #0B3A53;
+      padding: 0.45rem 0.85rem;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 48, 72, 0.04);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    #busyTimeModal #busyTitleInput:focus {
+      border-color: #2F93A8;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(47, 147, 168, 0.2);
+      outline: none;
     }
     #busyTimeModal .custom-select-wrapper {
       position: relative;
@@ -169,9 +184,116 @@
       display: inline-block !important;
     }
 
-    /* Adequate vertical scrolling room in modal-body */
+    /* Balanced vertical padding in modal-body */
     #busyTimeModal .modal-body {
-      padding-bottom: 3.5rem !important;
+      padding: 1.25rem 1.25rem 1.25rem !important;
+    }
+
+    /* ============================================================
+       Busy Time & Availability Blocks Management Section Styles
+       ============================================================ */
+    .busy-controls-toolbar {
+      background-color: #f8fafc;
+      border-bottom: 1px solid var(--btc-line);
+    }
+    .busy-controls-toolbar .form-control,
+    .busy-controls-toolbar .form-select {
+      background-color: #ffffff;
+      border-color: rgba(0, 48, 72, 0.16);
+      font-size: 0.82rem;
+    }
+    .busy-controls-toolbar .form-control:focus,
+    .busy-controls-toolbar .form-select:focus {
+      border-color: var(--btc-teal);
+      box-shadow: 0 0 0 3px rgba(48, 140, 160, 0.12);
+    }
+    .busy-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    #busyTimeTable {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    #busyTimeTable th {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--btc-muted);
+      background: #f8fafc;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--btc-line);
+      white-space: nowrap;
+    }
+    #busyTimeTable td {
+      padding: 0.85rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--btc-line);
+      font-size: 0.88rem;
+    }
+    #busyTimeTable tbody tr:hover td {
+      background-color: rgba(48, 140, 160, 0.02);
+    }
+    .badge-expired {
+      background-color: #f1f5f9 !important;
+      color: #64748b !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+
+    /* Mobile: transform table rows into clean compact cards */
+    @media (max-width: 767.98px) {
+      #busyTimeTable thead {
+        display: none !important;
+      }
+      #busyTimeTable,
+      #busyTimeTable tbody,
+      #busyTimeTable tr.busy-record-row {
+        display: block !important;
+        width: 100% !important;
+      }
+      #busyTimeTable tr.busy-record-row {
+        background: #ffffff !important;
+        border: 1px solid var(--btc-line) !important;
+        border-radius: 12px !important;
+        padding: 0.95rem 1.1rem !important;
+        margin: 0.75rem 0.75rem 0.95rem 0.75rem !important;
+        box-shadow: 0 2px 8px rgba(0, 48, 72, 0.04) !important;
+      }
+      #busyTimeTable tr.busy-record-row td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 0.38rem 0 !important;
+        border: none !important;
+        border-bottom: 1px dashed rgba(0, 48, 72, 0.08) !important;
+        font-size: 0.84rem !important;
+      }
+      #busyTimeTable tr.busy-record-row td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--btc-muted);
+        font-size: 0.74rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+      }
+      #busyTimeTable tr.busy-record-row td.td-actions {
+        border-bottom: none !important;
+        margin-top: 0.45rem;
+        padding-top: 0.65rem !important;
+        justify-content: stretch !important;
+      }
+      #busyTimeTable tr.busy-record-row td.td-actions::before {
+        display: none !important;
+      }
+      #busyTimeTable tr.busy-record-row td.td-actions .d-flex {
+        width: 100%;
+        justify-content: flex-end !important;
+        gap: 0.5rem !important;
+      }
     }
   </style>
 </head>
@@ -275,29 +397,6 @@
           </div>
         </div>
 
-        <!-- CONFLICT WARNING UI -->
-        <div class="conflict-warning-card" id="conflictAlertCard">
-          <div class="conflict-warning-content">
-            <div class="conflict-warning-icon">
-              <i class="bi bi-exclamation-triangle-fill"></i>
-            </div>
-            <div>
-              <h4>⚠ Appointment Time Conflict</h4>
-              <p><strong>Dr. Sultana Afrooz already has an appointment at this time.</strong> Marcus Vance is confirmed for <em>Ozone Therapy</em> (Sep 24 · 10:00 AM – 10:45 AM, Room 301). David K. Reynolds also requested this slot for <em>Frequency Specific Microcurrent™</em>.</p>
-            </div>
-          </div>
-          <div class="conflict-warning-actions">
-            <button type="button" class="btn-btc btn-sm-admin" id="btnConflictChooseTime">
-              <i class="bi bi-clock-history me-1"></i> Choose Another Time
-            </button>
-            <button type="button" class="btn-btc-outline btn-sm-admin" id="btnConflictChooseProvider">
-              <i class="bi bi-person-switch me-1"></i> Choose Another Provider
-            </button>
-            <button type="button" class="btn-btc-ghost btn-sm-admin" title="Dismiss warning banner" onclick="document.getElementById('conflictAlertCard').style.display='none'">
-              <i class="bi bi-x-lg"></i>
-            </button>
-          </div>
-        </div>
 
         <!-- ============================================================
              LIST VIEW CONTAINER (Single parent container for all List View content)
@@ -437,42 +536,6 @@
           </div>
         </div>
 
-        <!-- SCHEDULED BUSY TIMES & AVAILABILITY BLOCKS CARD (LIST VIEW) -->
-        <div class="card-admin mb-4" id="busyTimeListCard">
-          <div class="card-head">
-            <div>
-              <h2><i class="bi bi-clock-history text-teal me-2"></i>Scheduled Busy Times &amp; Availability Blocks</h2>
-              <p>Temporarily blocked provider and clinic hours for meetings, urgent clinical work, holidays, or equipment maintenance.</p>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-              <span class="badge bg-light text-dark border px-2 py-1 small" id="busyCountBadge">2 Blocked Periods</span>
-              <button class="btn-btc btn-sm-admin" type="button" onclick="openCreateBusyModal()" title="Add a new busy period to block appointment scheduling">
-                <i class="bi bi-plus-lg me-1"></i> Set Busy Time
-              </button>
-            </div>
-          </div>
-          <div class="card-body-admin p-0">
-            <div class="table-wrap">
-              <table class="table-admin mb-0" id="busyTimeTable">
-                <thead>
-                  <tr>
-                    <th>Date &amp; Time</th>
-                    <th>Block Reason</th>
-                    <th>Provider / Staff</th>
-                    <th>Location / Room</th>
-                    <th>Duration</th>
-                    <th>Internal Notes</th>
-                    <th>Status</th>
-                    <th class="text-end">Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="busyTimeTbody">
-                  <!-- Rendered dynamically by JavaScript -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
 
         <!-- MAIN APPOINTMENT LIST CARD -->
         <div class="card-admin mb-4">
@@ -1189,57 +1252,76 @@
       </div>
       <!-- /#calendarViewContainer -->
 
-        <!-- PUBLIC FORM SETTINGS (Maintained from original admin) -->
-        <div class="card-admin mt-4">
+        <!-- ============================================================ -->
+        <!-- BUSY TIME BLOCKS SECTION (Below Appointment Schedule)        -->
+        <!-- ============================================================ -->
+        <div class="card-admin mb-4" id="busyTimeListCard">
           <div class="card-head">
             <div>
-              <h2>Public form settings</h2>
-              <p>Labels &amp; options on book-appointment.html</p>
+              <h2><i class="bi bi-clock-history text-teal me-2"></i>Busy Time Blocks</h2>
+              <p>Manage temporarily blocked appointment availability.</p>
             </div>
-            <button class="btn-btc btn-sm-admin" type="button" data-save="Public form settings saved successfully.">
-              <i class="bi bi-check2 me-1"></i> Save form settings
-            </button>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn-btc btn-sm-admin" type="button" onclick="openCreateBusyModal()" title="Add a new busy period to block appointment scheduling">
+                <i class="bi bi-plus-lg me-1"></i> + Set Busy Time
+              </button>
+            </div>
           </div>
-          <div class="card-body-admin">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label-admin">Form heading</label>
-                <input class="form-control" value="Request Your Appointment">
+          <div class="card-body-admin p-0">
+            <!-- Filter & Search Controls Toolbar -->
+            <div class="busy-controls-toolbar p-3 border-bottom">
+              <div class="row g-2 align-items-center">
+                <div class="col-12 col-md-5 col-lg-4">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control border-start-0" id="busySearchInput" placeholder="Search busy times..." oninput="handleBusyFilterChange()">
+                  </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-3">
+                  <select class="form-select form-select-sm" id="busyDateFilter" onchange="handleBusyFilterChange()" aria-label="Filter by Date">
+                    <option value="all">Date: All</option>
+                    <option value="today">Date: Today (Sep 24)</option>
+                    <option value="upcoming">Date: Upcoming</option>
+                    <option value="past">Date: Past / Expired</option>
+                  </select>
+                </div>
+                <div class="col-6 col-md-2 col-lg-2">
+                  <select class="form-select form-select-sm" id="busyStatusFilter" onchange="handleBusyFilterChange()" aria-label="Filter by Status">
+                    <option value="all">Status: All</option>
+                    <option value="Active">Status: Active</option>
+                    <option value="Inactive">Status: Inactive</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-2 col-lg-3 ms-auto text-end d-flex align-items-center justify-content-end gap-2">
+                  <button type="button" class="btn btn-sm btn-outline-secondary text-nowrap" id="btnResetBusyFilters" onclick="resetBusyFilters()" title="Reset all filters">
+                    <i class="bi bi-arrow-counterclockwise"></i> Reset
+                  </button>
+                  <span class="badge bg-light text-navy border px-2.5 py-1.5 small fw-semibold text-nowrap" id="busyCountBadge">3 active blocks</span>
+                </div>
               </div>
-              <div class="col-md-6">
-                <label class="form-label-admin">Success message</label>
-                <input class="form-control" value="Request received. Our team will contact you to confirm your visit.">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label-admin">Service options</label>
-                <textarea class="form-control" rows="8">New patient consultation
-Follow-up visit
-Conditions we treat
-Frequency Specific Microcurrent™
-Infrared Sauna Therapy
-Hyperbaric Oxygen Therapy
-IV Nutritional Infusions
-Liquivida IV Therapy
-Reflexology
-Ozone Therapy
-Ion Foot Detox
-Personalized Wellness Plans
-Membership inquiry
-Other</textarea>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label-admin">Time windows</label>
-                <textarea class="form-control" rows="4">Morning (9am – 12pm)
-Afternoon (12pm – 3pm)
-Late afternoon (3pm – 6pm)
-First available</textarea>
-                <label class="form-label-admin mt-3">Consent copy</label>
-                <textarea class="form-control" rows="3">I understand this is an appointment request and the office will confirm availability. I also acknowledge the practice is out-of-network.</textarea>
-              </div>
+            </div>
+
+            <!-- Table / Responsive Card View -->
+            <div class="table-wrap busy-table-wrap">
+              <table class="table-admin mb-0" id="busyTimeTable">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Title</th>
+                    <th>Service</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="busyTimeTbody">
+                  <!-- Rendered dynamically by JavaScript -->
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-
       </main>
     </div>
   </div>
@@ -2436,338 +2518,118 @@ First available</textarea>
               </div>
             </div>
 
-            <!-- Reason Dropdown & Custom Reason -->
+            <!-- Reason / Category: Title & Service -->
             <div class="row g-3 mb-3 dropdown-row-reason">
-              <div class="col-md-6" id="busyReasonCol">
-                <label class="form-label-admin" for="busyReasonTrigger">Reason / Category *</label>
-                <div class="custom-select-wrapper" id="busyReasonWrapper" data-cs-init="true">
-                  <div class="custom-select-trigger" id="busyReasonTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select reason for busy period">
+              <div class="col-md-6" id="busyTitleCol">
+                <label class="form-label-admin" for="busyTitleInput">Title *</label>
+                <input type="text" class="form-control" id="busyTitleInput" name="busy_title" placeholder="Enter busy time title..." required oninput="updateBusyPreview()">
+              </div>
+              <div class="col-md-6" id="busyServiceCol">
+                <label class="form-label-admin" for="busyServiceTrigger">Service *</label>
+                <div class="custom-select-wrapper" id="busyServiceWrapper" data-cs-init="true">
+                  <div class="custom-select-trigger" id="busyServiceTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select service">
                     <div class="custom-select-selected-content">
-                      <i class="bi bi-people-fill select-leading-icon" id="busyReasonLeadingIcon"></i>
+                      <i class="bi bi-grid-fill select-leading-icon text-teal" id="busyServiceLeadingIcon"></i>
                       <div class="custom-select-text-group">
-                        <span class="custom-select-primary-text" id="busyReasonPrimaryText">Meeting</span>
-                        <span class="custom-select-secondary-text" id="busyReasonSecondaryText">Team coordination, protocol review, or clinical meetings</span>
+                        <span class="custom-select-primary-text" id="busyServicePrimaryText">All Services</span>
+                        <span class="custom-select-secondary-text" id="busyServiceSecondaryText">Apply block across all clinic services and therapies</span>
                       </div>
                     </div>
                     <i class="bi bi-chevron-down custom-select-chevron"></i>
                   </div>
-                  <select class="d-none" id="busyReasonSelect" name="busy_reason" aria-label="Reason / Category">
-                    <option value="Urgent Work">Urgent Work</option>
-                    <option value="Meeting" selected>Meeting</option>
-                    <option value="Holiday">Holiday</option>
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Staff Unavailable">Staff Unavailable</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Special Event">Special Event</option>
-                    <option value="Other">Other</option>
+                  <select class="d-none" id="busyServiceSelect" name="busy_service" aria-label="Service *" required>
+                    <option value="All Services" selected>All Services</option>
+                    <option value="Ionic Foot Detox">Ionic Foot Detox</option>
+                    <option value="Hyperbaric Oxygen Chamber">Hyperbaric Oxygen Chamber</option>
+                    <option value="Red Light Therapy">Red Light Therapy</option>
+                    <option value="Ear Ozone Insufflation">Ear Ozone Insufflation</option>
+                    <option value="Infrared Sauna">Infrared Sauna</option>
+                    <option value="FSM (Frequency Specific Microcurrent)">FSM (Frequency Specific Microcurrent)</option>
+                    <option value="IV Therapy">IV Therapy</option>
+                    <option value="Reflexology">Reflexology</option>
+                    <option value="Constitutional Hydrotherapy">Constitutional Hydrotherapy</option>
                   </select>
 
-                  <div class="custom-select-panel" id="busyReasonPanel" role="listbox" style="display: none;">
-                    <div class="custom-select-option" data-value="Urgent Work" data-primary="Urgent Work" data-secondary="Clinical emergency or urgent administrative tasks" data-icon="exclamation-octagon-fill" role="option">
+                  <div class="custom-select-panel" id="busyServicePanel" role="listbox" style="display: none;">
+                    <div class="custom-select-option selected" data-value="All Services" data-primary="All Services" data-secondary="Apply block across all clinic services and therapies" data-icon="grid-fill text-teal" role="option" aria-selected="true">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>Urgent Work</span>
-                        <span class="option-secondary">Clinical emergency or urgent administrative tasks</span>
+                        <span class="option-primary"><i class="bi bi-grid-fill text-teal me-2"></i>All Services</span>
+                        <span class="option-secondary">Apply block across all clinic services and therapies</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option selected" data-value="Meeting" data-primary="Meeting" data-secondary="Team coordination, protocol review, or clinical meetings" data-icon="people-fill" role="option" aria-selected="true">
+                    <div class="custom-select-option" data-value="Ionic Foot Detox" data-primary="Ionic Foot Detox" data-secondary="IonCleanse cellular detox and foot soak therapy" data-icon="droplet-half text-teal" role="option">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-people-fill text-teal me-2"></i>Meeting</span>
-                        <span class="option-secondary">Team coordination, protocol review, or clinical meetings</span>
+                        <span class="option-primary"><i class="bi bi-droplet-half text-teal me-2"></i>Ionic Foot Detox</span>
+                        <span class="option-secondary">IonCleanse cellular detox and foot soak therapy</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option" data-value="Holiday" data-primary="Holiday" data-secondary="Public holiday or scheduled facility closure" data-icon="calendar-heart-fill" role="option">
+                    <div class="custom-select-option" data-value="Hyperbaric Oxygen Chamber" data-primary="Hyperbaric Oxygen Chamber" data-secondary="Mild hyperbaric oxygen therapy chamber (HBOT)" data-icon="capsule text-primary" role="option">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-calendar-heart-fill text-primary me-2"></i>Holiday</span>
-                        <span class="option-secondary">Public holiday or scheduled facility closure</span>
+                        <span class="option-primary"><i class="bi bi-capsule text-primary me-2"></i>Hyperbaric Oxygen Chamber</span>
+                        <span class="option-secondary">Mild hyperbaric oxygen therapy chamber (HBOT)</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option" data-value="Maintenance" data-primary="Maintenance" data-secondary="Equipment calibration, device testing, or deep sanitization" data-icon="tools" role="option">
+                    <div class="custom-select-option" data-value="Red Light Therapy" data-primary="Red Light Therapy" data-secondary="Full-body targeted photobiomodulation & recovery" data-icon="sun-fill text-danger" role="option">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-tools text-warning me-2"></i>Maintenance</span>
-                        <span class="option-secondary">Equipment calibration, device testing, or deep sanitization</span>
+                        <span class="option-primary"><i class="bi bi-sun-fill text-danger me-2"></i>Red Light Therapy</span>
+                        <span class="option-secondary">Full-body targeted photobiomodulation &amp; recovery</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option" data-value="Staff Unavailable" data-primary="Staff Unavailable" data-secondary="Practitioner illness, training, or off-duty coverage" data-icon="person-x-fill" role="option">
+                    <div class="custom-select-option" data-value="Ear Ozone Insufflation" data-primary="Ear Ozone Insufflation" data-secondary="Micro-filtered medical ozone ear insufflation" data-icon="activity text-info" role="option">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-person-x-fill text-secondary me-2"></i>Staff Unavailable</span>
-                        <span class="option-secondary">Practitioner illness, training, or off-duty coverage</span>
+                        <span class="option-primary"><i class="bi bi-activity text-info me-2"></i>Ear Ozone Insufflation</span>
+                        <span class="option-secondary">Micro-filtered medical ozone ear insufflation</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option" data-value="Personal" data-primary="Personal" data-secondary="Personal leave or scheduled out-of-office block" data-icon="person-badge" role="option">
+                    <div class="custom-select-option" data-value="Infrared Sauna" data-primary="Infrared Sauna" data-secondary="Full-spectrum infrared heat & perspiration suite" data-icon="fire text-warning" role="option">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-person-badge text-info me-2"></i>Personal</span>
-                        <span class="option-secondary">Personal leave or scheduled out-of-office block</span>
+                        <span class="option-primary"><i class="bi bi-fire text-warning me-2"></i>Infrared Sauna</span>
+                        <span class="option-secondary">Full-spectrum infrared heat &amp; perspiration suite</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option" data-value="Special Event" data-primary="Special Event" data-secondary="Private clinic event, symposium, or wellness workshop" data-icon="star-fill" role="option">
+                    <div class="custom-select-option" data-value="FSM (Frequency Specific Microcurrent)" data-primary="FSM (Frequency Specific Microcurrent)" data-secondary="Precision bio-resonance microcurrent resonance" data-icon="lightning-charge-fill text-warning" role="option">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-star-fill text-warning me-2"></i>Special Event</span>
-                        <span class="option-secondary">Private clinic event, symposium, or wellness workshop</span>
+                        <span class="option-primary"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>FSM (Frequency Specific Microcurrent)</span>
+                        <span class="option-secondary">Precision bio-resonance microcurrent resonance</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option" data-value="Other" data-primary="Other" data-secondary="Custom reasoning specified below" data-icon="three-dots" role="option">
+                    <div class="custom-select-option" data-value="IV Therapy" data-primary="IV Therapy" data-secondary="Nutritional Myers cocktail & wellness IV infusions" data-icon="shield-plus text-success" role="option">
                       <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-three-dots text-muted me-2"></i>Other</span>
-                        <span class="option-secondary">Custom reasoning specified below</span>
+                        <span class="option-primary"><i class="bi bi-shield-plus text-success me-2"></i>IV Therapy</span>
+                        <span class="option-secondary">Nutritional Myers cocktail &amp; wellness IV infusions</span>
+                      </div>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Reflexology" data-primary="Reflexology" data-secondary="Holistic acupressure and therapeutic foot reflexology" data-icon="flower1 text-info" role="option">
+                      <div class="option-content">
+                        <span class="option-primary"><i class="bi bi-flower1 text-info me-2"></i>Reflexology</span>
+                        <span class="option-secondary">Holistic acupressure and therapeutic foot reflexology</span>
+                      </div>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Constitutional Hydrotherapy" data-primary="Constitutional Hydrotherapy" data-secondary="Traditional hot/cold contrast towel packs with sine wave" data-icon="droplet-fill text-primary" role="option">
+                      <div class="option-content">
+                        <span class="option-primary"><i class="bi bi-droplet-fill text-primary me-2"></i>Constitutional Hydrotherapy</span>
+                        <span class="option-secondary">Traditional hot/cold contrast towel packs with sine wave</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-6" id="busyCustomReasonWrap" style="display: none;">
-                <label class="form-label-admin" for="busyCustomReasonInput">Specify Custom Reason *</label>
-                <input type="text" class="form-control" id="busyCustomReasonInput" placeholder="Enter reason (e.g. Facility deep sanitization)" oninput="updateBusyPreview()">
-              </div>
-              <div class="col-md-6" id="busyStatusCol">
-                <label class="form-label-admin" for="busyStatusTrigger">Status</label>
-                <div class="custom-select-wrapper" id="busyStatusWrapper" data-cs-init="true">
-                  <div class="custom-select-trigger" id="busyStatusTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select busy block status">
-                    <div class="custom-select-selected-content">
-                      <i class="bi bi-check-circle-fill select-leading-icon text-success" id="busyStatusLeadingIcon"></i>
-                      <div class="custom-select-text-group">
-                        <span class="custom-select-primary-text" id="busyStatusPrimaryText">Active (Enforce Blocking)</span>
-                        <span class="custom-select-secondary-text" id="busyStatusSecondaryText">Appointments will be blocked on schedule and booking</span>
-                      </div>
-                    </div>
-                    <i class="bi bi-chevron-down custom-select-chevron"></i>
-                  </div>
-                  <select class="d-none" id="busyStatusSelect" name="busy_status" aria-label="Status">
-                    <option value="Active" selected>Active (Enforce Blocking)</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-
-                  <div class="custom-select-panel" id="busyStatusPanel" role="listbox" style="display: none;">
-                    <div class="custom-select-option selected" data-value="Active" data-primary="Active (Enforce Blocking)" data-secondary="Appointments will be blocked on schedule and booking" data-icon="check-circle-fill text-success" role="option" aria-selected="true">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-check-circle-fill text-success me-2"></i>Active (Enforce Blocking)</span>
-                        <span class="option-secondary">Appointments will be blocked on schedule and booking</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Inactive" data-primary="Inactive" data-secondary="Block is saved but clinic availability remains open" data-icon="dash-circle-fill text-muted" role="option">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-dash-circle-fill text-muted me-2"></i>Inactive (Draft / Lifted)</span>
-                        <span class="option-secondary">Block is saved but clinic availability remains open</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Provider & Location -->
-            <div class="row g-3 mb-3 dropdown-row-provider">
-              <div class="col-md-6" id="busyProviderCol">
-                <label class="form-label-admin" for="busyProviderTrigger">Provider / Staff *</label>
-                <div class="custom-select-wrapper" id="busyProviderWrapper" data-cs-init="true">
-                  <div class="custom-select-trigger" id="busyProviderTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select practitioner or staff">
-                    <div class="custom-select-selected-content">
-                      <span class="provider-avatar-chip" id="busyProviderChip">SA</span>
-                      <div class="custom-select-text-group">
-                        <span class="custom-select-primary-text" id="busyProviderPrimaryText">Dr. Sultana Afrooz, D.O.</span>
-                        <span class="custom-select-secondary-text" id="busyProviderSecondaryText">Integrative &amp; Functional Medicine Physician</span>
-                      </div>
-                    </div>
-                    <i class="bi bi-chevron-down custom-select-chevron"></i>
-                  </div>
-                  <select class="d-none" id="busyProviderSelect" name="busy_provider" aria-label="Provider / Staff">
-                    <option value="All Providers">All Providers (Clinic-wide Block)</option>
-                    <option value="Sultana Afrooz, D.O." selected>Dr. Sultana Afrooz, D.O.</option>
-                    <option value="Jessica Needle, N.D.">Dr. Jessica Needle, N.D.</option>
-                  </select>
-
-                  <div class="custom-select-panel" id="busyProviderPanel" role="listbox" style="display: none;">
-                    <div class="custom-select-option" data-value="All Providers" data-primary="All Providers (Clinic-wide Block)" data-secondary="Block schedule for all clinicians and departments" data-chip="ALL" data-icon="hospital" role="option">
-                      <div class="option-content">
-                        <div class="d-flex align-items-center gap-2">
-                          <span class="provider-avatar-chip" style="background:#0B3A53; color:#fff;">ALL</span>
-                          <span class="option-primary">All Providers (Clinic-wide Block)</span>
-                        </div>
-                        <span class="option-secondary">Block schedule for all clinicians and departments</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option selected" data-value="Sultana Afrooz, D.O." data-primary="Dr. Sultana Afrooz, D.O." data-secondary="Integrative &amp; Functional Medicine Physician" data-chip="SA" role="option" aria-selected="true">
-                      <div class="option-content">
-                        <div class="d-flex align-items-center gap-2">
-                          <span class="provider-avatar-chip">SA</span>
-                          <span class="option-primary">Dr. Sultana Afrooz, D.O.</span>
-                        </div>
-                        <span class="option-secondary">Integrative &amp; Functional Medicine Physician</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Jessica Needle, N.D." data-primary="Dr. Jessica Needle, N.D." data-secondary="Naturopathic Medicine Doctor" data-chip="JN" role="option">
-                      <div class="option-content">
-                        <div class="d-flex align-items-center gap-2">
-                          <span class="provider-avatar-chip chip-teal">JN</span>
-                          <span class="option-primary">Dr. Jessica Needle, N.D.</span>
-                        </div>
-                        <span class="option-secondary">Naturopathic Medicine Doctor</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-text small">Select a specific practitioner or block all clinic providers simultaneously.</div>
-              </div>
-              <div class="col-md-6" id="busyLocationCol">
-                <label class="form-label-admin" for="busyLocationTrigger">Location / Room</label>
-                <div class="custom-select-wrapper" id="busyLocationWrapper" data-cs-init="true">
-                  <div class="custom-select-trigger" id="busyLocationTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select location or procedure room">
-                    <div class="custom-select-selected-content">
-                      <i class="bi bi-building select-leading-icon text-teal" id="busyLocationLeadingIcon"></i>
-                      <div class="custom-select-text-group">
-                        <span class="custom-select-primary-text" id="busyLocationPrimaryText">All Locations &amp; Rooms</span>
-                        <span class="custom-select-secondary-text" id="busyLocationSecondaryText">Block availability across all clinic rooms</span>
-                      </div>
-                    </div>
-                    <i class="bi bi-chevron-down custom-select-chevron"></i>
-                  </div>
-                  <select class="d-none" id="busyLocationSelect" name="busy_location" aria-label="Location / Room">
-                    <option value="All Locations" selected>All Locations &amp; Rooms</option>
-                    <option value="Suite 301 · Exam & Treatment Rooms">Suite 301 · Exam &amp; Treatment Rooms</option>
-                    <option value="Suite 301 · Ozone Therapy Room">Suite 301 · Ozone Therapy Room</option>
-                    <option value="Suite 301 · HBOT Chamber 1">Suite 301 · HBOT Chamber 1</option>
-                    <option value="Suite 301 · Hydrotherapy Suite B">Suite 301 · Hydrotherapy Suite B</option>
-                    <option value="Suite 301 · IV Infusion Lounge">Suite 301 · IV Infusion Lounge</option>
-                    <option value="Telehealth Video Rooms (Virtual)">Telehealth Video Rooms (Virtual)</option>
-                  </select>
-
-                  <div class="custom-select-panel" id="busyLocationPanel" role="listbox" style="display: none;">
-                    <div class="custom-select-option selected" data-value="All Locations" data-primary="All Locations & Rooms" data-secondary="Block availability across all clinic rooms" data-icon="building" role="option" aria-selected="true">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-building text-teal me-2"></i>All Locations &amp; Rooms</span>
-                        <span class="option-secondary">Block availability across all clinic rooms</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Suite 301 · Exam & Treatment Rooms" data-primary="Suite 301 · Exam & Treatment Rooms" data-secondary="General examination and patient consult rooms" data-icon="door-closed" role="option">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-door-closed text-secondary me-2"></i>Suite 301 · Exam &amp; Treatment Rooms</span>
-                        <span class="option-secondary">General examination and patient consult rooms</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Suite 301 · Ozone Therapy Room" data-primary="Suite 301 · Ozone Therapy Room" data-secondary="Dedicated ozone therapy & autohemotherapy suite" data-icon="heart-pulse" role="option">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-heart-pulse text-teal me-2"></i>Suite 301 · Ozone Therapy Room</span>
-                        <span class="option-secondary">Dedicated ozone therapy &amp; autohemotherapy suite</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Suite 301 · HBOT Chamber 1" data-primary="Suite 301 · HBOT Chamber 1" data-secondary="Hyperbaric oxygen chamber clinical suite" data-icon="capsule" role="option">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-capsule text-primary me-2"></i>Suite 301 · HBOT Chamber 1</span>
-                        <span class="option-secondary">Hyperbaric oxygen chamber clinical suite</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Suite 301 · Hydrotherapy Suite B" data-primary="Suite 301 · Hydrotherapy Suite B" data-secondary="Constitutional hydrotherapy treatment suite" data-icon="droplet-fill" role="option">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-droplet-fill text-info me-2"></i>Suite 301 · Hydrotherapy Suite B</span>
-                        <span class="option-secondary">Constitutional hydrotherapy treatment suite</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Suite 301 · IV Infusion Lounge" data-primary="Suite 301 · IV Infusion Lounge" data-secondary="Nutritional infusions and recovery lounge" data-icon="shield-plus" role="option">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-shield-plus text-success me-2"></i>Suite 301 · IV Infusion Lounge</span>
-                        <span class="option-secondary">Nutritional infusions and recovery lounge</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                    <div class="custom-select-option" data-value="Telehealth Video Rooms (Virtual)" data-primary="Telehealth Video Rooms (Virtual)" data-secondary="Remote telehealth virtual video consult rooms" data-icon="laptop" role="option">
-                      <div class="option-content">
-                        <span class="option-primary"><i class="bi bi-laptop text-primary me-2"></i>Telehealth Video Rooms (Virtual)</span>
-                        <span class="option-secondary">Remote telehealth virtual video consult rooms</span>
-                      </div>
-                      <i class="bi bi-check2 option-check"></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-text small">Specify procedure room or block all clinic rooms.</div>
               </div>
             </div>
 
             <!-- Notes -->
-            <div class="mb-3">
+            <div class="mb-0">
               <label class="form-label-admin" for="busyNotesInput">Internal Notes (Optional)</label>
               <textarea class="form-control" id="busyNotesInput" rows="2" placeholder="Add internal notes about this busy period..."></textarea>
-            </div>
-
-            <!-- Conflict & Overlap Warning Box -->
-            <div id="busyConflictBox" class="alert alert-warning border-warning p-3 mb-3" style="display: none;">
-              <div class="d-flex align-items-start gap-2">
-                <i class="bi bi-exclamation-triangle-fill text-warning fs-5"></i>
-                <div class="flex-grow-1">
-                  <strong class="d-block text-dark" id="busyConflictTitle">⚠ Schedule Conflict</strong>
-                  <p class="small text-muted mb-2" id="busyConflictDesc">Existing appointments overlap with this busy period.</p>
-                  <div id="busyConflictList" class="small bg-white p-2 rounded border mb-2" style="max-height: 120px; overflow-y: auto;"></div>
-                  <div class="d-flex gap-2 flex-wrap">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="adjustBusyTimeToAvoidConflict()">Adjust Busy Time</button>
-                    <button type="button" class="btn btn-sm btn-warning text-dark fw-semibold" onclick="saveBusyTime(true)">Continue Anyway</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Overlapping Busy Period Warning Box -->
-            <div id="busyOverlapBox" class="alert alert-info border-info p-3 mb-3" style="display: none;">
-              <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-info-circle-fill text-info fs-5"></i>
-                <div>
-                  <strong class="d-block text-dark">Overlapping Block Detected</strong>
-                  <span class="small text-muted" id="busyOverlapDesc">Busy time overlaps with an existing blocked period. You may edit the existing block or adjust hours.</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Compact Preview Section -->
-            <div class="busy-preview-card">
-              <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
-                <span class="fw-bold text-uppercase small text-muted"><i class="bi bi-eye me-1 text-teal"></i> Busy Time Preview</span>
-                <span class="badge-admin badge-confirmed" id="prevBusyStatusBadge">Active</span>
-              </div>
-              <div class="busy-preview-grid">
-                <div class="busy-preview-item">
-                  <small>Date</small>
-                  <strong id="prevBusyDate">September 24, 2026</strong>
-                </div>
-                <div class="busy-preview-item">
-                  <small>Time</small>
-                  <strong id="prevBusyTime">10:00 AM – 01:00 PM</strong>
-                </div>
-                <div class="busy-preview-item">
-                  <small>Duration</small>
-                  <strong id="prevBusyDuration">3 hours</strong>
-                </div>
-                <div class="busy-preview-item">
-                  <small>Provider</small>
-                  <strong id="prevBusyProvider">Dr. Sultana Afrooz</strong>
-                </div>
-                <div class="busy-preview-item">
-                  <small>Reason</small>
-                  <strong id="prevBusyReason">Meeting</strong>
-                </div>
-                <div class="busy-preview-item">
-                  <small>Status</small>
-                  <strong id="prevBusyStatus">Active</strong>
-                </div>
-              </div>
-              <div class="mt-2 pt-2 border-top d-flex align-items-center gap-2 text-danger small">
-                <i class="bi bi-lock-fill"></i>
-                <span>Appointments will be unavailable during this period.</span>
-              </div>
             </div>
 
           </form>
@@ -2783,31 +2645,31 @@ First available</textarea>
   </div>
 
   <!-- ============================================================
-       REMOVE BUSY TIME CONFIRMATION MODAL (#removeBusyModal)
+       DELETE BUSY TIME CONFIRMATION MODAL (#removeBusyModal)
        ============================================================ -->
   <div class="modal fade" id="removeBusyModal" tabindex="-1" aria-labelledby="removeBusyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-bottom">
           <h5 class="modal-title text-danger fw-bold" id="removeBusyModalLabel">
-            <i class="bi bi-exclamation-triangle text-danger me-2"></i>Remove Busy Time?
+            <i class="bi bi-trash3 text-danger me-2"></i>Delete Busy Time?
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p class="text-muted small mb-3">Are you sure you want to remove this scheduled busy period? Removing it will restore patient appointment availability on the public booking interface and calendar.</p>
+          <p class="text-muted small mb-3">Are you sure you want to remove this busy time block? Appointment availability will be restored for this period.</p>
           <div class="p-3 bg-light rounded border mb-3">
             <div class="fw-bold text-navy mb-1" id="removeBusyDateText">September 24, 2026</div>
             <div class="text-muted small mb-1" id="removeBusyTimeText">10:00 AM – 1:00 PM</div>
-            <div class="small"><strong class="text-dark">Reason:</strong> <span id="removeBusyReasonText">Meeting</span></div>
-            <div class="small"><strong class="text-dark">Provider:</strong> <span id="removeBusyProviderText">Dr. Sultana Afrooz</span></div>
+            <div class="small mb-1"><strong class="text-dark">Title:</strong> <span id="removeBusyReasonText">Team Meeting</span></div>
+            <div class="small"><strong class="text-dark">Service:</strong> <span id="removeBusyServiceText">All Services</span></div>
           </div>
           <p class="small text-danger mb-0"><i class="bi bi-info-circle me-1"></i>This action cannot be undone.</p>
         </div>
         <div class="modal-footer border-top">
-          <button type="button" class="btn-btc-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger" id="btnConfirmDeleteBusyTime" onclick="executeDeleteBusyTime()">
-            <i class="bi bi-trash3 me-1"></i> Remove Busy Time
+          <button type="button" class="btn-btc-outline btn-sm-admin" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger btn-sm-admin" id="btnConfirmDeleteBusyTime" onclick="executeDeleteBusyTime()">
+            <i class="bi bi-trash3 me-1"></i> Delete Busy Time
           </button>
         </div>
       </div>
@@ -2825,14 +2687,14 @@ First available</textarea>
             <h5 class="modal-title text-navy fw-bold" id="busyDetailModalLabel">
               <i class="bi bi-lock-fill text-teal me-2"></i>Busy Time Details
             </h5>
-            <small class="text-muted" id="busyDetailSubText">Care Operations Schedule Block</small>
+            <small class="text-muted" id="busyDetailSubText">Care Operations Availability Block</small>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="d-flex align-items-center justify-content-between p-3 bg-light rounded border mb-3">
             <div>
-              <span class="badge-admin badge-blocked fs-6 px-3 py-1" id="busyDetailStatusBadge">Active Block</span>
+              <span class="badge-admin badge-confirmed fs-6 px-3 py-1" id="busyDetailStatusBadge">Active Block</span>
               <h4 class="h5 fw-bold text-navy mt-2 mb-0" id="busyDetailReasonTitle">Meeting</h4>
             </div>
             <span class="badge bg-teal-subtle text-teal fw-bold px-3 py-2" id="busyDetailDurationBadge">3 hours</span>
@@ -2855,37 +2717,48 @@ First available</textarea>
               <span class="text-muted d-block">Location / Room:</span>
               <strong class="text-dark" id="busyDetailLocation">All Locations &amp; Rooms</strong>
             </div>
+            <div class="col-6">
+              <span class="text-muted d-block">Service Scope:</span>
+              <strong class="text-dark" id="busyDetailService">All Services</strong>
+            </div>
+            <div class="col-6">
+              <span class="text-muted d-block">Created Date:</span>
+              <span class="text-dark fw-medium" id="busyDetailCreatedDate">Sep 22, 2026, 09:30 AM</span>
+            </div>
+            <div class="col-6">
+              <span class="text-muted d-block">Last Updated:</span>
+              <span class="text-dark fw-medium" id="busyDetailUpdatedDate">Sep 23, 2026, 11:15 AM</span>
+            </div>
           </div>
 
           <div class="mb-3">
             <span class="text-muted small d-block mb-1">Internal Notes:</span>
-            <div class="p-2 rounded bg-light border text-muted small fst-italic" id="busyDetailNotes">
+            <div class="p-2.5 rounded bg-light border text-muted small" id="busyDetailNotes">
               No additional notes provided.
             </div>
           </div>
 
           <div class="alert alert-light border small text-muted mb-0">
-            <i class="bi bi-shield-lock text-teal me-1"></i> Patient booking requests are blocked during this time window.
+            <i class="bi bi-shield-lock text-teal me-1"></i> Patient booking requests and appointment availability are blocked during this period.
           </div>
         </div>
         <div class="modal-footer border-top justify-content-between">
           <div>
-            <button type="button" class="btn-danger-soft btn-sm-admin" id="btnDetailDeleteBusy" onclick="triggerDeleteFromDetail()">
-              <i class="bi bi-trash3 me-1"></i> Remove
+            <button type="button" class="btn btn-outline-danger btn-sm-admin" id="btnDetailDeleteBusy" onclick="triggerDeleteFromDetail()">
+              <i class="bi bi-trash3 me-1"></i> Delete
             </button>
-            <button type="button" class="btn-btc-outline btn-sm-admin ms-1" id="btnDetailToggleStatus" onclick="triggerToggleFromDetail()">
+            <button type="button" class="btn btn-outline-secondary btn-sm-admin ms-1" id="btnDetailToggleStatus" onclick="triggerToggleFromDetail()">
               <i class="bi bi-toggle-on me-1"></i> Toggle Status
             </button>
           </div>
           <div>
-            <button type="button" class="btn-btc-outline btn-sm-admin" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn-btc btn-sm-admin" id="btnDetailEditBusy" onclick="triggerEditFromDetail()">
+            <button type="button" class="btn btn-outline-secondary btn-sm-admin" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-btc btn-sm-admin" id="btnDetailEditBusy" onclick="triggerEditFromDetail()">
               <i class="bi bi-pencil me-1"></i> Edit
             </button>
           </div>
         </div>
       </div>
-    </div>
   </div>
 
   <!-- ============================================================
@@ -3427,31 +3300,96 @@ First available</textarea>
         id: "busy-1",
         startDate: "2026-09-24",
         endDate: "2026-09-24",
-        startTime: "11:00",
+        startTime: "10:00",
         endTime: "13:00",
-        duration: "2 hours",
+        duration: "3 hours",
         allDay: false,
-        reason: "Meeting",
+        title: "Team Meeting",
+        service: "All Services",
+        reason: "Team Meeting",
         customReason: "",
-        provider: "Sultana Afrooz, D.O.",
-        location: "All Locations",
+        provider: "All Providers",
+        location: "Suite 301 · Conference Room",
         notes: "Clinical team coordination and quarterly protocol review meeting.",
-        status: "Active"
+        status: "Active",
+        createdAt: "Sep 22, 2026, 09:30 AM",
+        updatedAt: "Sep 23, 2026, 11:15 AM"
       },
       "busy-2": {
         id: "busy-2",
         startDate: "2026-09-25",
         endDate: "2026-09-25",
-        startTime: "09:00",
-        endTime: "17:00",
-        duration: "Full Day",
-        allDay: true,
-        reason: "Maintenance",
+        startTime: "14:00",
+        endTime: "16:00",
+        duration: "2 hours",
+        allDay: false,
+        title: "Staff Training",
+        service: "All Services",
+        reason: "Staff Training",
         customReason: "",
         provider: "All Providers",
-        location: "Suite 301 · HBOT Chamber 1",
-        notes: "Annual hyperbaric chamber calibration and oxygen line certification.",
-        status: "Active"
+        location: "Suite 301 · Training Suite",
+        notes: "Staff clinical procedure and new equipment protocol onboarding.",
+        status: "Active",
+        createdAt: "Sep 23, 2026, 10:00 AM",
+        updatedAt: "Sep 23, 2026, 10:00 AM"
+      },
+      "busy-3": {
+        id: "busy-3",
+        startDate: "2026-09-26",
+        endDate: "2026-09-26",
+        startTime: "11:00",
+        endTime: "12:00",
+        duration: "1 hour",
+        allDay: false,
+        title: "Private Appointment",
+        service: "Ionic Foot Detox",
+        reason: "Private Appointment",
+        customReason: "",
+        provider: "All Providers",
+        location: "Suite 301 · Treatment Room 2",
+        notes: "Reserved private treatment session and client consult.",
+        status: "Active",
+        createdAt: "Sep 21, 2026, 02:00 PM",
+        updatedAt: "Sep 21, 2026, 02:00 PM"
+      },
+      "busy-4": {
+        id: "busy-4",
+        startDate: "2026-09-28",
+        endDate: "2026-09-28",
+        startTime: "08:30",
+        endTime: "11:30",
+        duration: "3 hours",
+        allDay: false,
+        title: "Clinical Lab Review",
+        service: "IV Therapy",
+        reason: "Clinical Lab Review",
+        customReason: "",
+        provider: "All Providers",
+        location: "Suite 301 · IV Infusion Lounge",
+        notes: "Urgent chart reviews and clinical lab sample preparation.",
+        status: "Active",
+        createdAt: "Sep 23, 2026, 04:30 PM",
+        updatedAt: "Sep 23, 2026, 04:30 PM"
+      },
+      "busy-5": {
+        id: "busy-5",
+        startDate: "2026-09-30",
+        endDate: "2026-09-30",
+        startTime: "13:00",
+        endTime: "15:00",
+        duration: "2 hours",
+        allDay: false,
+        title: "Wellness Workshop",
+        service: "Red Light Therapy",
+        reason: "Wellness Workshop",
+        customReason: "",
+        provider: "All Providers",
+        location: "Suite 301 · Wellness Suite",
+        notes: "Integrative health workshop and community wellness seminar.",
+        status: "Active",
+        createdAt: "Sep 20, 2026, 11:00 AM",
+        updatedAt: "Sep 22, 2026, 03:20 PM"
       }
     };
 
@@ -3481,11 +3419,18 @@ First available</textarea>
 
     function loadBusyTimesFromStorage() {
       try {
+        var v = localStorage.getItem("btc_busy_times_version");
         var saved = localStorage.getItem("btc_busy_times");
-        if (saved) {
+        if (v === "v5" && saved) {
           var parsed = JSON.parse(saved);
           if (parsed && typeof parsed === "object" && Object.keys(parsed).length > 0) {
             BUSY_TIME_STORE = parsed;
+            Object.keys(BUSY_TIME_STORE).forEach(function(k) {
+              var it = BUSY_TIME_STORE[k];
+              if (!it.title) it.title = it.customReason || it.reason || "Busy Time Block";
+              if (!it.service) it.service = "All Services";
+              if (!it.reason) it.reason = it.title;
+            });
             return;
           }
         }
@@ -3493,12 +3438,14 @@ First available</textarea>
         console.warn("Could not read btc_busy_times from localStorage", e);
       }
       BUSY_TIME_STORE = JSON.parse(JSON.stringify(DEFAULT_BUSY_TIMES));
+      saveBusyTimesToStorage();
     }
     loadBusyTimesFromStorage();
 
     function saveBusyTimesToStorage() {
       try {
         localStorage.setItem("btc_busy_times", JSON.stringify(BUSY_TIME_STORE));
+        localStorage.setItem("btc_busy_times_version", "v5");
       } catch (e) {
         console.warn("Could not save btc_busy_times to localStorage", e);
       }
@@ -3743,29 +3690,31 @@ First available</textarea>
       updateBusyPreview();
     }
 
-    function setCustomSelectBusyReason(reasonVal) {
-      var hiddenInput = document.getElementById("busyReasonSelect");
-      var prim = document.getElementById("busyReasonPrimaryText");
-      var sec = document.getElementById("busyReasonSecondaryText");
-      var icon = document.getElementById("busyReasonLeadingIcon");
-      var panel = document.getElementById("busyReasonPanel");
+    function setCustomSelectBusyService(serviceVal) {
+      var hiddenInput = document.getElementById("busyServiceSelect");
+      var prim = document.getElementById("busyServicePrimaryText");
+      var sec = document.getElementById("busyServiceSecondaryText");
+      var icon = document.getElementById("busyServiceLeadingIcon");
+      var panel = document.getElementById("busyServicePanel");
       if (!hiddenInput || !prim) return;
 
-      var targetVal = reasonVal || "Meeting";
+      var targetVal = serviceVal || "All Services";
       hiddenInput.value = targetVal;
 
-      var reasonMap = {
-        "Urgent Work": { sec: "Clinical emergency or urgent administrative tasks", icon: "bi-exclamation-octagon-fill text-danger" },
-        "Meeting": { sec: "Team coordination, protocol review, or clinical meetings", icon: "bi-people-fill text-teal" },
-        "Holiday": { sec: "Public holiday or scheduled facility closure", icon: "bi-calendar-heart-fill text-primary" },
-        "Maintenance": { sec: "Equipment calibration, device testing, or deep sanitization", icon: "bi-tools text-warning" },
-        "Staff Unavailable": { sec: "Practitioner illness, training, or off-duty coverage", icon: "bi-person-x-fill text-secondary" },
-        "Personal": { sec: "Personal leave or scheduled out-of-office block", icon: "bi-person-badge text-info" },
-        "Special Event": { sec: "Private clinic event, symposium, or wellness workshop", icon: "bi-star-fill text-warning" },
-        "Other": { sec: "Custom reasoning specified below", icon: "bi-three-dots text-muted" }
+      var serviceMap = {
+        "All Services": { sec: "Apply block across all clinic services and therapies", icon: "bi-grid-fill text-teal" },
+        "Ionic Foot Detox": { sec: "IonCleanse cellular detox and foot soak therapy", icon: "bi-droplet-half text-teal" },
+        "Hyperbaric Oxygen Chamber": { sec: "Mild hyperbaric oxygen therapy chamber (HBOT)", icon: "bi-capsule text-primary" },
+        "Red Light Therapy": { sec: "Full-body targeted photobiomodulation & recovery", icon: "bi-sun-fill text-danger" },
+        "Ear Ozone Insufflation": { sec: "Micro-filtered medical ozone ear insufflation", icon: "bi-activity text-info" },
+        "Infrared Sauna": { sec: "Full-spectrum infrared heat & perspiration suite", icon: "bi-fire text-warning" },
+        "FSM (Frequency Specific Microcurrent)": { sec: "Precision bio-resonance microcurrent resonance", icon: "bi-lightning-charge-fill text-warning" },
+        "IV Therapy": { sec: "Nutritional Myers cocktail & wellness IV infusions", icon: "bi-shield-plus text-success" },
+        "Reflexology": { sec: "Holistic acupressure and therapeutic foot reflexology", icon: "bi-flower1 text-info" },
+        "Constitutional Hydrotherapy": { sec: "Traditional hot/cold contrast towel packs with sine wave", icon: "bi-droplet-fill text-primary" }
       };
 
-      var info = reasonMap[targetVal] || { sec: "Custom reasoning specified below", icon: "bi-three-dots text-muted" };
+      var info = serviceMap[targetVal] || { sec: "Clinic wellness therapy", icon: "bi-grid-fill text-teal" };
       prim.textContent = targetVal;
       if (sec) sec.textContent = info.sec;
       if (icon) icon.className = "bi " + info.icon + " select-leading-icon";
@@ -3777,11 +3726,12 @@ First available</textarea>
           opt.setAttribute("aria-selected", isMatch ? "true" : "false");
         });
       }
+      updateBusyPreview();
+    }
 
-      var customWrap = document.getElementById("busyCustomReasonWrap");
-      if (customWrap) {
-        customWrap.style.display = (targetVal === "Other") ? "block" : "none";
-      }
+    function setCustomSelectBusyReason(reasonVal) {
+      var titleInput = document.getElementById("busyTitleInput");
+      if (titleInput && reasonVal) titleInput.value = reasonVal;
       updateBusyPreview();
     }
 
@@ -3911,32 +3861,11 @@ First available</textarea>
 
       var configs = [
         {
-          wrapperId: "busyReasonWrapper",
-          triggerId: "busyReasonTrigger",
-          panelId: "busyReasonPanel",
-          selectId: "busyReasonSelect",
-          setter: setCustomSelectBusyReason
-        },
-        {
-          wrapperId: "busyStatusWrapper",
-          triggerId: "busyStatusTrigger",
-          panelId: "busyStatusPanel",
-          selectId: "busyStatusSelect",
-          setter: setCustomSelectBusyStatus
-        },
-        {
-          wrapperId: "busyProviderWrapper",
-          triggerId: "busyProviderTrigger",
-          panelId: "busyProviderPanel",
-          selectId: "busyProviderSelect",
-          setter: setCustomSelectBusyProvider
-        },
-        {
-          wrapperId: "busyLocationWrapper",
-          triggerId: "busyLocationTrigger",
-          panelId: "busyLocationPanel",
-          selectId: "busyLocationSelect",
-          setter: setCustomSelectBusyLocation
+          wrapperId: "busyServiceWrapper",
+          triggerId: "busyServiceTrigger",
+          panelId: "busyServicePanel",
+          selectId: "busyServiceSelect",
+          setter: setCustomSelectBusyService
         }
       ];
 
@@ -3956,9 +3885,7 @@ First available</textarea>
           }
         });
         var rowReason = modal.querySelector(".dropdown-row-reason");
-        var rowProvider = modal.querySelector(".dropdown-row-provider");
         if (rowReason) rowReason.style.zIndex = "30";
-        if (rowProvider) rowProvider.style.zIndex = "20";
       }
 
       configs.forEach(function(cfg) {
@@ -4000,14 +3927,7 @@ First available</textarea>
 
             // Elevate parent row's stacking context cleanly above other rows
             var rowReason = modal.querySelector(".dropdown-row-reason");
-            var rowProvider = modal.querySelector(".dropdown-row-provider");
-            if (wrapper.id === "busyReasonWrapper" || wrapper.id === "busyStatusWrapper") {
-              if (rowReason) rowReason.style.zIndex = "1050";
-              if (rowProvider) rowProvider.style.zIndex = "10";
-            } else {
-              if (rowProvider) rowProvider.style.zIndex = "1050";
-              if (rowReason) rowReason.style.zIndex = "10";
-            }
+            if (rowReason) rowReason.style.zIndex = "1050";
 
             var selectedOpt = panel.querySelector(".custom-select-option.selected");
             if (selectedOpt && typeof selectedOpt.scrollIntoView === "function") {
@@ -4067,9 +3987,14 @@ First available</textarea>
       });
     }
 
+    function handleBusyServiceChange() {
+      var val = document.getElementById("busyServiceSelect") ? document.getElementById("busyServiceSelect").value : "";
+      setCustomSelectBusyService(val);
+    }
+
     function handleBusyReasonChange() {
-      var val = document.getElementById("busyReasonSelect").value;
-      setCustomSelectBusyReason(val);
+      var val = document.getElementById("busyServiceSelect") ? document.getElementById("busyServiceSelect").value : "";
+      setCustomSelectBusyService(val);
     }
 
     function handleBusyProviderChange() {
@@ -4087,14 +4012,22 @@ First available</textarea>
       var sTime = document.getElementById("busyStartTime").value || "10:00";
       var eTime = document.getElementById("busyEndTime").value || "13:00";
 
-      var reason = document.getElementById("busyReasonSelect").value;
-      if (reason === "Other") {
-        var custom = (document.getElementById("busyCustomReasonInput").value || "").trim();
-        if (custom) reason = custom;
+      var titleInput = document.getElementById("busyTitleInput");
+      var title = titleInput ? (titleInput.value || "").trim() : "";
+      if (!title) title = "Busy Time Block";
+
+      var serviceSelect = document.getElementById("busyServiceSelect");
+      var service = serviceSelect ? serviceSelect.value : "All Services";
+
+      var displayLabel = title;
+      if (service && service !== "All Services") {
+        displayLabel += " · " + service;
       }
 
-      var provider = document.getElementById("busyProviderSelect").value;
-      var status = document.getElementById("busyStatusSelect").value;
+      var provSelect = document.getElementById("busyProviderSelect");
+      var provider = provSelect ? provSelect.value : "All Providers";
+      var statSelect = document.getElementById("busyStatusSelect");
+      var status = statSelect ? statSelect.value : "Active";
 
       var duration = calculateBusyDuration(sDate, eDate, sTime, eTime, isAllDay);
       var durBadge = document.getElementById("busyCalculatedDuration");
@@ -4118,7 +4051,7 @@ First available</textarea>
       if (prevProv) prevProv.textContent = provider;
 
       var prevReas = document.getElementById("prevBusyReason");
-      if (prevReas) prevReas.textContent = reason;
+      if (prevReas) prevReas.textContent = displayLabel;
 
       var prevStat = document.getElementById("prevBusyStatus");
       var prevStatBadge = document.getElementById("prevBusyStatusBadge");
@@ -4164,7 +4097,7 @@ First available</textarea>
           if (ovDesc) {
             var firstOv = checkRes.busyOverlaps[0];
             var timeDesc = firstOv.allDay ? "Full Day" : (formatTimeAMPM(firstOv.startTime) + " – " + formatTimeAMPM(firstOv.endTime));
-            ovDesc.textContent = "Busy time overlaps with an existing blocked period (" + timeDesc + " · " + firstOv.reason + "). Review or adjust to avoid duplicate blocks.";
+            ovDesc.textContent = "Busy time overlaps with an existing blocked period (" + timeDesc + " · " + (firstOv.title || firstOv.reason) + "). Review or adjust to avoid duplicate blocks.";
           }
         } else {
           overlapBox.style.display = "none";
@@ -4193,8 +4126,9 @@ First available</textarea>
       document.getElementById("busyModalHeaderTitle").textContent = "Set Busy Time & Block Availability";
       document.getElementById("btnSaveBusyText").textContent = "Set Busy Time";
 
-      document.getElementById("busyStartDate").value = "2026-09-24";
-      document.getElementById("busyEndDate").value = "2026-09-24";
+      var defaultDate = "2026-09-24";
+      document.getElementById("busyStartDate").value = defaultDate;
+      document.getElementById("busyEndDate").value = defaultDate;
       document.getElementById("busySingleDayCheck").checked = true;
       document.getElementById("busyEndDateCol").style.display = "none";
       document.getElementById("busyEndDate").disabled = true;
@@ -4210,12 +4144,14 @@ First available</textarea>
         timeRow.style.pointerEvents = "auto";
       }
 
-      document.getElementById("busyCustomReasonInput").value = "";
-      setCustomSelectBusyReason("Meeting");
-      setCustomSelectBusyProvider("Sultana Afrooz, D.O.");
-      setCustomSelectBusyLocation("All Locations");
-      setCustomSelectBusyStatus("Active");
-      document.getElementById("busyNotesInput").value = "";
+      var titleInput = document.getElementById("busyTitleInput");
+      if (titleInput) titleInput.value = "";
+      setCustomSelectBusyService("All Services");
+      if (typeof setCustomSelectBusyProvider === "function") setCustomSelectBusyProvider("Sultana Afrooz, D.O.");
+      if (typeof setCustomSelectBusyLocation === "function") setCustomSelectBusyLocation("All Locations");
+      if (typeof setCustomSelectBusyStatus === "function") setCustomSelectBusyStatus("Active");
+      var notesInput = document.getElementById("busyNotesInput");
+      if (notesInput) notesInput.value = "";
 
       if (window.BTCAdmin && typeof window.BTCAdmin.closeAllCustomSelects === "function") {
         window.BTCAdmin.closeAllCustomSelects();
@@ -4236,7 +4172,7 @@ First available</textarea>
       if (!item) return;
 
       document.getElementById("busyEditId").value = item.id;
-      document.getElementById("busyModalHeaderTitle").textContent = "Edit Busy Time & Availability Block";
+      document.getElementById("busyModalHeaderTitle").textContent = "Edit Busy Time";
       document.getElementById("btnSaveBusyText").textContent = "Save Changes";
 
       document.getElementById("busyStartDate").value = item.startDate;
@@ -4258,19 +4194,18 @@ First available</textarea>
         timeRow.style.pointerEvents = item.allDay ? "none" : "auto";
       }
 
-      var knownReasons = ["Urgent Work", "Meeting", "Holiday", "Maintenance", "Staff Unavailable", "Personal", "Special Event"];
-      if (knownReasons.indexOf(item.reason) !== -1) {
-        document.getElementById("busyCustomReasonInput").value = "";
-        setCustomSelectBusyReason(item.reason);
-      } else {
-        document.getElementById("busyCustomReasonInput").value = item.customReason || item.reason;
-        setCustomSelectBusyReason("Other");
+      // Pre-fill Title and pre-select saved Service without resetting
+      var titleInput = document.getElementById("busyTitleInput");
+      if (titleInput) {
+        titleInput.value = item.title || item.reason || "";
       }
+      setCustomSelectBusyService(item.service || "All Services");
 
-      setCustomSelectBusyProvider(item.provider || "All Providers");
-      setCustomSelectBusyLocation(item.location || "All Locations");
-      setCustomSelectBusyStatus(item.status || "Active");
-      document.getElementById("busyNotesInput").value = item.notes || "";
+      if (typeof setCustomSelectBusyProvider === "function") setCustomSelectBusyProvider(item.provider || "All Providers");
+      if (typeof setCustomSelectBusyLocation === "function") setCustomSelectBusyLocation(item.location || "All Locations");
+      if (typeof setCustomSelectBusyStatus === "function") setCustomSelectBusyStatus(item.status || "Active");
+      var notesInput = document.getElementById("busyNotesInput");
+      if (notesInput) notesInput.value = item.notes || "";
 
       if (window.BTCAdmin && typeof window.BTCAdmin.closeAllCustomSelects === "function") {
         window.BTCAdmin.closeAllCustomSelects();
@@ -4321,15 +4256,36 @@ First available</textarea>
         }
       }
 
-      var reasonSelectVal = document.getElementById("busyReasonSelect").value;
-      var customVal = (document.getElementById("busyCustomReasonInput").value || "").trim();
-      var reasonFinal = (reasonSelectVal === "Other") ? (customVal || "Other Block") : reasonSelectVal;
+      var titleInput = document.getElementById("busyTitleInput");
+      var titleVal = titleInput ? (titleInput.value || "").trim() : "";
+      if (!titleVal) {
+        showAdminToast("Please enter a title for the busy time block.", "warn");
+        if (titleInput) {
+          titleInput.focus();
+          titleInput.classList.add("is-invalid");
+          setTimeout(function() { titleInput.classList.remove("is-invalid"); }, 2500);
+        }
+        return;
+      }
 
-      var providerVal = document.getElementById("busyProviderSelect").value;
-      var locationVal = document.getElementById("busyLocationSelect").value;
-      var notesVal = document.getElementById("busyNotesInput").value;
-      var statusVal = document.getElementById("busyStatusSelect").value;
+      var serviceSelect = document.getElementById("busyServiceSelect");
+      var serviceVal = serviceSelect ? (serviceSelect.value || "").trim() : "All Services";
+      if (!serviceVal) {
+        showAdminToast("Please select a service for the busy time block.", "warn");
+        return;
+      }
+
       var editId = document.getElementById("busyEditId").value;
+      var existing = editId ? BUSY_TIME_STORE[editId] : null;
+
+      var provSelect = document.getElementById("busyProviderSelect");
+      var providerVal = provSelect ? provSelect.value : ((existing && existing.provider) ? existing.provider : "All Providers");
+      var locSelect = document.getElementById("busyLocationSelect");
+      var locationVal = locSelect ? locSelect.value : ((existing && existing.location) ? existing.location : "All Locations & Rooms");
+      var notesInput = document.getElementById("busyNotesInput");
+      var notesVal = notesInput ? notesInput.value : "";
+      var statSelect = document.getElementById("busyStatusSelect");
+      var statusVal = statSelect ? statSelect.value : ((existing && existing.status) ? existing.status : "Active");
 
       // Check conflicts if not forced
       if (!force) {
@@ -4339,13 +4295,15 @@ First available</textarea>
           if (cBox) {
             cBox.style.display = "block";
             cBox.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
           }
-          return;
         }
       }
 
       var duration = calculateBusyDuration(sDate, eDate, sTime, eTime, isAllDay);
       var busyId = editId || ("busy-" + (Date.now()));
+      var nowTimestamp = formatBusyDateTimeNow();
+      var existing = editId ? BUSY_TIME_STORE[editId] : null;
 
       BUSY_TIME_STORE[busyId] = {
         id: busyId,
@@ -4355,12 +4313,16 @@ First available</textarea>
         endTime: eTime,
         duration: duration,
         allDay: isAllDay,
-        reason: reasonFinal,
-        customReason: (reasonSelectVal === "Other") ? customVal : "",
+        title: titleVal,
+        service: serviceVal,
+        reason: titleVal,
+        customReason: "",
         provider: providerVal,
         location: locationVal,
         notes: notesVal,
-        status: statusVal
+        status: statusVal,
+        createdAt: (existing && existing.createdAt) ? existing.createdAt : nowTimestamp,
+        updatedAt: nowTimestamp
       };
 
       saveBusyTimesToStorage();
@@ -4378,8 +4340,78 @@ First available</textarea>
       updateTodayScheduleBusyRows();
       renderCustomerBookingSlots();
 
-      var msg = editId ? "Busy time updated successfully." : "Busy time has been scheduled successfully.";
+      var msg = editId ? "Availability block updated successfully." : "Availability block has been scheduled successfully.";
       showAdminToast(msg);
+    }
+
+    function formatBusyDateTimeNow() {
+      var d = new Date();
+      var mShorts = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var m = mShorts[d.getMonth()];
+      var day = d.getDate();
+      var yr = d.getFullYear();
+      var hr = d.getHours();
+      var min = d.getMinutes();
+      var ampm = hr >= 12 ? "PM" : "AM";
+      var hr12 = hr % 12 || 12;
+      var hrStr = hr12 < 10 ? "0" + hr12 : hr12;
+      var minStr = min < 10 ? "0" + min : min;
+      return m + " " + day + ", " + yr + ", " + hrStr + ":" + minStr + " " + ampm;
+    }
+
+    function formatBusyDateDisplay(iso) {
+      if (!iso) return "";
+      var parts = iso.split("-");
+      if (parts.length !== 3) return iso;
+      var mShorts = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var mIdx = parseInt(parts[1], 10) - 1;
+      var mName = mShorts[mIdx] || parts[1];
+      var d = parseInt(parts[2], 10);
+      return mName + " " + d + ", " + parts[0];
+    }
+
+    function getBusyEffectiveStatus(item) {
+      if (!item) return "Active";
+      if (item.status === "Inactive") return "Inactive";
+      var today = "2026-09-24";
+      var endDate = item.endDate || item.startDate;
+      if (endDate < today) {
+        return "Expired";
+      }
+      return item.status || "Active";
+    }
+
+    function getReasonIcon(reason) {
+      var r = (reason || "").toLowerCase();
+      if (r.indexOf("meet") !== -1) return "bi-people-fill text-teal";
+      if (r.indexOf("person") !== -1) return "bi-person-badge text-info";
+      if (r.indexOf("maint") !== -1) return "bi-tools text-warning";
+      if (r.indexOf("urgent") !== -1) return "bi-exclamation-octagon-fill text-danger";
+      if (r.indexOf("holiday") !== -1) return "bi-calendar-heart-fill text-primary";
+      if (r.indexOf("unavail") !== -1) return "bi-person-x-fill text-secondary";
+      if (r.indexOf("event") !== -1) return "bi-star-fill text-warning";
+      return "bi-slash-circle text-teal";
+    }
+
+    function getProviderChip(provider) {
+      var p = (provider || "").toLowerCase();
+      if (p.indexOf("sultana") !== -1) {
+        return '<span class="provider-avatar-chip">SA</span>';
+      }
+      if (p.indexOf("needle") !== -1 || p.indexOf("jessica") !== -1) {
+        return '<span class="provider-avatar-chip chip-teal">JN</span>';
+      }
+      return '<span class="provider-avatar-chip" style="background:#0B3A53; color:#fff;">ALL</span>';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
     function openBusyTimeDetail(busyId) {
@@ -4387,20 +4419,43 @@ First available</textarea>
       if (!item) return;
 
       currentActiveBusyId = item.id;
-      document.getElementById("busyDetailReasonTitle").textContent = item.reason;
-      document.getElementById("busyDetailStatusBadge").textContent = (item.status === "Active") ? "Active Block" : "Inactive";
-      document.getElementById("busyDetailStatusBadge").className = "badge-admin " + (item.status === "Active" ? "badge-blocked" : "badge-draft") + " fs-6 px-3 py-1";
-      document.getElementById("busyDetailDurationBadge").textContent = item.duration;
+      var effectiveStatus = getBusyEffectiveStatus(item);
 
-      var dateDisplay = (item.startDate === (item.endDate || item.startDate)) ? formatDateReadable(item.startDate) : (formatDateReadable(item.startDate) + " – " + formatDateReadable(item.endDate));
+      document.getElementById("busyDetailReasonTitle").textContent = item.title || item.reason;
+      
+      var statusBadgeEl = document.getElementById("busyDetailStatusBadge");
+      if (statusBadgeEl) {
+        if (effectiveStatus === "Active") {
+          statusBadgeEl.textContent = "Active Block";
+          statusBadgeEl.className = "badge-admin badge-confirmed fs-6 px-3 py-1";
+        } else if (effectiveStatus === "Inactive") {
+          statusBadgeEl.textContent = "Inactive Block";
+          statusBadgeEl.className = "badge-admin badge-draft fs-6 px-3 py-1";
+        } else {
+          statusBadgeEl.textContent = "Expired Block";
+          statusBadgeEl.className = "badge-admin badge-expired fs-6 px-3 py-1";
+        }
+      }
+
+      document.getElementById("busyDetailDurationBadge").textContent = item.duration || "Custom Duration";
+
+      var isSingle = (item.startDate === (item.endDate || item.startDate));
+      var dateDisplay = isSingle ? formatBusyDateDisplay(item.startDate) : (formatBusyDateDisplay(item.startDate) + " – " + formatBusyDateDisplay(item.endDate));
       document.getElementById("busyDetailDate").textContent = dateDisplay;
 
-      var timeDisplay = item.allDay ? "Full Day (8:00 AM – 6:00 PM)" : (formatTimeAMPM(item.startTime) + " – " + formatTimeAMPM(item.endTime));
+      var timeDisplay = item.allDay ? "Full Day (All Hours Unavailable)" : (formatTimeAMPM(item.startTime) + " – " + formatTimeAMPM(item.endTime));
       document.getElementById("busyDetailTime").textContent = timeDisplay;
 
       document.getElementById("busyDetailProvider").textContent = item.provider;
       document.getElementById("busyDetailLocation").textContent = item.location;
-      document.getElementById("busyDetailNotes").textContent = item.notes ? ('"' + item.notes + '"') : "No additional notes recorded for this period.";
+      var servEl = document.getElementById("busyDetailService");
+      if (servEl) servEl.textContent = item.service || "All Services";
+      document.getElementById("busyDetailNotes").textContent = item.notes ? item.notes : "No additional internal notes recorded for this period.";
+
+      var createdEl = document.getElementById("busyDetailCreatedDate");
+      if (createdEl) createdEl.textContent = item.createdAt || "Sep 22, 2026, 09:30 AM";
+      var updatedEl = document.getElementById("busyDetailUpdatedDate");
+      if (updatedEl) updatedEl.textContent = item.updatedAt || item.createdAt || "Sep 23, 2026, 11:15 AM";
 
       var modalEl = document.getElementById("busyDetailModal");
       if (modalEl && bootstrap.Modal) {
@@ -4436,10 +4491,13 @@ First available</textarea>
       if (!item) return;
 
       busyIdToDelete = busyId;
-      document.getElementById("removeBusyDateText").textContent = (item.startDate === (item.endDate || item.startDate)) ? formatDateReadable(item.startDate) : (formatDateReadable(item.startDate) + " – " + formatDateReadable(item.endDate));
+      var isSingle = (item.startDate === (item.endDate || item.startDate));
+      document.getElementById("removeBusyDateText").textContent = isSingle ? formatBusyDateDisplay(item.startDate) : (formatBusyDateDisplay(item.startDate) + " – " + formatBusyDateDisplay(item.endDate));
       document.getElementById("removeBusyTimeText").textContent = item.allDay ? "Full Day" : (formatTimeAMPM(item.startTime) + " – " + formatTimeAMPM(item.endTime));
-      document.getElementById("removeBusyReasonText").textContent = item.reason;
-      document.getElementById("removeBusyProviderText").textContent = item.provider;
+      var reasonEl = document.getElementById("removeBusyReasonText");
+      if (reasonEl) reasonEl.textContent = item.title || item.reason || "Busy Time Block";
+      var serviceEl = document.getElementById("removeBusyServiceText");
+      if (serviceEl) serviceEl.textContent = item.service || "All Services";
 
       var modalEl = document.getElementById("removeBusyModal");
       if (modalEl && bootstrap.Modal) {
@@ -4465,9 +4523,7 @@ First available</textarea>
       updateTodayScheduleBusyRows();
       renderCustomerBookingSlots();
 
-      if (window.toast) {
-        window.toast("Busy time removed successfully.");
-      }
+      showAdminToast("Busy time block removed. Appointment availability restored.", "info");
     }
 
     function toggleBusyStatus(busyId) {
@@ -4475,6 +4531,7 @@ First available</textarea>
       if (!item) return;
 
       item.status = (item.status === "Active") ? "Inactive" : "Active";
+      item.updatedAt = formatBusyDateTimeNow();
       saveBusyTimesToStorage();
 
       renderActiveCalendarView();
@@ -4482,34 +4539,23 @@ First available</textarea>
       updateTodayScheduleBusyRows();
       renderCustomerBookingSlots();
 
-      if (window.toast) {
-        window.toast("Busy time set to " + item.status + ".");
-      }
+      showAdminToast("Busy time set to " + item.status + ".");
     }
 
-    function renderCalendarBusyCard(busy, isWeekView) {
-      var timeDisplay = busy.allDay ? "Full Day" : (formatTimeAMPM(busy.startTime) + " – " + formatTimeAMPM(busy.endTime));
-      var html = '<div class="cal-event-card status-busy" onclick="openBusyTimeDetail(\'' + busy.id + '\')" title="Blocked Availability: ' + busy.reason + ' (' + timeDisplay + ')">';
+    function handleBusyFilterChange() {
+      renderScheduledBusyTimesTable();
+    }
 
-      html += '<div class="cal-event-top-line">' +
-                '<span class="cal-event-time text-secondary"><i class="bi bi-lock-fill me-1 text-secondary"></i> <strong>Busy / Blocked</strong></span>' +
-                '<span class="badge-admin badge-blocked" style="font-size:0.62rem; padding:1px 5px;">Blocked</span>' +
-              '</div>';
-
-      html += '<div class="cal-event-patient text-dark fw-bold">' + timeDisplay + '</div>';
-      html += '<div class="cal-event-service text-navy fw-semibold"><i class="bi bi-slash-circle me-1 text-teal"></i>' + busy.reason + '</div>';
-
-      if (!isWeekView) {
-        html += '<div class="cal-event-service text-muted small mt-1">' + busy.provider + ' · ' + (busy.location.indexOf("All") !== -1 ? "All Rooms" : busy.location) + '</div>';
-      }
-
-      html += '<div class="cal-event-bottom-line">' +
-                '<span class="cal-event-provider text-muted small"><i class="bi bi-clock-history me-1"></i>' + busy.duration + '</span>' +
-                '<span class="text-teal small fw-semibold">Manage <i class="bi bi-chevron-right"></i></span>' +
-              '</div>';
-
-      html += '</div>';
-      return html;
+    function resetBusyFilters() {
+      var sInput = document.getElementById("busySearchInput");
+      var dFilter = document.getElementById("busyDateFilter");
+      var stFilter = document.getElementById("busyStatusFilter");
+      var pFilter = document.getElementById("busyProviderFilter");
+      if (sInput) sInput.value = "";
+      if (dFilter) dFilter.value = "all";
+      if (stFilter) stFilter.value = "all";
+      if (pFilter) pFilter.value = "all";
+      renderScheduledBusyTimesTable();
     }
 
     function renderScheduledBusyTimesTable() {
@@ -4517,53 +4563,218 @@ First available</textarea>
       var badge = document.getElementById("busyCountBadge");
       if (!tbody) return;
 
-      var keys = Object.keys(BUSY_TIME_STORE);
+      var allKeys = Object.keys(BUSY_TIME_STORE);
+      
+      // Calculate active blocks overall
+      var totalActive = 0;
+      allKeys.forEach(function(k) {
+        if (getBusyEffectiveStatus(BUSY_TIME_STORE[k]) === "Active") {
+          totalActive++;
+        }
+      });
+
+      // Read filter values
+      var searchInput = document.getElementById("busySearchInput");
+      var query = searchInput ? (searchInput.value || "").trim().toLowerCase() : "";
+      
+      var dateFilter = document.getElementById("busyDateFilter");
+      var dateVal = (dateFilter && dateFilter.value) ? dateFilter.value : "all";
+
+      var statusFilter = document.getElementById("busyStatusFilter");
+      var statusVal = (statusFilter && statusFilter.value) ? statusFilter.value : "all";
+
+      var providerFilter = document.getElementById("busyProviderFilter");
+      var provVal = (providerFilter && providerFilter.value) ? providerFilter.value : "all";
+
+      var filteredKeys = allKeys.filter(function(k) {
+        var b = BUSY_TIME_STORE[k];
+        var effectiveStatus = getBusyEffectiveStatus(b);
+
+        // Status filter
+        if (statusVal !== "all" && effectiveStatus !== statusVal) {
+          return false;
+        }
+
+        // Provider filter
+        if (provVal !== "all") {
+          if (provVal === "All Providers") {
+            if (b.provider !== "All Providers" && b.provider.indexOf("All") === -1) return false;
+          } else {
+            if (b.provider.indexOf(provVal) === -1 && provVal.indexOf(b.provider) === -1) return false;
+          }
+        }
+
+        // Date filter
+        var today = "2026-09-24";
+        var bEnd = b.endDate || b.startDate;
+        if (dateVal === "today") {
+          if (!(b.startDate <= today && bEnd >= today)) return false;
+        } else if (dateVal === "upcoming") {
+          if (bEnd < today) return false;
+        } else if (dateVal === "past") {
+          if (bEnd >= today) return false;
+        }
+
+        // Search query
+        if (query) {
+          var isSingle = (b.startDate === (b.endDate || b.startDate));
+          var dateStr = isSingle ? formatBusyDateDisplay(b.startDate) : (formatBusyDateDisplay(b.startDate) + " – " + formatBusyDateDisplay(b.endDate));
+          var timeStr = b.allDay ? "Full Day" : (formatTimeAMPM(b.startTime) + " – " + formatTimeAMPM(b.endTime));
+          var corpus = [
+            b.title,
+            b.service,
+            b.reason,
+            b.customReason,
+            b.provider,
+            b.location,
+            b.notes,
+            effectiveStatus,
+            dateStr,
+            timeStr
+          ].join(" ").toLowerCase();
+
+          if (corpus.indexOf(query) === -1) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      // Sort: chronological by startDate ascending
+      filteredKeys.sort(function(a, b) {
+        var itemA = BUSY_TIME_STORE[a];
+        var itemB = BUSY_TIME_STORE[b];
+        if (itemA.startDate !== itemB.startDate) {
+          return itemA.startDate.localeCompare(itemB.startDate);
+        }
+        return (itemA.startTime || "").localeCompare(itemB.startTime || "");
+      });
+
+      // Update badge
       if (badge) {
-        badge.textContent = keys.length + " Blocked Period" + (keys.length === 1 ? "" : "s");
+        var filteredActive = 0;
+        filteredKeys.forEach(function(k) {
+          if (getBusyEffectiveStatus(BUSY_TIME_STORE[k]) === "Active") filteredActive++;
+        });
+
+        if (filteredKeys.length === allKeys.length) {
+          badge.textContent = totalActive + " active block" + (totalActive === 1 ? "" : "s");
+        } else {
+          badge.textContent = filteredActive + " active block" + (filteredActive === 1 ? "" : "s") + " (" + filteredKeys.length + " matching)";
+        }
       }
 
-      if (keys.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-muted">' +
-                            '<i class="bi bi-calendar-check fs-4 d-block mb-1 text-teal"></i>' +
-                            'No busy times currently scheduled. All clinic hours are open for bookings.' +
-                            '<div class="mt-2"><button type="button" class="btn btn-sm btn-btc" onclick="openCreateBusyModal()"><i class="bi bi-plus-lg me-1"></i>Set Busy Time</button></div>' +
+      // Zero items total
+      if (allKeys.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-5">' +
+                            '<div class="py-4">' +
+                              '<div class="mb-3">' +
+                                '<i class="bi bi-clock-history fs-1 text-teal opacity-50"></i>' +
+                              '</div>' +
+                              '<h5 class="fw-bold text-navy mb-1">No Busy Time Blocks</h5>' +
+                              '<p class="text-muted small mb-3">Temporarily blocked schedules will appear here.</p>' +
+                              '<button type="button" class="btn-btc btn-sm-admin" onclick="openCreateBusyModal()"><i class="bi bi-plus-lg me-1"></i>+ Set Busy Time</button>' +
+                            '</div>' +
+                          '</td></tr>';
+        return;
+      }
+
+      // Filter returned no results
+      if (filteredKeys.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-5">' +
+                            '<div class="py-3">' +
+                              '<i class="bi bi-search fs-2 d-block mb-2 text-secondary"></i>' +
+                              '<div class="fw-semibold text-dark mb-1">No Matching Busy Time Blocks</div>' +
+                              '<div class="small text-muted mb-3">No schedule blocks match your current search query or filter selection.</div>' +
+                              '<button type="button" class="btn btn-sm btn-outline-secondary" onclick="resetBusyFilters()"><i class="bi bi-arrow-counterclockwise me-1"></i>Clear Filters</button>' +
+                            '</div>' +
                           '</td></tr>';
         return;
       }
 
       var rowsHtml = "";
-      keys.forEach(function(k) {
+      filteredKeys.forEach(function(k) {
         var b = BUSY_TIME_STORE[k];
         var isSingle = (b.startDate === (b.endDate || b.startDate));
-        var dateStr = isSingle ? formatDateReadable(b.startDate) : (formatDateReadable(b.startDate) + " – " + formatDateReadable(b.endDate));
-        var timeStr = b.allDay ? '<span class="badge bg-light text-secondary border">Full Day (All Hours)</span>' : ('<span class="schedule-time-badge border-secondary text-secondary"><i class="bi bi-lock-fill"></i> ' + formatTimeAMPM(b.startTime) + ' – ' + formatTimeAMPM(b.endTime) + '</span>');
-        var statusBadge = (b.status === "Active") ? '<span class="badge-admin badge-confirmed">Active</span>' : '<span class="badge-admin badge-draft">Inactive</span>';
+        var dateStr = isSingle ? formatBusyDateDisplay(b.startDate) : (formatBusyDateDisplay(b.startDate) + " – " + formatBusyDateDisplay(b.endDate));
+        var timeStr = b.allDay ? 'Full Day (All Hours)' : (formatTimeAMPM(b.startTime) + " – " + formatTimeAMPM(b.endTime));
+        var effectiveStatus = getBusyEffectiveStatus(b);
 
-        rowsHtml += '<tr>' +
-                      '<td>' +
-                        '<div class="fw-semibold text-navy">' + dateStr + '</div>' +
-                        '<div class="mt-1">' + timeStr + '</div>' +
+        var statusBadge = "";
+        if (effectiveStatus === "Active") {
+          statusBadge = '<span class="badge-admin badge-confirmed"><i class="bi bi-check-circle-fill me-1"></i>Active</span>';
+        } else if (effectiveStatus === "Inactive") {
+          statusBadge = '<span class="badge-admin badge-draft"><i class="bi bi-dash-circle-fill me-1"></i>Inactive</span>';
+        } else {
+          statusBadge = '<span class="badge-admin badge-expired"><i class="bi bi-clock-history me-1"></i>Expired</span>';
+        }
+
+        var durationText = b.duration || calculateBusyDuration(b.startDate, b.endDate, b.startTime, b.endTime, b.allDay);
+
+        rowsHtml += '<tr class="busy-record-row">' +
+                      '<td data-label="Date">' +
+                        '<div class="fw-semibold text-navy"><i class="bi bi-calendar3 me-1 text-teal"></i>' + dateStr + '</div>' +
                       '</td>' +
-                      '<td>' +
-                        '<div class="d-flex align-items-center gap-2">' +
-                          '<span class="badge-admin badge-blocked py-1 px-2"><i class="bi bi-slash-circle me-1"></i>' + b.reason + '</span>' +
+                      '<td data-label="Time">' +
+                        '<span class="schedule-time-badge"><i class="bi bi-clock me-1"></i>' + timeStr + '</span>' +
+                      '</td>' +
+                      '<td data-label="Title">' +
+                        '<div class="d-flex flex-column align-items-start">' +
+                          '<span class="fw-bold text-navy">' + escapeHtml(b.title || b.reason) + '</span>' +
+                          (b.notes ? ('<div class="small text-muted text-truncate mt-0.5" style="max-width: 250px;" title="' + escapeHtml(b.notes) + '"><i class="bi bi-chat-left-text me-1 text-teal"></i>' + escapeHtml(b.notes) + '</div>') : '') +
                         '</div>' +
                       '</td>' +
-                      '<td><span class="fw-semibold text-navy">' + b.provider + '</span></td>' +
-                      '<td><span class="small text-muted">' + b.location + '</span></td>' +
-                      '<td><span class="badge bg-teal-subtle text-teal fw-semibold">' + b.duration + '</span></td>' +
-                      '<td style="max-width:220px;" class="small text-muted text-truncate" title="' + (b.notes || "") + '">' + (b.notes || '<span class="fst-italic text-secondary">None</span>') + '</td>' +
-                      '<td>' + statusBadge + '</td>' +
-                      '<td class="text-end text-nowrap">' +
-                        '<button class="icon-action" title="View details" onclick="openBusyTimeDetail(\'' + b.id + '\')"><i class="bi bi-eye"></i></button>' +
-                        '<button class="icon-action" title="Edit busy time" onclick="editBusyTime(\'' + b.id + '\')"><i class="bi bi-pencil"></i></button>' +
-                        '<button class="icon-action ' + (b.status === "Active" ? "text-secondary" : "text-success") + '" title="' + (b.status === "Active" ? "Deactivate" : "Activate") + '" onclick="toggleBusyStatus(\'' + b.id + '\')"><i class="bi ' + (b.status === "Active" ? "bi-toggle-on" : "bi-toggle-off") + '"></i></button>' +
-                        '<button class="icon-action danger" title="Remove busy period" onclick="confirmDeleteBusyTime(\'' + b.id + '\')"><i class="bi bi-trash3"></i></button>' +
+                      '<td data-label="Service">' +
+                        '<span class="badge ' + (b.service === "All Services" ? "bg-teal-subtle text-teal" : "bg-light text-dark border") + ' fw-semibold">' +
+                          escapeHtml(b.service || "All Services") +
+                        '</span>' +
+                      '</td>' +
+                      '<td data-label="Duration">' +
+                        '<span class="badge bg-light text-secondary border px-2 py-1 small">' +
+                          durationText +
+                        '</span>' +
+                      '</td>' +
+                      '<td data-label="Status">' + statusBadge + '</td>' +
+                      '<td data-label="Actions" class="text-end text-nowrap td-actions">' +
+                        '<div class="d-flex align-items-center justify-content-end gap-1">' +
+                          '<button class="icon-action text-teal" title="Edit" onclick="editBusyTime(\'' + b.id + '\')">' +
+                            '<i class="bi bi-pencil-square"></i>' +
+                          '</button>' +
+                          '<button class="icon-action text-danger" title="Delete" onclick="confirmDeleteBusyTime(\'' + b.id + '\')">' +
+                            '<i class="bi bi-trash3"></i>' +
+                          '</button>' +
+                        '</div>' +
                       '</td>' +
                     '</tr>';
       });
 
       tbody.innerHTML = rowsHtml;
+    }
+
+    function renderCalendarBusyCard(busy, isWeekView) {
+      var timeDisplay = busy.allDay ? "Full Day" : (formatTimeAMPM(busy.startTime) + " – " + formatTimeAMPM(busy.endTime));
+      var html = '<div class="cal-event-card status-busy" onclick="openBusyTimeDetail(\'' + busy.id + '\')" title="Blocked Availability: ' + escapeHtml(busy.reason) + ' (' + timeDisplay + ')">';
+
+      html += '<div class="cal-event-top-line">' +
+                '<span class="cal-event-time text-secondary"><i class="bi bi-lock-fill me-1 text-secondary"></i> <strong>Busy / Blocked</strong></span>' +
+                '<span class="badge-admin badge-blocked" style="font-size:0.62rem; padding:1px 5px;">Blocked</span>' +
+              '</div>';
+
+      html += '<div class="cal-event-patient text-dark fw-bold">' + timeDisplay + '</div>';
+      html += '<div class="cal-event-service text-navy fw-semibold"><i class="bi bi-slash-circle me-1 text-teal"></i>' + escapeHtml(busy.reason) + '</div>';
+
+      if (!isWeekView) {
+        html += '<div class="cal-event-service text-muted small mt-1">' + escapeHtml(busy.provider) + ' · ' + (busy.location.indexOf("All") !== -1 ? "All Rooms" : escapeHtml(busy.location)) + '</div>';
+      }
+
+      html += '<div class="cal-event-bottom-line">' +
+                '<span class="cal-event-provider text-muted small"><i class="bi bi-clock-history me-1"></i>' + (busy.duration || "Custom") + '</span>' +
+                '<span class="text-teal small fw-semibold">Manage <i class="bi bi-chevron-right"></i></span>' +
+              '</div>';
+
+      html += '</div>';
+      return html;
     }
 
     function updateTodayScheduleBusyRows() {
@@ -5262,15 +5473,21 @@ First available</textarea>
       });
     });
 
-    // Conflict buttons wireup
-    document.getElementById("btnConflictChooseTime").addEventListener("click", function() {
-      openRescheduleModal("apt-2");
-    });
-    document.getElementById("btnConflictChooseProvider").addEventListener("click", function() {
-      openApproveModal("apt-2");
-      document.getElementById("approveInputProvider").value = "Jessica Needle, N.D.";
-      if (window.toast) window.toast("Switched provider to Dr. Jessica Needle, N.D. (Available at 10:00 AM).");
-    });
+    // Conflict buttons wireup (if banner present)
+    var btnConflictTime = document.getElementById("btnConflictChooseTime");
+    if (btnConflictTime) {
+      btnConflictTime.addEventListener("click", function() {
+        openRescheduleModal("apt-2");
+      });
+    }
+    var btnConflictProv = document.getElementById("btnConflictChooseProvider");
+    if (btnConflictProv) {
+      btnConflictProv.addEventListener("click", function() {
+        openApproveModal("apt-2");
+        document.getElementById("approveInputProvider").value = "Jessica Needle, N.D.";
+        if (window.toast) window.toast("Switched provider to Dr. Jessica Needle, N.D. (Available at 10:00 AM).");
+      });
+    }
 
     /**
      * Custom Healthcare SaaS Calendar Picker State & Handlers
@@ -6089,8 +6306,10 @@ First available</textarea>
     window.handleBusyDateChange = handleBusyDateChange;
     window.handleBusyTimeChange = handleBusyTimeChange;
     window.handleBusyReasonChange = handleBusyReasonChange;
+    window.handleBusyServiceChange = handleBusyServiceChange;
     window.handleBusyProviderChange = handleBusyProviderChange;
     window.setCustomSelectBusyReason = setCustomSelectBusyReason;
+    window.setCustomSelectBusyService = setCustomSelectBusyService;
     window.setCustomSelectBusyStatus = setCustomSelectBusyStatus;
     window.setCustomSelectBusyProvider = setCustomSelectBusyProvider;
     window.setCustomSelectBusyLocation = setCustomSelectBusyLocation;
