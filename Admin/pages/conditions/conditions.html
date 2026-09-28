@@ -11,6 +11,516 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../../assets/css/style.css" rel="stylesheet">
+  <style>
+    /* ========================================================
+       Conditions Management CMS Styling
+       Colors: Navy #032E49 · Teal #2F95A8 · Soft Mist #F4F8FA
+       ======================================================== */
+    :root {
+      --cond-navy: #032E49;
+      --cond-teal: #2F95A8;
+      --cond-teal-soft: rgba(47, 149, 168, 0.08);
+      --cond-bg: #F4F8FA;
+      --cond-card-bg: #FFFFFF;
+      --cond-border: #DCE7EB;
+      --cond-input-border: #D2E0E5;
+      --cond-text: #17324D;
+      --cond-muted: #657681;
+      --cond-path: #7A8A94;
+      --cond-success-bg: #EAF7F0;
+      --cond-success-text: #198754;
+      --cond-danger: #D64545;
+    }
+
+    body {
+      background-color: var(--cond-bg);
+      color: var(--cond-text);
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Page Header Area */
+    .conditions-header-area {
+      margin-bottom: 1.5rem;
+    }
+    .conditions-page-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--cond-navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .conditions-page-subtitle {
+      font-size: 0.88rem;
+      color: var(--cond-muted);
+      margin-bottom: 0;
+    }
+
+    /* Primary CTA Button */
+    .btn-add-condition {
+      background: var(--cond-teal);
+      color: #FFFFFF;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(47, 149, 168, 0.2);
+    }
+    .btn-add-condition:hover {
+      background: var(--cond-navy);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(3, 46, 73, 0.22);
+      transform: translateY(-1px);
+    }
+
+    /* Conditions Table Card Wrapper */
+    .conditions-card {
+      background: var(--cond-card-bg);
+      border: 1px solid var(--cond-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(3, 46, 73, 0.03);
+    }
+    .conditions-card-toolbar {
+      padding: 1.15rem 1.4rem;
+      border-bottom: 1px solid var(--cond-border);
+      background: #FFFFFF;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    /* Search Bar */
+    .search-input-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+    }
+    .search-input-wrap .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--cond-path);
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+    .table-search-input {
+      height: 44px;
+      border-radius: 8px;
+      border: 1px solid var(--cond-input-border);
+      background: #FFFFFF;
+      padding-left: 38px;
+      padding-right: 14px;
+      font-size: 0.88rem;
+      color: var(--cond-text);
+      transition: all 0.15s ease;
+    }
+    .table-search-input:focus {
+      border-color: var(--cond-teal);
+      box-shadow: 0 0 0 3px rgba(47, 149, 168, 0.10);
+      outline: none;
+    }
+
+    /* Table & Columns */
+    .table-responsive-cond {
+      overflow-x: auto;
+    }
+    .table-conditions {
+      width: 100%;
+      margin-bottom: 0;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .table-conditions thead th {
+      background: #F8FBFC;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6B7C87;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--cond-border);
+      border-top: none;
+      white-space: nowrap;
+    }
+    .table-conditions tbody tr {
+      height: 76px;
+      transition: background 0.15s ease;
+      border-bottom: 1px solid #EBF1F3;
+    }
+    .table-conditions tbody tr:last-child {
+      border-bottom: none;
+    }
+    .table-conditions tbody tr:hover {
+      background: #F7FBFC;
+    }
+    .table-conditions tbody td {
+      padding: 14px 20px;
+      vertical-align: middle;
+      border-top: none;
+      border-bottom: 1px solid #EBF1F3;
+    }
+    .table-conditions tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Condition Identity Column */
+    .condition-media-group {
+      display: flex;
+      align-items: center;
+      gap: 0.95rem;
+    }
+    .condition-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--cond-border);
+      box-shadow: 0 1px 3px rgba(3, 46, 73, 0.05);
+      flex-shrink: 0;
+      background: #F1F5F9;
+    }
+    .condition-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--cond-text);
+      line-height: 1.25;
+      margin-bottom: 2px;
+    }
+    .condition-path {
+      font-size: 12px;
+      color: var(--cond-path);
+      display: block;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Description Column */
+    .condition-blurb {
+      font-size: 13px;
+      color: var(--cond-muted);
+      line-height: 1.48;
+      max-width: 480px;
+      margin-bottom: 0;
+    }
+
+    /* Published Status Badge Pill */
+    .badge-published-pill {
+      background: var(--cond-success-bg);
+      color: var(--cond-success-text);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(25, 135, 84, 0.15);
+      padding: 5px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .badge-published-pill .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cond-success-text);
+      display: inline-block;
+    }
+
+    /* Modern Icon Action Buttons */
+    .actions-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.45rem;
+    }
+    .btn-action-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--cond-border);
+      background: #FFFFFF;
+      color: var(--cond-teal);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+    .btn-action-icon:hover {
+      background: #F4F8FA;
+      border-color: var(--cond-teal);
+      color: var(--cond-navy);
+      transform: translateY(-1px);
+    }
+    .btn-action-icon.danger {
+      color: var(--cond-danger);
+    }
+    .btn-action-icon.danger:hover {
+      background: #FEF2F2;
+      border-color: #F87171;
+      color: #B91C1C;
+    }
+
+    /* ========================================================
+       Edit Condition Modal Design
+       ======================================================== */
+    .modal-backdrop.show {
+      background-color: rgba(3, 46, 73, 0.58) !important;
+      backdrop-filter: blur(2px);
+    }
+    .condition-modal-dialog {
+      width: 640px;
+      max-width: calc(100vw - 32px);
+      margin: 1.75rem auto;
+    }
+    .condition-modal-content {
+      background: #FFFFFF;
+      border-radius: 14px;
+      border: 1px solid var(--cond-border);
+      box-shadow: 0 20px 60px rgba(3, 46, 73, 0.18);
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Modal Header */
+    .condition-modal-header {
+      padding: 22px 24px;
+      border-bottom: 1px solid #E5ECEF;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .condition-modal-title {
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--cond-text);
+      line-height: 1.25;
+      margin-bottom: 3px;
+    }
+    .condition-modal-subtitle {
+      font-size: 13px;
+      color: var(--cond-muted);
+    }
+    .condition-modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background-color: transparent;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.65;
+      transition: all 0.15s ease;
+      margin: -4px -4px 0 0;
+    }
+    .condition-modal-close:hover {
+      opacity: 1;
+      background-color: #F2F7F8;
+    }
+
+    /* Modal Body */
+    .condition-modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .form-label-admin {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cond-text);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .condition-input {
+      height: 46px;
+      border: 1px solid #CBDDE3;
+      border-radius: 8px;
+      padding: 0 14px;
+      font-size: 14px;
+      color: var(--cond-text);
+      transition: all 0.15s ease;
+    }
+    .condition-input:focus,
+    .condition-textarea:focus {
+      border-color: var(--cond-teal);
+      box-shadow: 0 0 0 3px rgba(47, 149, 168, 0.10);
+      outline: none;
+    }
+    .condition-textarea {
+      min-height: 100px;
+      padding: 12px 14px;
+      resize: vertical;
+      border: 1px solid #CBDDE3;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--cond-text);
+      line-height: 1.5;
+    }
+
+    /* Image Upload Box */
+    .condition-upload-box {
+      border: 1px dashed #B9DCE3;
+      background: #F7FCFD;
+      border-radius: 10px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .condition-upload-box:hover {
+      border-color: var(--cond-teal);
+      background: #F0F9FB;
+    }
+    .condition-upload-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 1.25rem;
+      align-items: center;
+    }
+    .condition-preview-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .condition-preview-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--cond-path);
+    }
+    .condition-upload-box .upload-preview {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--cond-border);
+      box-shadow: 0 1px 4px rgba(3, 46, 73, 0.08);
+      background: #FFFFFF;
+    }
+    .condition-upload-info-pane {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
+    }
+    .upload-icon-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: rgba(47, 149, 168, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--cond-teal);
+      margin-bottom: 0.25rem;
+    }
+    .btn-fake-choose {
+      background: #FFFFFF;
+      border: 1px solid #CBDDE3;
+      color: var(--cond-text);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 1px 2px rgba(3, 46, 73, 0.04);
+      pointer-events: none;
+    }
+    .condition-file-input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Modal Footer */
+    .condition-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #E5ECEF;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.65rem;
+      background: #FFFFFF;
+    }
+    .btn-condition-cancel {
+      background: #FFFFFF;
+      border: 1px solid var(--cond-navy);
+      color: var(--cond-navy);
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .btn-condition-cancel:hover {
+      background: #F4F8FA;
+    }
+    .btn-condition-save {
+      background: var(--cond-teal);
+      border: none;
+      color: #FFFFFF;
+      height: 44px;
+      padding: 0 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(47, 149, 168, 0.2);
+      cursor: pointer;
+    }
+    .btn-condition-save:hover {
+      background: var(--cond-navy);
+      box-shadow: 0 4px 12px rgba(3, 46, 73, 0.22);
+    }
+
+    @media (max-width: 576px) {
+      .condition-upload-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+      .condition-upload-box .upload-preview {
+        height: 130px;
+      }
+      .condition-modal-dialog {
+        width: calc(100vw - 24px);
+        margin: 0.75rem auto;
+      }
+      .condition-modal-footer {
+        flex-direction: column-reverse;
+      }
+      .btn-condition-cancel,
+      .btn-condition-save {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body data-page="conditions">
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
@@ -19,99 +529,328 @@
     <div class="app-main">
       <header class="topbar" id="topbar"></header>
       <main class="content">
-        <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
-          <div>
-            <p class="section-map mb-1">Frontend · conditions/*.html</p>
-            <p class="text-muted mb-0">Eight condition cards on the homepage grid.</p>
-          </div>
-          <button class="btn-btc" type="button" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-plus-lg"></i> Add condition</button>
-        </div>
-        <div class="card-admin">
-          <div class="card-body-admin">
-            <input class="form-control mb-3" style="max-width:280px" placeholder="Search conditions…" data-table-search="cond-table">
-            <div class="table-wrap">
-              <table class="table-admin" id="cond-table">
-                <thead><tr><th>Condition</th><th>Homepage blurb</th><th>Status</th><th></th></tr></thead>
-                <tbody>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" alt=""><span><strong>Diabetes</strong><small>conditions/diabetes.html</small></span></div></td>
-                    <td>Holistic therapies to support metabolism and healthy blood sugar balance.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Diabetes"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Medical-Weight-Loss.jpg" alt=""><span><strong>Obesity</strong></span></div></td>
-                    <td>Individualized medical weight loss and diet planning for lasting results.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Obesity"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Heart-Disease.jpg" alt=""><span><strong>Heart Disease</strong></span></div></td>
-                    <td>Holistic wellness plans to reduce heart disease risk and complications.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Heart Disease"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Chronic-fatigue-1.jpg" alt=""><span><strong>Chronic Fatigue</strong></span></div></td>
-                    <td>Holistic treatment for CFS and fibromyalgia that may reduce medication needs.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Chronic Fatigue"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Pain-relief-Services.jpg" alt=""><span><strong>Chronic Pain</strong></span></div></td>
-                    <td>Frequency Specific Microcurrent™ (FSM) and therapies for lasting pain relief.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Chronic Pain"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Detoxification.jpg" alt=""><span><strong>Toxins / Detoxification</strong></span></div></td>
-                    <td>Support for removing toxins that cause pain, discomfort, and ambiguous symptoms.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Toxins"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Concussion.jpg" alt=""><span><strong>Concussion</strong></span></div></td>
-                    <td>Hyperbaric oxygen therapy or FSM for brain injuries and concussions.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Concussion"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="person"><img class="thumb" src="../../../Frontend/assets/uploads/2024/08/Hormone.jpg" alt=""><span><strong>Hormone Imbalance</strong></span></div></td>
-                    <td>Holistic hormone support for men and women of all ages.</td>
-                    <td><span class="badge-admin badge-published">Published</span></td>
-                    <td><button class="icon-action" data-bs-toggle="modal" data-bs-target="#condModal"><i class="bi bi-pencil"></i></button> <button class="icon-action danger" data-delete="Hormone Imbalance"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                </tbody>
-              </table>
+
+        <!-- ========================================== -->
+        <!-- Breadcrumb & Header                        -->
+        <!-- ========================================== -->
+        <div class="conditions-header-area">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                  <li class="breadcrumb-item"><a href="../dashboard.html" class="text-muted"><i class="bi bi-grid-1x2 me-1"></i>Dashboard</a></li>
+                  <li class="breadcrumb-item text-muted">Care Operations</li>
+                  <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Conditions</li>
+                </ol>
+              </nav>
+              <h1 class="conditions-page-title">Conditions Management</h1>
+              <p class="conditions-page-subtitle">Manage condition cards, descriptions, and linked wellness pathways across the patient portal.</p>
             </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn-btc btn-add-condition" type="button" data-bs-toggle="modal" data-bs-target="#condModal">
+                <i class="bi bi-plus-lg"></i> Add condition
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- Conditions List / Table Card               -->
+        <!-- ========================================== -->
+        <div class="card-admin conditions-card">
+          <!-- Toolbar with Search -->
+          <div class="conditions-card-toolbar">
+            <div class="search-input-wrap">
+              <i class="bi bi-search search-icon"></i>
+              <input class="form-control table-search-input" placeholder="Search conditions…" data-table-search="cond-table">
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-muted border px-2.5 py-1.5 small">
+                <strong class="text-navy" data-result-count>8</strong> Conditions Listed
+              </span>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="table-wrap table-responsive-cond">
+            <table class="table-admin table-conditions" id="cond-table">
+              <thead>
+                <tr>
+                  <th style="width: 28%;">CONDITION</th>
+                  <th style="width: 44%;">DESCRIPTION</th>
+                  <th style="width: 16%;">STATUS</th>
+                  <th style="width: 12%; text-align: right;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" alt="Diabetes">
+                      <span>
+                        <strong class="condition-name">Diabetes</strong>
+                        <small class="condition-path">conditions/diabetes.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Holistic therapies to support metabolism and healthy blood sugar balance.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Diabetes" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Medical-Weight-Loss.jpg" alt="Obesity">
+                      <span>
+                        <strong class="condition-name">Obesity</strong>
+                        <small class="condition-path">conditions/obesity.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Individualized medical weight loss and diet planning for lasting results.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Obesity" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Heart-Disease.jpg" alt="Heart Disease">
+                      <span>
+                        <strong class="condition-name">Heart Disease</strong>
+                        <small class="condition-path">conditions/heart-disease.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Holistic wellness plans to reduce heart disease risk and complications.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Heart Disease" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Chronic-fatigue-1.jpg" alt="Chronic Fatigue">
+                      <span>
+                        <strong class="condition-name">Chronic Fatigue</strong>
+                        <small class="condition-path">conditions/chronic-fatigue.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Holistic treatment for CFS and fibromyalgia that may reduce medication needs.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Chronic Fatigue" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Pain-relief-Services.jpg" alt="Chronic Pain">
+                      <span>
+                        <strong class="condition-name">Chronic Pain</strong>
+                        <small class="condition-path">conditions/chronic-pain.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Frequency Specific Microcurrent™ (FSM) and therapies for lasting pain relief.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Chronic Pain" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Detoxification.jpg" alt="Toxins / Detoxification">
+                      <span>
+                        <strong class="condition-name">Toxins / Detoxification</strong>
+                        <small class="condition-path">conditions/toxins.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Support for removing toxins that cause pain, discomfort, and ambiguous symptoms.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Toxins" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Concussion.jpg" alt="Concussion">
+                      <span>
+                        <strong class="condition-name">Concussion</strong>
+                        <small class="condition-path">conditions/concussion.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Hyperbaric oxygen therapy or FSM for brain injuries and concussions.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Concussion" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="person condition-media-group">
+                      <img class="thumb condition-avatar" src="../../../Frontend/assets/uploads/2024/08/Hormone.jpg" alt="Hormone Imbalance">
+                      <span>
+                        <strong class="condition-name">Hormone Imbalance</strong>
+                        <small class="condition-path">conditions/hormone-imbalance.html</small>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="condition-blurb">Holistic hormone support for men and women of all ages.</p>
+                  </td>
+                  <td>
+                    <span class="badge-admin badge-published badge-published-pill">
+                      <span class="status-dot"></span> Published
+                    </span>
+                  </td>
+                  <td>
+                    <div class="actions-group">
+                      <button class="icon-action btn-action-icon" type="button" data-bs-toggle="modal" data-bs-target="#condModal" title="Edit Condition"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger btn-action-icon" type="button" data-delete="Hormone Imbalance" title="Delete Condition"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
     </div>
   </div>
 
-  <div class="modal fade" id="condModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header"><h5 class="modal-title">Edit condition</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-        <div class="modal-body">
-          <label class="form-label-admin">Name</label>
-          <input class="form-control mb-3" value="Diabetes">
-          <label class="form-label-admin">Card blurb</label>
-          <textarea class="form-control mb-3" rows="2">Holistic therapies to support metabolism and healthy blood sugar balance.</textarea>
-          <div class="upload-box compact">
-            <img class="upload-preview" src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" alt="">
-            <p>Replace card image</p>
-            <input type="file" accept="image/*">
+  <!-- ========================================== -->
+  <!-- Edit Condition Modal                       -->
+  <!-- ========================================== -->
+  <div class="modal fade" id="condModal" tabindex="-1" aria-labelledby="condModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered condition-modal-dialog">
+      <div class="modal-content condition-modal-content">
+        
+        <!-- Modal Header -->
+        <div class="modal-header condition-modal-header">
+          <div>
+            <h5 class="modal-title condition-modal-title" id="condModalTitle">Edit Condition</h5>
+            <p class="condition-modal-subtitle mb-0">Update the condition name, description and card image.</p>
+          </div>
+          <button type="button" class="btn-close condition-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body condition-modal-body">
+          <div class="mb-3">
+            <label class="form-label-admin">Name</label>
+            <input type="text" class="form-control condition-input" value="Diabetes" placeholder="Enter condition name">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label-admin">Card blurb</label>
+            <textarea class="form-control condition-textarea" rows="3" placeholder="Enter card description">Holistic therapies to support metabolism and healthy blood sugar balance.</textarea>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label-admin">Card Image</label>
+            <div class="upload-box condition-upload-box">
+              <div class="condition-upload-grid">
+                <div class="condition-preview-pane">
+                  <span class="condition-preview-tag">Current Image</span>
+                  <img class="upload-preview" src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" alt="Condition preview">
+                </div>
+                <div class="condition-upload-info-pane">
+                  <div class="upload-icon-circle"><i class="bi bi-cloud-arrow-up text-teal"></i></div>
+                  <strong class="d-block text-navy small mb-1">Replace card image</strong>
+                  <span class="d-block text-muted small mb-2">JPG / PNG / WebP • Recommended: 800×600</span>
+                  <div class="btn-fake-choose"><i class="bi bi-folder2-open me-1"></i> Choose Image</div>
+                </div>
+              </div>
+              <input type="file" accept="image/*" class="condition-file-input" title="Choose image file">
+            </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button class="btn-btc-outline" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn-btc" data-save="Condition saved." data-bs-dismiss="modal">Save condition</button>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer condition-modal-footer">
+          <button type="button" class="btn-btc-outline btn-condition-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn-btc btn-condition-save" data-save="Condition saved." data-bs-dismiss="modal">
+            <i class="bi bi-check-lg me-1"></i> Save condition
+          </button>
         </div>
+
       </div>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/js/script.js"></script>
 </body>

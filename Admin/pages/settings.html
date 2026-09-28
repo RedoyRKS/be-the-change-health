@@ -11,6 +11,459 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
+  <style>
+    /* ========================================================
+       Site Settings CMS - Healthcare SaaS Styling
+       Colors: Navy #032E49 · Teal #2F95A8 · Accent Mint #3BE79B
+       Background: #F4F8FA · Card: #FFFFFF · Border: #DCE7EB
+       Main Text: #173B4D · Muted: #71838C
+       ======================================================== */
+    :root {
+      --set-navy: #032E49;
+      --set-teal: #2F95A8;
+      --set-teal-hover: #267c8c;
+      --set-teal-soft: rgba(47, 149, 168, 0.08);
+      --set-mint: #3BE79B;
+      --set-bg: #F4F8FA;
+      --set-card: #FFFFFF;
+      --set-border: #DCE7EB;
+      --set-text: #173B4D;
+      --set-muted: #71838C;
+      --set-success: #198754;
+      --set-warning: #D99A00;
+    }
+
+    body {
+      background-color: var(--set-bg);
+      color: var(--set-text);
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Page Header */
+    .settings-header-area {
+      margin-bottom: 1.5rem;
+    }
+    .settings-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--set-teal);
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .settings-page-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--set-navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .settings-page-subtitle {
+      font-size: 0.88rem;
+      color: var(--set-muted);
+      margin-bottom: 0;
+    }
+
+    /* Primary CTA Button */
+    .btn-save-settings {
+      background: var(--set-teal);
+      color: #FFFFFF;
+      height: 44px;
+      padding: 0 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(47, 149, 168, 0.2);
+    }
+    .btn-save-settings:hover {
+      background: var(--set-navy);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(3, 46, 73, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* Sticky Settings Navigation Wrapper */
+    .settings-tabs-wrapper {
+      position: -webkit-sticky;
+      position: sticky;
+      top: var(--topbar-h, 68px);
+      z-index: 1000;
+      background: var(--set-bg, #F4F8FA);
+      padding-top: 8px;
+      padding-bottom: 12px;
+      margin-top: -8px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Horizontal Settings Navigation Tabs */
+    .settings-nav-scroll {
+      overflow-x: auto;
+      margin-bottom: 0;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .settings-nav-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    .settings-nav-scroll::-webkit-scrollbar-thumb {
+      background: #dce7eb;
+      border-radius: 4px;
+    }
+    .settings-nav-tabs {
+      display: flex;
+      gap: 0.45rem;
+      background: #FFFFFF;
+      padding: 0.45rem;
+      border-radius: 12px;
+      border: 1px solid var(--set-border);
+      box-shadow: 0 2px 8px rgba(3, 46, 73, 0.03);
+      width: max-content;
+      min-width: 100%;
+    }
+    .settings-tab-btn {
+      color: var(--set-muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+    .settings-tab-btn:hover {
+      color: var(--set-navy);
+      background: #F4F8FA;
+    }
+    .settings-tab-btn.active {
+      color: #FFFFFF;
+      background: var(--set-navy);
+      border-color: var(--set-navy);
+      box-shadow: 0 2px 8px rgba(3, 46, 73, 0.15);
+    }
+
+    /* Section Cards */
+    .settings-section-card {
+      background: var(--set-card);
+      border: 1px solid var(--set-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 10px rgba(3, 46, 73, 0.03);
+      margin-bottom: 24px;
+      scroll-margin-top: 145px;
+    }
+    .settings-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--set-border);
+    }
+    .settings-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--set-navy);
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .settings-card-subtitle {
+      font-size: 0.82rem;
+      color: var(--set-muted);
+      margin-bottom: 0;
+    }
+
+    /* Form Design */
+    .form-label-admin {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--set-text);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-control,
+    .form-select {
+      height: 46px;
+      border: 1px solid var(--set-border);
+      border-radius: 8px;
+      padding: 0 14px;
+      font-size: 14px;
+      color: var(--set-text);
+      background-color: #FFFFFF;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    textarea.form-control {
+      height: auto;
+      min-height: 96px;
+      padding: 12px 14px;
+      line-height: 1.55;
+    }
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--set-teal);
+      box-shadow: 0 0 0 3px rgba(47, 149, 168, 0.12);
+      outline: none;
+    }
+    .form-helper-text {
+      font-size: 12px;
+      color: var(--set-muted);
+      margin-top: 4px;
+    }
+
+    /* Color Swatch Controls */
+    .color-token-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+    }
+    .color-swatch-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      border: 1px solid var(--set-border);
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+    }
+
+    /* Hours Schedule Row */
+    .hours-schedule-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr;
+      gap: 0.75rem;
+      align-items: center;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      background: #FAFDFE;
+      border: 1px solid #EBF3F5;
+      margin-bottom: 0.6rem;
+      transition: background 0.15s ease;
+    }
+    .hours-schedule-row:hover {
+      background: #F4FAFC;
+    }
+
+    /* Upload Box & Branding */
+    .upload-box.compact {
+      border: 1px dashed #B9DCE3;
+      background: #F7FCFD;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .upload-box.compact:hover {
+      border-color: var(--set-teal);
+      background: #F0F9FB;
+    }
+    .upload-box .upload-preview {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--set-border);
+      background: #FFFFFF;
+      box-shadow: 0 1px 4px rgba(3, 46, 73, 0.08);
+      flex-shrink: 0;
+    }
+    .upload-box input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 5;
+    }
+    .btn-fake-upload {
+      background: #FFFFFF;
+      border: 1px solid #CBDDE3;
+      color: var(--set-text);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      pointer-events: none;
+    }
+
+    /* Logo Preview Box */
+    .logo-preview-card {
+      border: 1px dashed #B9DCE3;
+      background: #FFFFFF;
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 110px;
+      margin-bottom: 0.75rem;
+    }
+    .logo-preview-img {
+      max-height: 60px;
+      max-width: 220px;
+      object-fit: contain;
+    }
+
+    /* Switch / Checkbox Row */
+    .flag-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #EBF1F3;
+      background: #FFFFFF;
+      margin-bottom: 0.65rem;
+      transition: background 0.15s ease;
+    }
+    .flag-toggle-row:hover {
+      background: #F8FBFC;
+    }
+    .flag-label-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .flag-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--set-text);
+    }
+    .flag-desc {
+      font-size: 12px;
+      color: var(--set-muted);
+    }
+    .form-check-input {
+      width: 2.25rem;
+      height: 1.25rem;
+      cursor: pointer;
+    }
+    .form-check-input:checked {
+      background-color: var(--set-teal);
+      border-color: var(--set-teal);
+    }
+
+    /* User Avatar & Admin Card */
+    .admin-user-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid #EBF1F3;
+      background: #FFFFFF;
+      margin-bottom: 0.65rem;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--set-navy);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* Right Sticky Sidebar */
+    .settings-sidebar-sticky {
+      position: sticky;
+      top: 145px;
+      z-index: 90;
+    }
+    .sidebar-widget-card {
+      background: #FFFFFF;
+      border: 1px solid var(--set-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 10px rgba(3, 46, 73, 0.03);
+      margin-bottom: 1.25rem;
+    }
+    .widget-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--set-navy);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    /* Status Checklist Items */
+    .status-check-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.82rem;
+    }
+    .status-check-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    /* Sticky Bottom Actions Bar */
+    .sticky-actions-settings {
+      position: sticky;
+      bottom: 0;
+      z-index: 1020;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--set-border);
+      padding: 0.95rem 1.6rem;
+      margin: 2rem -1.6rem -5.5rem -1.6rem;
+      box-shadow: 0 -4px 16px rgba(0, 48, 72, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .hours-schedule-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .sticky-actions-settings {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .sticky-actions-settings .d-flex {
+        flex-direction: column;
+      }
+      .btn-save-settings {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body data-page="settings">
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
@@ -19,81 +472,587 @@
     <div class="app-main">
       <header class="topbar" id="topbar"></header>
       <main class="content">
+
+        <!-- ========================================== -->
+        <!-- Breadcrumb & Header                        -->
+        <!-- ========================================== -->
+        <div class="settings-header-area">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                  <li class="breadcrumb-item"><a href="dashboard.html" class="text-muted"><i class="bi bi-grid-1x2 me-1"></i>Dashboard</a></li>
+                  <li class="breadcrumb-item text-muted">Site</li>
+                  <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Site Settings</li>
+                </ol>
+              </nav>
+              <div class="settings-eyebrow">
+                <i class="bi bi-sliders"></i> Site Configuration
+              </div>
+              <h1 class="settings-page-title">Site Settings</h1>
+              <p class="settings-page-subtitle">Manage your website information, branding, contact details and system preferences.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn-save-settings" type="button" data-save="Site settings saved.">
+                <i class="bi bi-cloud-check me-1"></i> Save Settings
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- Settings Horizontal Navigation Tabs        -->
+        <!-- ========================================== -->
+        <div class="settings-tabs-wrapper">
+          <nav class="settings-nav-scroll" id="settingsTabsNav">
+            <div class="settings-nav-tabs">
+              <a href="#sec-general" class="settings-tab-btn active"><i class="bi bi-globe me-1"></i> General</a>
+              <a href="#sec-contact" class="settings-tab-btn"><i class="bi bi-telephone me-1"></i> Contact Info</a>
+              <a href="#sec-hours" class="settings-tab-btn"><i class="bi bi-clock me-1"></i> Location &amp; Hours</a>
+              <a href="#sec-branding" class="settings-tab-btn"><i class="bi bi-palette me-1"></i> Branding</a>
+              <a href="#sec-seo" class="settings-tab-btn"><i class="bi bi-search me-1"></i> SEO Settings</a>
+              <a href="#sec-social" class="settings-tab-btn"><i class="bi bi-share me-1"></i> Social &amp; Links</a>
+              <a href="#sec-integrations" class="settings-tab-btn"><i class="bi bi-toggles me-1"></i> Feature Flags</a>
+              <a href="#sec-advanced" class="settings-tab-btn"><i class="bi bi-shield-lock me-1"></i> Admin Users</a>
+            </div>
+          </nav>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- Main 2-Column Layout                       -->
+        <!-- Left: ~70% Settings Cards                  -->
+        <!-- Right: ~30% Sticky Preview & Status        -->
+        <!-- ========================================== -->
         <div class="row g-4">
-          <div class="col-lg-7">
-            <div class="card-admin mb-4">
-              <div class="card-head"><div><h2>Practice identity</h2></div></div>
-              <div class="card-body-admin">
-                <label class="form-label-admin">Practice name</label>
-                <input class="form-control mb-3" value="Be The Change Health & Wellness Center">
-                <label class="form-label-admin">Favicon</label>
-                <div class="upload-box compact mb-3">
-                  <img class="upload-preview" src="../../Frontend/assets/uploads/2025/02/fav.jpg" alt="Favicon">
-                  <input type="file" accept="image/*">
+
+          <!-- Left Column: Settings Sections (~70%) -->
+          <div class="col-lg-8">
+
+            <!-- 1. GENERAL SETTINGS -->
+            <section id="sec-general" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-info-circle text-teal"></i> Website Information</h2>
+                  <p class="settings-card-subtitle">Basic information displayed throughout the website.</p>
                 </div>
+                <span class="badge bg-light text-primary border">Core Settings</span>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label-admin">Practice Name</label>
+                  <input class="form-control" value="Be The Change Health &amp; Wellness Center">
+                  <div class="form-helper-text">Official clinic title displayed in headers and footer.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Tagline / Motto</label>
+                  <input class="form-control" value="Integrative &amp; Functional Medicine in Columbia, MD">
+                  <div class="form-helper-text">Subtitle phrase shown below logo and search meta.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Website URL</label>
+                  <input class="form-control" value="https://bethechangehealth.com">
+                  <div class="form-helper-text">Primary canonical production domain.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Practice Type</label>
+                  <input class="form-control" value="Integrative Family Practice &amp; Naturopathic Clinic">
+                  <div class="form-helper-text">Healthcare operational classification.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label-admin">About Website / Clinic Statement</label>
+                  <textarea class="form-control" rows="3">Family Practice &amp; Integrative Medicine in Columbia, MD. Get to the root cause of your health concerns with functional lab testing and a personalized plan.</textarea>
+                  <div class="form-helper-text">Primary mission statement displayed on site overviews.</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 2. CONTACT INFORMATION -->
+            <section id="sec-contact" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-telephone text-teal"></i> Contact Information</h2>
+                  <p class="settings-card-subtitle">Primary contact details for patient inquiries and clinic communications.</p>
+                </div>
+                <span class="badge bg-light text-muted border">Public Contact</span>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label-admin">Primary Office Phone</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-telephone"></i></span>
+                    <input class="form-control border-start-0" value="301-970-9724">
+                  </div>
+                  <div class="form-helper-text">Main clinic line for appointments and inquiries.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Primary Inquiries Email</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                    <input class="form-control border-start-0" value="info@bethechangehealth.com">
+                  </div>
+                  <div class="form-helper-text">Patient intake and general messaging address.</div>
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label-admin">Street Address</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-geo-alt"></i></span>
+                    <input class="form-control border-start-0" value="8808 Centre Park Drive, Suite 301">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label-admin">City</label>
+                  <input class="form-control" value="Columbia">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label-admin">State</label>
+                  <input class="form-control" value="MD">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label-admin">ZIP / Postal Code</label>
+                  <input class="form-control" value="21045">
+                </div>
+              </div>
+            </section>
+
+            <!-- 3. LOCATION & HOURS -->
+            <section id="sec-hours" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-clock text-teal"></i> Location &amp; Business Hours</h2>
+                  <p class="settings-card-subtitle">Office physical location query and patient clinic schedule.</p>
+                </div>
+                <span class="badge bg-light text-muted border">Office Schedule</span>
+              </div>
+              <div class="mb-4">
+                <label class="form-label-admin">Map Query / Embed Address</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-pin-map"></i></span>
+                  <input class="form-control border-start-0" value="8808 Centre Park Dr Suite 301 Columbia MD 21045">
+                </div>
+                <div class="form-helper-text">Used for interactive directions and Google Maps routing.</div>
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label-admin mb-2">Weekly Office Operating Schedule</label>
+                <div class="hours-row hours-schedule-row">
+                  <input class="form-control fw-semibold" value="Monday – Friday" title="Days">
+                  <input class="form-control" value="9am" placeholder="Opening Time" title="Opens">
+                  <input class="form-control" value="6pm" placeholder="Closing Time" title="Closes">
+                </div>
+                <div class="hours-row hours-schedule-row">
+                  <input class="form-control fw-semibold" value="Saturday" title="Days">
+                  <input class="form-control text-muted" value="Closed" placeholder="Status" title="Opens">
+                  <input class="form-control" value="" placeholder="Closed" title="Closes">
+                </div>
+                <div class="hours-row hours-schedule-row">
+                  <input class="form-control fw-semibold" value="Sunday" title="Days">
+                  <input class="form-control text-muted" value="Closed" placeholder="Status" title="Opens">
+                  <input class="form-control" value="" placeholder="Closed" title="Closes">
+                </div>
+              </div>
+            </section>
+
+            <!-- 4. BRAND IDENTITY -->
+            <section id="sec-branding" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-palette text-teal"></i> Brand Identity</h2>
+                  <p class="settings-card-subtitle">Manage practice logo, website favicon, and brand color palette.</p>
+                </div>
+                <span class="badge bg-light text-muted border">Visual Identity</span>
+              </div>
+
+              <!-- Logo & Favicon row -->
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label-admin">Practice Primary Logo</label>
+                  <div class="logo-preview-card">
+                    <img class="logo-preview-img" src="../../Frontend/assets/uploads/2024/08/LOGO.jpg" alt="Logo preview" onerror="this.src='https://be-the-change-health.vercel.app/assets/uploads/2024/08/LOGO.jpg'">
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="small text-muted">Dimensions: 528×140 px</span>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle">Active</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Website Favicon</label>
+                  <div class="upload-box compact">
+                    <img class="upload-preview" src="../../Frontend/assets/uploads/2025/02/fav.jpg" alt="Favicon">
+                    <div class="d-flex flex-column gap-1">
+                      <span class="small fw-semibold text-navy">Replace Favicon Icon</span>
+                      <span class="btn-fake-upload"><i class="bi bi-folder2-open me-1"></i> Choose Image</span>
+                    </div>
+                    <input type="file" accept="image/*" title="Choose favicon image">
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                    <span class="small text-muted">Format: PNG, ICO, JPG (32×32)</span>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle">Active</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Brand Color Palette -->
+              <div>
+                <label class="form-label-admin mb-2">Brand Palette Tokens</label>
                 <div class="row g-3">
-                  <div class="col-md-4"><label class="form-label-admin">Navy</label><input class="form-control" value="#003048"></div>
-                  <div class="col-md-4"><label class="form-label-admin">Teal</label><input class="form-control" value="#308ca0"></div>
-                  <div class="col-md-4"><label class="form-label-admin">Accent green</label><input class="form-control" value="#a2c08a"></div>
+                  <div class="col-md-4">
+                    <label class="small text-muted mb-1">Navy (Primary)</label>
+                    <div class="color-token-wrap">
+                      <div class="color-swatch-box" style="background: #003048;"></div>
+                      <input class="form-control" value="#003048">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small text-muted mb-1">Teal (Secondary)</label>
+                    <div class="color-token-wrap">
+                      <div class="color-swatch-box" style="background: #308ca0;"></div>
+                      <input class="form-control" value="#308ca0">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="small text-muted mb-1">Accent Green</label>
+                    <div class="color-token-wrap">
+                      <div class="color-swatch-box" style="background: #a2c08a;"></div>
+                      <input class="form-control" value="#a2c08a">
+                    </div>
+                  </div>
                 </div>
-                <p class="help mt-2">These tokens match Frontend/assets/css/theme.css. Changing them here is CMS-only until publish.</p>
+                <p class="help form-helper-text mt-3">These tokens match Frontend/assets/css/theme.css. Changing them here is CMS-only until publish.</p>
               </div>
-            </div>
-            <div class="card-admin">
-              <div class="card-head"><div><h2>Office &amp; hours</h2></div></div>
-              <div class="card-body-admin">
-                <label class="form-label-admin">Map query</label>
-                <input class="form-control mb-3" value="8808 Centre Park Dr Suite 301 Columbia MD 21045">
-                <div class="hours-row">
-                  <input class="form-control" value="Monday – Friday">
-                  <input class="form-control" value="9am">
-                  <input class="form-control" value="6pm">
+            </section>
+
+            <!-- 5. DEFAULT SEO SETTINGS -->
+            <section id="sec-seo" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-search text-teal"></i> Default SEO Settings</h2>
+                  <p class="settings-card-subtitle">Global fallback metadata and search engine indexing directives.</p>
                 </div>
-                <div class="hours-row">
-                  <input class="form-control" value="Saturday">
-                  <input class="form-control" value="Closed">
-                  <input class="form-control" value="">
+                <span class="badge bg-light text-muted border">Global SEO</span>
+              </div>
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label class="form-label-admin mb-0">Default Meta Title</label>
+                    <span class="small text-muted">Recommended: 50–60 characters</span>
+                  </div>
+                  <input class="form-control" value="Be The Change Health &amp; Wellness Center | Columbia, MD">
                 </div>
-                <div class="hours-row">
-                  <input class="form-control" value="Sunday">
-                  <input class="form-control" value="Closed">
-                  <input class="form-control" value="">
+                <div class="col-12">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label class="form-label-admin mb-0">Default Meta Description</label>
+                    <span class="small text-muted">Recommended: 150–160 characters</span>
+                  </div>
+                  <textarea class="form-control" rows="3">Family Practice &amp; Integrative Medicine in Columbia, MD. Get to the root cause of your health concerns with functional lab testing and a personalized plan.</textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Default Meta Keywords</label>
+                  <input class="form-control" value="integrative medicine, functional medicine, columbia md, osteopathic physician">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Default Social Share Image</label>
+                  <input class="form-control" value="assets/uploads/2024/08/approach.jpg">
                 </div>
               </div>
+            </section>
+
+            <!-- 6. SOCIAL MEDIA & LINKS -->
+            <section id="sec-social" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-share text-teal"></i> Social Media &amp; Links</h2>
+                  <p class="settings-card-subtitle">Official social media profiles and public directory links.</p>
+                </div>
+                <span class="badge bg-light text-muted border">Public Channels</span>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label-admin">Facebook</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-facebook"></i></span>
+                    <input class="form-control border-start-0" value="https://facebook.com/bethechangehealth">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">Instagram</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-instagram"></i></span>
+                    <input class="form-control border-start-0" value="https://instagram.com/bethechangehealth">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">LinkedIn</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-linkedin"></i></span>
+                    <input class="form-control border-start-0" value="https://linkedin.com/company/be-the-change-health">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-admin">YouTube</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-youtube"></i></span>
+                    <input class="form-control border-start-0" value="https://youtube.com/@bethechangehealth">
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 7. FEATURE FLAGS & INTEGRATIONS -->
+            <section id="sec-integrations" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-toggles text-teal"></i> Feature Flags &amp; Integrations</h2>
+                  <p class="settings-card-subtitle">System feature toggles, communication gateways, and clinical flags.</p>
+                </div>
+                <span class="badge bg-light text-muted border">Toggles</span>
+              </div>
+              <div class="mb-4">
+                <div class="flag-toggle-row">
+                  <div class="flag-label-wrap">
+                    <span class="flag-title">Telehealth available</span>
+                    <span class="flag-desc">Display telehealth appointment scheduling badges across doctor cards.</span>
+                  </div>
+                  <label class="form-check m-0">
+                    <input class="form-check-input" type="checkbox" checked>
+                  </label>
+                </div>
+                <div class="flag-toggle-row">
+                  <div class="flag-label-wrap">
+                    <span class="flag-title">Show out-of-network notice</span>
+                    <span class="flag-desc">Present transparent insurance superbill explanation on checkout &amp; intake.</span>
+                  </div>
+                  <label class="form-check m-0">
+                    <input class="form-check-input" type="checkbox" checked>
+                  </label>
+                </div>
+                <div class="flag-toggle-row">
+                  <div class="flag-label-wrap">
+                    <span class="flag-title">Newsletter ion-cleanse offer</span>
+                    <span class="flag-desc">Activate seasonal ion foot detox promotional modal for subscribers.</span>
+                  </div>
+                  <label class="form-check m-0">
+                    <input class="form-check-input" type="checkbox" checked>
+                  </label>
+                </div>
+                <div class="flag-toggle-row">
+                  <div class="flag-label-wrap">
+                    <span class="flag-title">Book Appointment CTA in header</span>
+                    <span class="flag-desc">Show primary booking button prominently in the top website navigation.</span>
+                  </div>
+                  <label class="form-check m-0">
+                    <input class="form-check-input" type="checkbox" checked>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Integrations Status -->
+              <div>
+                <label class="form-label-admin mb-2">Clinical Gateways &amp; Dispatch Status</label>
+                <div class="row g-2">
+                  <div class="col-md-4">
+                    <div class="p-2.5 rounded border bg-light d-flex align-items-center justify-content-between">
+                      <span class="small fw-semibold text-navy"><i class="bi bi-chat-dots text-teal me-1"></i> SMS Gateway</span>
+                      <span class="badge bg-success-subtle text-success small">Connected</span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="p-2.5 rounded border bg-light d-flex align-items-center justify-content-between">
+                      <span class="small fw-semibold text-navy"><i class="bi bi-envelope-check text-teal me-1"></i> SMTP Relay</span>
+                      <span class="badge bg-success-subtle text-success small">Connected</span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="p-2.5 rounded border bg-light d-flex align-items-center justify-content-between">
+                      <span class="small fw-semibold text-navy"><i class="bi bi-database-check text-teal me-1"></i> Local Storage</span>
+                      <span class="badge bg-success-subtle text-success small">Active</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 8. ADMIN USERS & ACCESS -->
+            <section id="sec-advanced" class="settings-section-card">
+              <div class="settings-card-head">
+                <div>
+                  <h2 class="settings-card-title"><i class="bi bi-shield-lock text-teal"></i> Admin Users &amp; Roles</h2>
+                  <p class="settings-card-subtitle">Manage authorized clinical administrators and editorial access.</p>
+                </div>
+                <span class="badge bg-light text-muted border">2 Active Admins</span>
+              </div>
+              <div class="mb-4">
+                <div class="admin-user-row">
+                  <div class="d-flex align-items-center gap-2.5">
+                    <span class="user-avatar">SA</span>
+                    <div>
+                      <strong class="d-block text-navy" style="font-size: 14px;">Sultana Afrooz, D.O.</strong>
+                      <small class="text-muted">Practice Administrator · Full System Privileges</small>
+                    </div>
+                  </div>
+                  <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1">Practice Admin</span>
+                </div>
+                <div class="admin-user-row">
+                  <div class="d-flex align-items-center gap-2.5">
+                    <span class="user-avatar" style="background: var(--set-teal);">JN</span>
+                    <div>
+                      <strong class="d-block text-navy" style="font-size: 14px;">Jessica Needle, N.D.</strong>
+                      <small class="text-muted">Clinical Editor · Content &amp; Media Authoring</small>
+                    </div>
+                  </div>
+                  <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2.5 py-1">Editor</span>
+                </div>
+              </div>
+
+              <!-- Maintenance / Dangerous zone -->
+              <div class="p-3 bg-light rounded-3 border">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong class="d-block text-navy small">System Cache &amp; Re-indexing</strong>
+                    <span class="text-muted small">Flush local temporary assets or rebuild search directory indexes.</span>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="alert('System cache flushed successfully.')">
+                    <i class="bi bi-arrow-repeat me-1"></i> Flush Cache
+                  </button>
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Right Column: Sticky Sidebar (~30%) -->
+          <div class="col-lg-4">
+            <div class="settings-sidebar-sticky">
+
+              <!-- CARD 1: Website Preview -->
+              <div class="sidebar-widget-card">
+                <div class="widget-title">
+                  <i class="bi bi-display text-teal"></i> Website Preview
+                </div>
+                <div class="p-3 rounded border bg-light mb-3">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <img src="../../Frontend/assets/uploads/2024/08/LOGO.jpg" alt="Logo" style="height: 28px; object-fit: contain;" onerror="this.src='https://be-the-change-health.vercel.app/assets/uploads/2024/08/LOGO.jpg'">
+                    <span class="badge bg-success-subtle text-success small">Live</span>
+                  </div>
+                  <strong class="d-block text-navy" style="font-size: 13.5px;">Be The Change Health &amp; Wellness Center</strong>
+                  <span class="d-block text-muted small mb-2">Integrative Family Medicine · Columbia, MD</span>
+                  <div class="small text-muted pt-2 border-top">
+                    <div class="mb-1"><i class="bi bi-geo-alt me-1 text-teal"></i> 8808 Centre Park Dr Suite 301</div>
+                    <div><i class="bi bi-telephone me-1 text-teal"></i> 301-970-9724</div>
+                  </div>
+                </div>
+                <a href="../../Frontend/index.html" target="_blank" class="btn btn-sm btn-outline-secondary w-100">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> View Live Website
+                </a>
+              </div>
+
+              <!-- CARD 2: Configuration Status -->
+              <div class="sidebar-widget-card">
+                <div class="widget-title">
+                  <i class="bi bi-check2-circle text-teal"></i> Configuration Status
+                </div>
+                <div class="status-check-item">
+                  <span class="text-muted">Website Information:</span>
+                  <span class="fw-semibold text-success"><i class="bi bi-check-circle-fill me-1"></i> Configured</span>
+                </div>
+                <div class="status-check-item">
+                  <span class="text-muted">Contact Information:</span>
+                  <span class="fw-semibold text-success"><i class="bi bi-check-circle-fill me-1"></i> Configured</span>
+                </div>
+                <div class="status-check-item">
+                  <span class="text-muted">Location &amp; Hours:</span>
+                  <span class="fw-semibold text-success"><i class="bi bi-check-circle-fill me-1"></i> Configured</span>
+                </div>
+                <div class="status-check-item">
+                  <span class="text-muted">Branding &amp; Favicon:</span>
+                  <span class="fw-semibold text-success"><i class="bi bi-check-circle-fill me-1"></i> Configured</span>
+                </div>
+                <div class="status-check-item">
+                  <span class="text-muted">Social Media Links:</span>
+                  <span class="fw-semibold text-success"><i class="bi bi-check-circle-fill me-1"></i> Configured</span>
+                </div>
+                <div class="status-check-item">
+                  <span class="text-muted">Security &amp; Admin Users:</span>
+                  <span class="fw-semibold text-success"><i class="bi bi-check-circle-fill me-1"></i> 2 Verified</span>
+                </div>
+              </div>
+
+              <!-- CARD 3: Quick Tips -->
+              <div class="sidebar-widget-card">
+                <div class="widget-title">
+                  <i class="bi bi-lightbulb text-warning"></i> Quick Tips
+                </div>
+                <div class="d-flex align-items-start gap-2 mb-2 pb-2 border-bottom">
+                  <i class="bi bi-check2 text-teal mt-0.5"></i>
+                  <span class="small text-muted">Keep office phone and inquiry email synchronized for automated patient routing.</span>
+                </div>
+                <div class="d-flex align-items-start gap-2 mb-2 pb-2 border-bottom">
+                  <i class="bi bi-check2 text-teal mt-0.5"></i>
+                  <span class="small text-muted">Ensure high-contrast PNG or SVG formats when updating the clinic header logo.</span>
+                </div>
+                <div class="d-flex align-items-start gap-2">
+                  <i class="bi bi-check2 text-teal mt-0.5"></i>
+                  <span class="small text-muted">Verify out-of-network superbill disclaimers periodically with Maryland guidelines.</span>
+                </div>
+              </div>
+
             </div>
           </div>
-          <div class="col-lg-5">
-            <div class="card-admin mb-4">
-              <div class="card-head"><div><h2>Flags</h2></div></div>
-              <div class="card-body-admin">
-                <label class="form-check mb-2"><input class="form-check-input" type="checkbox" checked> Telehealth available</label>
-                <label class="form-check mb-2"><input class="form-check-input" type="checkbox" checked> Show out-of-network notice</label>
-                <label class="form-check mb-2"><input class="form-check-input" type="checkbox" checked> Newsletter ion-cleanse offer</label>
-                <label class="form-check"><input class="form-check-input" type="checkbox" checked> Book Appointment CTA in header</label>
-              </div>
-            </div>
-            <div class="card-admin">
-              <div class="card-head"><div><h2>Admin users</h2></div></div>
-              <div class="card-body-admin">
-                <div class="d-flex align-items-center gap-2 mb-3">
-                  <span class="user-avatar">SA</span>
-                  <div><strong>Sultana Afrooz</strong><br><small class="text-muted">Practice Admin</small></div>
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                  <span class="user-avatar">JN</span>
-                  <div><strong>Jessica Needle</strong><br><small class="text-muted">Editor</small></div>
-                </div>
-              </div>
-            </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- Sticky Bottom Action Bar                   -->
+        <!-- ========================================== -->
+        <div class="sticky-actions-settings sticky-actions">
+          <div>
+            <span class="text-muted small"><i class="bi bi-clock-history me-1"></i> All settings up to date</span>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" type="button" onclick="location.reload()">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+            </button>
+            <button class="btn-btc btn-save-settings" type="button" data-save="Site settings saved.">
+              <i class="bi bi-cloud-check me-1"></i> Save settings
+            </button>
           </div>
         </div>
-        <div class="sticky-actions">
-          <button class="btn-btc" type="button" data-save="Site settings saved.">Save settings</button>
-        </div>
+
       </main>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/script.js"></script>
+  <script>
+    (function () {
+      // Smooth navigation tab highlighting
+      var tabLinks = document.querySelectorAll('.settings-tab-btn');
+      tabLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          tabLinks.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+        });
+      });
+
+      // Update active tab on scroll
+      var sections = document.querySelectorAll('.settings-section-card');
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var id = entry.target.getAttribute('id');
+              tabLinks.forEach(function (l) {
+                if (l.getAttribute('href') === '#' + id) {
+                  tabLinks.forEach(function (other) { other.classList.remove('active'); });
+                  l.classList.add('active');
+                }
+              });
+            }
+          });
+        }, { threshold: 0.3 });
+        sections.forEach(function (sec) { observer.observe(sec); });
+      }
+    })();
+  </script>
 </body>
 </html>

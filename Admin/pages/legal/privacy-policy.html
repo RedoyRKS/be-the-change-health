@@ -12,77 +12,348 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../../assets/css/style.css" rel="stylesheet">
   <style>
-    .jump-nav {
-      position: sticky;
-      top: 70px;
-      z-index: 95;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 0.65rem 1rem;
+    /* ========================================================
+       Legal CMS Pages - Healthcare SaaS CMS Styling
+       Colors: Navy #032E49 · Teal #2F95A8 · Soft Mist #F4F8FA
+       ======================================================== */
+    :root {
+      --legal-navy: #032E49;
+      --legal-teal: #2F95A8;
+      --legal-teal-soft: rgba(47, 149, 168, 0.08);
+      --legal-bg: #F4F8FA;
+      --legal-card-bg: #FFFFFF;
+      --legal-border: #DCE7EB;
+      --legal-input-border: #CBDDE3;
+      --legal-text: #17324D;
+      --legal-muted: #6B7C87;
+      --legal-success: #198754;
+      --legal-warning: #D99A00;
+    }
+
+    body {
+      background-color: var(--legal-bg);
+      color: var(--legal-text);
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Page Header */
+    .legal-header-area {
       margin-bottom: 1.5rem;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+    .legal-page-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--legal-navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .legal-page-subtitle {
+      font-size: 0.88rem;
+      color: var(--legal-muted);
+      margin-bottom: 0;
+    }
+
+    /* Cards */
+    .card-admin {
+      background: var(--legal-card-bg);
+      border: 1px solid var(--legal-border);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(3, 46, 73, 0.03);
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.2s ease;
+    }
+    .card-admin .card-head {
       display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-      white-space: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.15rem 1.4rem;
+      border-bottom: 1px solid var(--legal-border);
     }
-    .jump-nav a {
-      color: #64748b;
-      font-size: 0.825rem;
-      font-weight: 500;
-      padding: 0.35rem 0.75rem;
+    .card-admin .card-head h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--legal-navy);
+      letter-spacing: -0.01em;
+    }
+    .card-admin .card-head p {
+      margin: 0.2rem 0 0;
+      font-size: 0.82rem;
+      color: var(--legal-muted);
+    }
+    .card-body-admin {
+      padding: 1.4rem;
+    }
+
+    /* Form Controls */
+    .form-label-admin {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--legal-text);
+      margin-bottom: 0.45rem;
+    }
+    .form-control,
+    .form-select {
+      border: 1px solid var(--legal-input-border);
       border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-    .jump-nav a:hover {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
-    .repeater-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 1.1rem;
-      margin-bottom: 1rem;
+      font-size: 0.88rem;
+      color: var(--legal-text);
+      background-color: #ffffff;
+      padding: 0.65rem 0.85rem;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--legal-teal);
+      box-shadow: 0 0 0 3px rgba(47, 149, 168, 0.14);
+      outline: 0;
+    }
+    input.form-control, select.form-select {
+      height: 46px;
+    }
+    textarea.form-control {
+      min-height: 100px;
+      line-height: 1.6;
+    }
+    .char-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: var(--legal-muted);
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Section Repeater Cards */
+    .repeater-card {
+      background: #ffffff;
+      border: 1px solid var(--legal-border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin-bottom: 1.15rem;
+      box-shadow: 0 2px 6px rgba(3, 46, 73, 0.02);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
     .repeater-card:hover {
-      border-color: #cbd5e1;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      border-color: #cbdde3;
+      box-shadow: 0 4px 14px rgba(3, 46, 73, 0.06);
     }
     .card-handle {
       cursor: grab;
       color: #94a3b8;
-      font-size: 1.1rem;
-      margin-right: 0.5rem;
+      font-size: 1.15rem;
+      margin-right: 0.6rem;
+      transition: color 0.15s ease;
     }
+    .card-handle:hover {
+      color: var(--legal-teal);
+    }
+
+    /* Sticky On This Page Sidebar */
+    .legal-sidebar-sticky {
+      position: sticky;
+      top: 86px;
+      z-index: 90;
+    }
+    .on-page-nav-card {
+      background: #ffffff;
+      border: 1px solid var(--legal-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 10px rgba(3, 46, 73, 0.03);
+      margin-bottom: 1.25rem;
+    }
+    .on-page-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--legal-navy);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .legal-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.6rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: #475569;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      margin-bottom: 0.25rem;
+    }
+    .legal-nav-link i {
+      font-size: 0.95rem;
+      color: var(--legal-teal);
+      transition: transform 0.15s ease;
+    }
+    .legal-nav-link:hover {
+      background: var(--legal-teal-soft);
+      color: var(--legal-navy);
+      transform: translateX(3px);
+    }
+    .legal-nav-link:hover i {
+      transform: scale(1.1);
+    }
+
+    /* Document Metadata Card */
+    .doc-meta-card {
+      background: #ffffff;
+      border: 1px solid var(--legal-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 10px rgba(3, 46, 73, 0.03);
+      margin-bottom: 1.25rem;
+    }
+    .doc-meta-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--legal-navy);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .doc-meta-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.82rem;
+    }
+    .doc-meta-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .doc-meta-lbl {
+      color: var(--legal-muted);
+      font-weight: 500;
+    }
+    .doc-meta-val {
+      font-weight: 600;
+      color: var(--legal-text);
+    }
+
+    /* Callout Notice Box */
+    .legal-callout-box {
+      background: #f8fafc;
+      border: 1px solid var(--legal-border);
+      border-left: 3px solid var(--legal-teal);
+      border-radius: 8px;
+      padding: 1rem 1.15rem;
+      font-size: 0.82rem;
+      color: #334155;
+      line-height: 1.55;
+    }
+
+    /* SERP Google Preview Card */
     .serp-preview {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
+      border: 1px solid var(--legal-border);
       border-radius: 10px;
-      padding: 1.25rem;
+      padding: 1.15rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      font-family: Arial, sans-serif;
+    }
+    .serp-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 0.35rem;
+    }
+    .serp-favicon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--legal-teal);
+      flex-shrink: 0;
+    }
+    .serp-source {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .serp-site-name {
+      font-size: 0.78rem;
+      color: #202124;
+      font-weight: 500;
+    }
+    .serp-url {
+      color: #5f6368;
+      font-size: 0.73rem;
+      word-break: break-all;
     }
     .serp-title {
       color: #1a0dab;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 500;
       cursor: pointer;
-      line-height: 1.3;
-      margin-bottom: 0.2rem;
+      line-height: 1.35;
+      margin-bottom: 0.3rem;
+      text-decoration: none;
     }
-    .serp-url {
-      color: #006621;
-      font-size: 0.85rem;
-      line-height: 1.4;
-      margin-bottom: 0.35rem;
+    .serp-title:hover {
+      text-decoration: underline;
     }
     .serp-desc {
       color: #4d5156;
-      font-size: 0.875rem;
+      font-size: 0.83rem;
       line-height: 1.5;
       margin-bottom: 0;
+    }
+
+    /* Buttons */
+    .btn-btc {
+      background: var(--legal-navy);
+      color: #ffffff;
+      height: 44px;
+      padding: 0 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-btc:hover {
+      background: var(--legal-teal);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(47, 149, 168, 0.25);
+    }
+
+    /* Sticky Bottom Actions Bar */
+    .sticky-actions-legal {
+      position: sticky;
+      bottom: 0;
+      z-index: 1020;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--legal-border);
+      padding: 0.95rem 1.6rem;
+      margin: 2rem -1.6rem -5.5rem -1.6rem;
+      box-shadow: 0 -4px 16px rgba(0, 48, 72, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
   </style>
 </head>
@@ -93,168 +364,260 @@
     <div class="app-main">
       <header class="topbar" id="topbar"></header>
       <main class="content">
-        <!-- Breadcrumb & Header -->
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-          <div>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb mb-1">
-                <li class="breadcrumb-item"><a href="../dashboard.html">Dashboard</a></li>
-                <li class="breadcrumb-item">Legal</li>
-                <li class="breadcrumb-item active">Privacy Policy</li>
-              </ol>
-            </nav>
-            <h1 class="h3 mb-0">Privacy Policy CMS</h1>
-            <p class="text-muted small mb-0">Manage page headings, effective dates, CTIA mobile SMS disclosures, structured policy sections repeater, contact info, and SEO.</p>
-          </div>
-          <div class="d-flex align-items-center gap-2">
-            <span class="badge-admin badge-published"><i class="bi bi-check-circle-fill me-1"></i> Live on Site</span>
-            <a href="../../../Frontend/privacy-policy.html" target="_blank" class="btn btn-sm btn-outline-secondary">
-              <i class="bi bi-box-arrow-up-right me-1"></i> View Live Page
-            </a>
+
+        <!-- ========================================== -->
+        <!-- Breadcrumb & Header                        -->
+        <!-- ========================================== -->
+        <div class="legal-header-area">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                  <li class="breadcrumb-item"><a href="../dashboard.html" class="text-muted"><i class="bi bi-grid-1x2 me-1"></i>Dashboard</a></li>
+                  <li class="breadcrumb-item text-muted">Legal</li>
+                  <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Privacy Policy</li>
+                </ol>
+              </nav>
+              <h1 class="legal-page-title">Privacy Policy CMS</h1>
+              <p class="legal-page-subtitle">Manage page headings, effective dates, CTIA mobile SMS disclosures, structured policy sections repeater, contact info, and SEO.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge-admin badge-published px-3 py-2">
+                <i class="bi bi-check-circle-fill me-1 text-success"></i> Live on Site
+              </span>
+              <a href="../../../Frontend/privacy-policy.html" target="_blank" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-box-arrow-up-right me-1"></i> View Live Page
+              </a>
+              <button class="btn-btc" type="button" onclick="document.getElementById('savePageBtn').click()">
+                <i class="bi bi-cloud-check me-1"></i> Save Privacy Policy
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Sticky Quick Nav -->
-        <div class="jump-nav">
-          <a href="#sec-header"><i class="bi bi-file-text me-1"></i> Header &amp; Dates</a>
-          <a href="#sec-sections"><i class="bi bi-list-check me-1"></i> Policy Sections Repeater</a>
-          <a href="#sec-contact"><i class="bi bi-envelope me-1"></i> Contact &amp; Inquiries</a>
-          <a href="#sec-seo"><i class="bi bi-search me-1"></i> SEO &amp; Metadata</a>
-        </div>
+        <!-- ========================================== -->
+        <!-- Main 2-Column Desktop Layout               -->
+        <!-- LEFT (~70%): Legal Document Content        -->
+        <!-- RIGHT (~30%): Sticky Navigation & Meta     -->
+        <!-- ========================================== -->
+        <div class="row g-4">
 
-        <!-- Section 1: Header & Dates -->
-        <section id="sec-header" class="card-admin mb-4">
-          <div class="card-head">
-            <div>
-              <h2>Page Header &amp; Publication Dates</h2>
-              <p>Top title, CTIA subtitle banner, and audit dates</p>
-            </div>
-          </div>
-          <div class="card-body-admin">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label-admin">Page Title (H1)</label>
-                <input type="text" id="pageTitle" class="form-control" value="Privacy Policy">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label-admin">Banner Subtitle / Notice</label>
-                <input type="text" id="pageSubtitle" class="form-control" value="Mobile SMS Privacy Policy as Per The CTIA Guidelines">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label-admin">Effective Date</label>
-                <input type="date" id="effectiveDate" class="form-control" value="2025-07-26">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label-admin">Last Updated Date</label>
-                <input type="date" id="lastUpdatedDate" class="form-control" value="2025-07-26">
-              </div>
-            </div>
-          </div>
-        </section>
+          <!-- Left Column: Main Legal Content (~70%) -->
+          <div class="col-lg-8">
 
-        <!-- Section 2: Policy Sections Repeater -->
-        <section id="sec-sections" class="card-admin mb-4">
-          <div class="card-head d-flex justify-content-between align-items-center">
-            <div>
-              <h2>Policy Sections Repeater</h2>
-              <p>Manage individual legal sections with headings and structured body paragraphs</p>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-primary" id="addSectionBtn">
-              <i class="bi bi-plus-lg me-1"></i> Add Policy Section
-            </button>
-          </div>
-          <div class="card-body-admin" id="sectionsContainer">
-            <!-- Dynamically populated sections -->
-          </div>
-        </section>
-
-        <!-- Section 3: Contact & Inquiries -->
-        <section id="sec-contact" class="card-admin mb-4">
-          <div class="card-head">
-            <div>
-              <h2>Privacy Inquiries Contact Information</h2>
-              <p>Contact details for user privacy questions and data requests</p>
-            </div>
-          </div>
-          <div class="card-body-admin">
-            <div class="row g-3">
-              <div class="col-md-4">
-                <label class="form-label-admin">Inquiry Email</label>
-                <input type="email" id="contactEmail" class="form-control" value="info@bethechangehealth.com">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label-admin">Office Phone</label>
-                <input type="text" id="contactPhone" class="form-control" value="301-970-9724">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label-admin">Postal Address</label>
-                <input type="text" id="contactAddress" class="form-control" value="8808 Centre Park Drive Suite 301, Columbia, MD 21045">
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 4: SEO & Metadata -->
-        <section id="sec-seo" class="card-admin mb-4">
-          <div class="card-head">
-            <div>
-              <h2>SEO &amp; Metadata</h2>
-              <p>Meta title, description, and SERP preview</p>
-            </div>
-          </div>
-          <div class="card-body-admin">
-            <div class="row g-4">
-              <div class="col-lg-7">
-                <div class="mb-3">
-                  <label class="form-label-admin">Meta Title Tag</label>
-                  <input type="text" id="seoTitle" class="form-control" value="Privacy Policy | Be The Change Health &amp; Wellness Center">
-                  <div class="d-flex justify-content-between mt-1">
-                    <span class="small text-muted">Recommended: 50–60 characters</span>
-                    <span class="small text-muted" id="seoTitleCount">57 chars</span>
-                  </div>
+            <!-- Section 1: Header & Dates -->
+            <section id="sec-header" class="card-admin">
+              <div class="card-head">
+                <div>
+                  <h2>Page Header &amp; Publication Dates</h2>
+                  <p>Top title, CTIA subtitle banner, and audit dates</p>
                 </div>
-                <div class="mb-3">
-                  <label class="form-label-admin">Meta Description</label>
-                  <textarea id="seoDesc" class="form-control" rows="3">Our commitment to protecting your personal information and HIPAA medical privacy. Learn about our mobile SMS data practices and CTIA compliance.</textarea>
-                  <div class="d-flex justify-content-between mt-1">
-                    <span class="small text-muted">Recommended: 150–160 characters</span>
-                    <span class="small text-muted" id="seoDescCount">150 chars</span>
-                  </div>
-                </div>
+              </div>
+              <div class="card-body-admin">
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label class="form-label-admin">Canonical URL</label>
-                    <input type="text" id="seoCanonical" class="form-control" value="https://bethechangehealth.com/privacy-policy.html">
+                    <label class="form-label-admin" for="pageTitle">Page Title (H1)</label>
+                    <input type="text" id="pageTitle" class="form-control" value="Privacy Policy">
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label-admin">Robots Meta</label>
-                    <select id="seoRobots" class="form-select">
-                      <option value="index, follow" selected>Index, Follow</option>
-                      <option value="noindex, follow">Noindex, Follow</option>
-                    </select>
+                    <label class="form-label-admin" for="pageSubtitle">Banner Subtitle / Notice</label>
+                    <input type="text" id="pageSubtitle" class="form-control" value="Mobile SMS Privacy Policy as Per The CTIA Guidelines">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label-admin" for="effectiveDate">Effective Date</label>
+                    <input type="date" id="effectiveDate" class="form-control" value="2025-07-26">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label-admin" for="lastUpdatedDate">Last Updated Date</label>
+                    <input type="date" id="lastUpdatedDate" class="form-control" value="2025-07-26">
                   </div>
                 </div>
               </div>
-              <div class="col-lg-5">
-                <label class="form-label-admin mb-2">Google SERP Snippet Preview</label>
-                <div class="serp-preview">
-                  <div class="serp-title" id="serpTitlePreview">Privacy Policy | Be The Change Health &amp; Wellness Center</div>
-                  <div class="serp-url" id="serpUrlPreview">https://bethechangehealth.com/privacy-policy.html</div>
-                  <div class="serp-desc" id="serpDescPreview">Our commitment to protecting your personal information and HIPAA medical privacy. Learn about our mobile SMS data practices and CTIA compliance.</div>
+            </section>
+
+            <!-- Section 2: Policy Sections Repeater -->
+            <section id="sec-sections" class="card-admin">
+              <div class="card-head d-flex justify-content-between align-items-center">
+                <div>
+                  <h2>Policy Sections Repeater</h2>
+                  <p>Manage individual legal sections with headings and structured body paragraphs</p>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="addSectionBtn">
+                  <i class="bi bi-plus-lg me-1"></i> Add Policy Section
+                </button>
+              </div>
+              <div class="card-body-admin" id="sectionsContainer">
+                <!-- Dynamically populated sections -->
+              </div>
+            </section>
+
+            <!-- Section 3: Contact & Inquiries -->
+            <section id="sec-contact" class="card-admin">
+              <div class="card-head">
+                <div>
+                  <h2>Privacy Inquiries Contact Information</h2>
+                  <p>Contact details for user privacy questions and data requests</p>
                 </div>
               </div>
+              <div class="card-body-admin">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label class="form-label-admin" for="contactEmail">Inquiry Email</label>
+                    <input type="email" id="contactEmail" class="form-control" value="info@bethechangehealth.com">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label-admin" for="contactPhone">Office Phone</label>
+                    <input type="text" id="contactPhone" class="form-control" value="301-970-9724">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label-admin" for="contactAddress">Postal Address</label>
+                    <input type="text" id="contactAddress" class="form-control" value="8808 Centre Park Drive Suite 301, Columbia, MD 21045">
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Section 4: SEO & Metadata -->
+            <section id="sec-seo" class="card-admin">
+              <div class="card-head">
+                <div>
+                  <h2>SEO &amp; Metadata</h2>
+                  <p>Meta title, description, and SERP preview</p>
+                </div>
+              </div>
+              <div class="card-body-admin">
+                <div class="row g-4">
+                  <div class="col-lg-7">
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label-admin mb-0" for="seoTitle">Meta Title Tag</label>
+                        <span class="char-badge" id="seoTitleCount">57 chars</span>
+                      </div>
+                      <input type="text" id="seoTitle" class="form-control" value="Privacy Policy | Be The Change Health &amp; Wellness Center">
+                      <div class="small text-muted mt-1">Recommended: 50–60 characters</div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label-admin mb-0" for="seoDesc">Meta Description</label>
+                        <span class="char-badge" id="seoDescCount">150 chars</span>
+                      </div>
+                      <textarea id="seoDesc" class="form-control" rows="3">Our commitment to protecting your personal information and HIPAA medical privacy. Learn about our mobile SMS data practices and CTIA compliance.</textarea>
+                      <div class="small text-muted mt-1">Recommended: 150–160 characters</div>
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label-admin" for="seoCanonical">Canonical URL</label>
+                        <input type="text" id="seoCanonical" class="form-control" value="https://bethechangehealth.com/privacy-policy.html">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label-admin" for="seoRobots">Robots Meta</label>
+                        <select id="seoRobots" class="form-select">
+                          <option value="index, follow" selected>Index, Follow</option>
+                          <option value="noindex, follow">Noindex, Follow</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-5">
+                    <label class="form-label-admin mb-2">Google SERP Snippet Preview</label>
+                    <div class="serp-preview">
+                      <div class="serp-header-meta">
+                        <div class="serp-favicon">
+                          <i class="bi bi-globe"></i>
+                        </div>
+                        <div class="serp-source">
+                          <span class="serp-site-name">Be The Change Health &amp; Wellness Center</span>
+                          <span class="serp-url" id="serpUrlPreview">https://bethechangehealth.com/privacy-policy.html</span>
+                        </div>
+                      </div>
+                      <div class="serp-title" id="serpTitlePreview">Privacy Policy | Be The Change Health &amp; Wellness Center</div>
+                      <p class="serp-desc" id="serpDescPreview">Our commitment to protecting your personal information and HIPAA medical privacy. Learn about our mobile SMS data practices and CTIA compliance.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Right Column: Sticky Navigation & Document Info (~30%) -->
+          <div class="col-lg-4">
+            <div class="legal-sidebar-sticky">
+
+              <!-- Sticky "On This Page" Navigation Card -->
+              <div class="on-page-nav-card">
+                <div class="on-page-title">
+                  <i class="bi bi-list-nested text-teal"></i> On This Page
+                </div>
+                <nav class="d-flex flex-column">
+                  <a href="#sec-header" class="legal-nav-link">
+                    <i class="bi bi-file-earmark-text"></i> Header &amp; Publication Dates
+                  </a>
+                  <a href="#sec-sections" class="legal-nav-link">
+                    <i class="bi bi-list-check"></i> Policy Sections Repeater
+                  </a>
+                  <a href="#sec-contact" class="legal-nav-link">
+                    <i class="bi bi-envelope"></i> Contact &amp; Inquiries
+                  </a>
+                  <a href="#sec-seo" class="legal-nav-link">
+                    <i class="bi bi-search"></i> SEO &amp; Metadata
+                  </a>
+                </nav>
+              </div>
+
+              <!-- Document Metadata Card -->
+              <div class="doc-meta-card">
+                <div class="doc-meta-title">
+                  <i class="bi bi-info-circle text-teal"></i> Document Information
+                </div>
+                <div class="doc-meta-item">
+                  <span class="doc-meta-lbl">Document Type:</span>
+                  <span class="doc-meta-val">Privacy Policy</span>
+                </div>
+                <div class="doc-meta-item">
+                  <span class="doc-meta-lbl">Effective Date:</span>
+                  <span class="doc-meta-val">July 26, 2025</span>
+                </div>
+                <div class="doc-meta-item">
+                  <span class="doc-meta-lbl">Audit Status:</span>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle">CTIA Compliant</span>
+                </div>
+                <div class="doc-meta-item">
+                  <span class="doc-meta-lbl">Target File:</span>
+                  <span class="doc-meta-val font-monospace small">privacy-policy.html</span>
+                </div>
+              </div>
+
+              <!-- Compliance Notice Card -->
+              <div class="legal-callout-box">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <i class="bi bi-shield-check text-teal fs-6"></i>
+                  <strong class="text-navy">HIPAA &amp; CTIA Adherence</strong>
+                </div>
+                <p class="mb-0 text-muted">
+                  SMS communications must strictly respect opt-out requests (STOP/HELP) with zero non-consensual third-party marketing distribution.
+                </p>
+              </div>
+
             </div>
           </div>
-        </section>
 
-        <!-- Sticky Actions Bar -->
-        <div class="sticky-actions d-flex justify-content-between align-items-center">
+        </div>
+
+        <!-- ========================================== -->
+        <!-- Sticky Bottom Actions Bar                  -->
+        <!-- ========================================== -->
+        <div class="sticky-actions-legal">
           <div>
-            <span id="saveStatus" class="text-muted small">All changes up to date</span>
+            <span id="saveStatus" class="text-muted small"><i class="bi bi-clock-history me-1"></i> All changes up to date</span>
           </div>
           <div class="d-flex gap-2">
-            <a class="btn btn-outline-secondary" href="terms-conditions.html">Terms &amp; Conditions</a>
-            <button class="btn btn-outline-secondary" type="button" id="resetBtn">Reset to Default</button>
+            <a class="btn btn-outline-secondary" href="terms-conditions.html">
+              <i class="bi bi-file-earmark-ruled me-1"></i> Terms &amp; Conditions
+            </a>
+            <button class="btn btn-outline-secondary" type="button" id="resetBtn">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Reset to Default
+            </button>
             <button class="btn-btc" type="button" id="savePageBtn">
               <i class="bi bi-cloud-check me-1"></i> Save Privacy Policy
             </button>

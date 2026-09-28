@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SEO Management Center | Be The Change Admin</title>
+  <title>SEO Settings | Be The Change Admin CMS</title>
   <link rel="icon" href="../../Frontend/assets/uploads/2025/02/fav.jpg" type="image/jpeg">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -12,47 +12,339 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
   <style>
+    /* ========================================================
+       SEO Settings Page - Healthcare SaaS CMS Styling
+       Colors: Navy #032E49 · Teal #2F95A8 · Soft Mist #F4F8FA
+       ======================================================== */
+    :root {
+      --seo-navy: #032E49;
+      --seo-teal: #2F95A8;
+      --seo-teal-soft: rgba(47, 149, 168, 0.1);
+      --seo-bg: #F4F8FA;
+      --seo-card-bg: #FFFFFF;
+      --seo-border: #DCE7EB;
+      --seo-input-border: #CBDDE3;
+      --seo-text: #17324D;
+      --seo-muted: #6B7C87;
+      --seo-success: #198754;
+      --seo-warning: #D99A00;
+    }
+
+    body {
+      background-color: var(--seo-bg);
+      color: var(--seo-text);
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Page Header */
+    .seo-header-area {
+      margin-bottom: 1.5rem;
+    }
+    .seo-page-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--seo-navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .seo-page-subtitle {
+      font-size: 0.88rem;
+      color: var(--seo-muted);
+      margin-bottom: 0;
+    }
+
+    /* SEO Overview / KPI Status Cards */
+    .seo-kpi-card {
+      background: var(--seo-card-bg);
+      border: 1px solid var(--seo-border);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(3, 46, 73, 0.03);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      height: 100%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .seo-kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(3, 46, 73, 0.06);
+    }
+    .seo-kpi-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+    .seo-kpi-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .seo-kpi-label {
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--seo-muted);
+      margin-bottom: 0.2rem;
+    }
+    .seo-kpi-value {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--seo-navy);
+      margin-bottom: 0.15rem;
+      line-height: 1.2;
+    }
+    .seo-kpi-status {
+      font-size: 0.75rem;
+      color: var(--seo-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .seo-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .seo-dot-success { background: var(--seo-success); }
+    .seo-dot-teal { background: var(--seo-teal); }
+    .seo-dot-navy { background: var(--seo-navy); }
+
+    /* Main Settings Card */
+    .seo-main-card {
+      background: var(--seo-card-bg);
+      border: 1px solid var(--seo-border);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(3, 46, 73, 0.03);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .seo-card-header {
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--seo-border);
+    }
+    .seo-active-page-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--seo-navy);
+      margin-bottom: 0.25rem;
+    }
+    .seo-active-page-file {
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
+      color: var(--seo-muted);
+      background: #f8fafc;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Custom Navigation Tabs */
+    .seo-tabs-nav {
+      border-bottom: 1px solid var(--seo-border);
+      gap: 0.5rem;
+      padding-bottom: 0;
+      margin-bottom: 1.5rem;
+    }
+    .seo-tabs-nav .nav-link {
+      color: var(--seo-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.65rem 1.15rem;
+      border-radius: 8px 8px 0 0;
+      border: 1px solid transparent;
+      border-bottom: none;
+      background: transparent;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .seo-tabs-nav .nav-link:hover {
+      color: var(--seo-navy);
+      background: #f8fafc;
+      border-color: #e2e8f0 #e2e8f0 transparent;
+    }
+    .seo-tabs-nav .nav-link.active {
+      color: var(--seo-teal);
+      background: #ffffff;
+      border-color: var(--seo-border) var(--seo-border) #ffffff;
+      font-weight: 700;
+      position: relative;
+    }
+    .seo-tabs-nav .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--seo-teal);
+    }
+
+    /* Form Inputs & Controls */
+    .form-label-admin {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--seo-text);
+      margin-bottom: 0.45rem;
+    }
+    .form-control-seo,
+    .form-control,
+    .form-select-seo,
+    .form-select {
+      border: 1px solid var(--seo-input-border);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: var(--seo-text);
+      background-color: #ffffff;
+      padding: 0.65rem 0.85rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-control-seo:focus,
+    .form-control:focus,
+    .form-select-seo:focus,
+    .form-select:focus {
+      border-color: var(--seo-teal);
+      box-shadow: 0 0 0 3px rgba(47, 149, 168, 0.14);
+      outline: 0;
+    }
+    input.form-control, select.form-select {
+      height: 46px;
+    }
+    textarea.form-control {
+      min-height: 105px;
+      line-height: 1.5;
+    }
+    .form-helper-text {
+      font-size: 0.77rem;
+      color: var(--seo-muted);
+      margin-top: 0.35rem;
+    }
+
+    /* Character Counter Badges */
+    .char-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: var(--seo-muted);
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Directives / Robots Row Box */
+    .directive-card-row {
+      background: #fafbfc;
+      border: 1px solid var(--seo-border);
+      border-radius: 10px;
+      padding: 1.15rem;
+      margin-bottom: 1rem;
+      transition: background 0.15s ease;
+    }
+    .directive-card-row:hover {
+      background: #f4f8fa;
+    }
+    .directive-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--seo-navy);
+      margin-bottom: 0.2rem;
+    }
+    .directive-desc {
+      font-size: 0.78rem;
+      color: var(--seo-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    /* SERP Google Preview Card */
     .serp-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
+      border: 1px solid var(--seo-border);
       border-radius: 12px;
       padding: 1.25rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      font-family: Arial, sans-serif;
+    }
+    .serp-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 0.4rem;
+    }
+    .serp-favicon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--seo-teal);
+      flex-shrink: 0;
+    }
+    .serp-source {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .serp-site-name {
+      font-size: 0.78rem;
+      color: #202124;
+      font-weight: 500;
+    }
+    .serp-url {
+      color: #5f6368;
+      font-size: 0.73rem;
+      word-break: break-all;
     }
     .serp-title {
       color: #1a0dab;
       font-size: 1.15rem;
       font-weight: 500;
       cursor: pointer;
-      line-height: 1.3;
-      margin-bottom: 0.2rem;
-    }
-    .serp-url {
-      color: #006621;
-      font-size: 0.85rem;
-      line-height: 1.4;
+      line-height: 1.35;
       margin-bottom: 0.35rem;
+      text-decoration: none;
+    }
+    .serp-title:hover {
+      text-decoration: underline;
     }
     .serp-desc {
       color: #4d5156;
-      font-size: 0.875rem;
+      font-size: 0.84rem;
       line-height: 1.5;
       margin-bottom: 0;
+      word-break: break-word;
     }
+
+    /* Social Open Graph Preview Card */
     .og-preview-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
+      border: 1px solid var(--seo-border);
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
     .og-preview-img {
-      height: 180px;
+      height: 175px;
       background: #f1f5f9;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      position: relative;
     }
     .og-preview-img img {
       width: 100%;
@@ -60,50 +352,151 @@
       object-fit: cover;
     }
     .og-preview-body {
-      padding: 1rem;
+      padding: 0.95rem 1.15rem;
+      background: #ffffff;
     }
     .og-preview-domain {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
       color: #64748b;
       margin-bottom: 0.25rem;
+      font-weight: 500;
     }
     .og-preview-title {
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-weight: 600;
       color: #0f172a;
-      line-height: 1.3;
-      margin-bottom: 0.25rem;
+      line-height: 1.35;
+      margin-bottom: 0.3rem;
     }
     .og-preview-desc {
       font-size: 0.8rem;
       color: #64748b;
-      line-height: 1.4;
+      line-height: 1.45;
       margin-bottom: 0;
+    }
+
+    /* Page Navigation List in Sidebar Card */
+    .seo-page-list-scroll {
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .seo-page-list-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .seo-page-list-scroll::-webkit-scrollbar-thumb {
+      background: #dce7eb;
+      border-radius: 4px;
     }
     .page-nav-pill {
       cursor: pointer;
-      padding: 0.5rem 0.85rem;
+      padding: 0.55rem 0.85rem;
       border-radius: 8px;
-      font-size: 0.85rem;
-      color: #475569;
+      font-size: 0.84rem;
+      color: #334155;
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.25rem;
       transition: all 0.15s ease;
+      border: 1px solid transparent;
     }
     .page-nav-pill:hover {
-      background: #f1f5f9;
-      color: #0f172a;
+      background: #f1f7f9;
+      color: var(--seo-navy);
+      border-color: #e2edf1;
     }
     .page-nav-pill.active {
-      background: #0d9488;
+      background: var(--seo-navy);
       color: #ffffff;
       font-weight: 500;
+      border-color: var(--seo-navy);
+      box-shadow: 0 2px 8px rgba(3, 46, 73, 0.15);
+    }
+    .page-nav-pill.active span {
+      color: #ffffff !important;
+    }
+    .page-nav-pill.active .badge {
+      background: rgba(255, 255, 255, 0.22) !important;
+      color: #ffffff !important;
     }
     .page-nav-pill .badge {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+    }
+
+    /* Social Upload Dropzone Area */
+    .og-upload-dropzone {
+      background: #fbfdfe;
+      border: 2px dashed #cbdde3;
+      border-radius: 10px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .og-upload-dropzone:hover {
+      border-color: var(--seo-teal);
+      background: #f4fafb;
+    }
+
+    /* Buttons */
+    .btn-btc {
+      background: var(--seo-navy);
+      color: #ffffff;
+      height: 44px;
+      padding: 0 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-btc:hover {
+      background: var(--seo-teal);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(47, 149, 168, 0.25);
+    }
+    .btn-secondary-admin {
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid #cbdde3;
+      height: 44px;
+      padding: 0 1.15rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary-admin:hover {
+      background: #f8fafc;
+      color: var(--seo-navy);
+      border-color: #94a3b8;
+    }
+
+    /* Sticky Bottom Actions Bar */
+    .sticky-actions-seo {
+      position: sticky;
+      bottom: 0;
+      z-index: 1020;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--seo-border);
+      padding: 0.95rem 1.6rem;
+      margin: 2rem -1.6rem -5.5rem -1.6rem;
+      box-shadow: 0 -4px 16px rgba(0, 48, 72, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
   </style>
 </head>
@@ -114,26 +507,391 @@
     <div class="app-main">
       <header class="topbar" id="topbar"></header>
       <main class="content">
-        <!-- Breadcrumb & Header -->
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-          <div>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb mb-1">
-                <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
-                <li class="breadcrumb-item active">SEO Management Center</li>
-              </ol>
-            </nav>
-            <h1 class="h3 mb-0">Master SEO Management Center</h1>
-            <p class="text-muted small mb-0">Manage search titles, descriptions, canonical URLs, keywords, Open Graph social cards, and indexing directives for all 40 Frontend pages.</p>
-          </div>
-          <div class="d-flex align-items-center gap-2">
-            <span class="badge-admin badge-published"><i class="bi bi-check-circle-fill me-1"></i> 40 Pages Cataloged</span>
+
+        <!-- ========================================== -->
+        <!-- Breadcrumb & Page Header                   -->
+        <!-- ========================================== -->
+        <div class="seo-header-area">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                  <li class="breadcrumb-item"><a href="dashboard.html" class="text-muted"><i class="bi bi-grid-1x2 me-1"></i>Dashboard</a></li>
+                  <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">SEO Settings</li>
+                </ol>
+              </nav>
+              <h1 class="seo-page-title">SEO Settings</h1>
+              <p class="seo-page-subtitle">Manage search engine optimization, meta tags, and social previews for your website.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge-admin badge-published px-3 py-2">
+                <i class="bi bi-check-circle-fill me-1 text-success"></i> 40 Pages Cataloged
+              </span>
+              <button class="btn-btc" type="button" onclick="document.getElementById('savePageBtn').click()">
+                <i class="bi bi-cloud-check me-1"></i> Save SEO Settings
+              </button>
+            </div>
           </div>
         </div>
 
+        <!-- ========================================== -->
+        <!-- SEO Overview / Status Cards                -->
+        <!-- ========================================== -->
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="seo-kpi-card">
+              <div class="seo-kpi-icon" style="background: rgba(25, 135, 84, 0.1); color: var(--seo-success);">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <div class="seo-kpi-info">
+                <div class="seo-kpi-label">SEO Health</div>
+                <div class="seo-kpi-value">Optimized</div>
+                <div class="seo-kpi-status">
+                  <span class="seo-dot seo-dot-success"></span> All vital tags configured
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="seo-kpi-card">
+              <div class="seo-kpi-icon" style="background: rgba(47, 149, 168, 0.1); color: var(--seo-teal);">
+                <i class="bi bi-globe2"></i>
+              </div>
+              <div class="seo-kpi-info">
+                <div class="seo-kpi-label">Search Visibility</div>
+                <div class="seo-kpi-value">Enabled</div>
+                <div class="seo-kpi-status">
+                  <span class="seo-dot seo-dot-teal"></span> Crawlers index &amp; follow
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="seo-kpi-card">
+              <div class="seo-kpi-icon" style="background: rgba(3, 46, 73, 0.08); color: var(--seo-navy);">
+                <i class="bi bi-collection"></i>
+              </div>
+              <div class="seo-kpi-info">
+                <div class="seo-kpi-label">Pages Indexed</div>
+                <div class="seo-kpi-value">40 Pages</div>
+                <div class="seo-kpi-status">
+                  <span class="seo-dot seo-dot-navy"></span> Full site coverage
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xl-3">
+            <div class="seo-kpi-card">
+              <div class="seo-kpi-icon" style="background: rgba(217, 154, 0, 0.1); color: var(--seo-warning);">
+                <i class="bi bi-share"></i>
+              </div>
+              <div class="seo-kpi-info">
+                <div class="seo-kpi-label">Meta Configuration</div>
+                <div class="seo-kpi-value">Configured</div>
+                <div class="seo-kpi-status">
+                  <span class="seo-dot seo-dot-teal"></span> Open Graph &amp; SERP active
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- Main 2-Column Layout                       -->
+        <!-- Left: ~67% Settings Card                   -->
+        <!-- Right: ~33% Live Previews & Page Directory -->
+        <!-- ========================================== -->
         <div class="row g-4">
-          <!-- Left Column: Page Directory Navigation -->
+
+          <!-- ========================================== -->
+          <!-- LEFT COLUMN: Main SEO Settings Card (~67%) -->
+          <!-- ========================================== -->
+          <div class="col-lg-8">
+            <div class="seo-main-card">
+              
+              <!-- Card Header: Active Editing Page Context -->
+              <div class="seo-card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge bg-primary" id="currentPageCategory">Core Pages</span>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle">
+                      <i class="bi bi-check-circle me-1"></i>Production Live
+                    </span>
+                  </div>
+                  <h2 class="seo-active-page-title" id="currentPageHeading">Editing: Homepage</h2>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="seo-active-page-file">
+                      <i class="bi bi-filetype-html text-teal"></i>
+                      <span id="currentPageFile">Frontend/index.html</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="text-end d-none d-md-block">
+                  <p class="text-muted small mb-0">Configure search results, Open Graph cards, and crawler directives.</p>
+                </div>
+              </div>
+
+              <!-- Nav Tabs for Settings Sections -->
+              <ul class="nav seo-tabs-nav" id="seoTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-search" type="button" role="tab">
+                    <i class="bi bi-google"></i> Basic SEO
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-og" type="button" role="tab">
+                    <i class="bi bi-share"></i> Social / Open Graph
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-robots" type="button" role="tab">
+                    <i class="bi bi-robot"></i> Search Engine Settings
+                  </button>
+                </li>
+              </ul>
+
+              <!-- Tab Contents -->
+              <div class="tab-content">
+
+                <!-- ----------------------------------------- -->
+                <!-- SECTION 1 — BASIC SEO                     -->
+                <!-- ----------------------------------------- -->
+                <div class="tab-pane fade show active" id="tab-search" role="tabpanel">
+                  <div class="row g-4 mb-2">
+                    
+                    <!-- Field: SEO Title -->
+                    <div class="col-12">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label-admin mb-0" for="metaTitle">
+                          SEO Title <span class="text-danger">*</span>
+                        </label>
+                        <span class="char-badge" id="metaTitleCount">0 chars</span>
+                      </div>
+                      <input type="text" id="metaTitle" class="form-control form-control-seo" placeholder="e.g. Integrative Medicine & Wellness Center | Columbia, MD">
+                      <div class="form-helper-text">
+                        <i class="bi bi-info-circle me-1 text-teal"></i> Recommended length: <strong>50–60 characters</strong>. Displays as the primary headline link in search results.
+                      </div>
+                    </div>
+
+                    <!-- Field: Meta Description -->
+                    <div class="col-12">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label-admin mb-0" for="metaDesc">
+                          Meta Description <span class="text-danger">*</span>
+                        </label>
+                        <span class="char-badge" id="metaDescCount">0 chars</span>
+                      </div>
+                      <textarea id="metaDesc" class="form-control form-control-seo" rows="3" placeholder="Write an informative, concise summary of this page to encourage patients to click through from search results..."></textarea>
+                      <div class="form-helper-text">
+                        <i class="bi bi-info-circle me-1 text-teal"></i> Recommended length: <strong>150–160 characters</strong>. A concise summary displayed under the title in search results.
+                      </div>
+                    </div>
+
+                    <!-- Field: Focus Keywords -->
+                    <div class="col-md-6">
+                      <label class="form-label-admin" for="metaKeywords">
+                        Focus Keywords / Keywords
+                      </label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-tags"></i></span>
+                        <input type="text" id="metaKeywords" class="form-control form-control-seo border-start-0" placeholder="e.g. integrative medicine, naturopathic, columbia md">
+                      </div>
+                      <div class="form-helper-text">
+                        Comma-separated keywords defining this page's healthcare focus.
+                      </div>
+                    </div>
+
+                    <!-- Field: Canonical URL -->
+                    <div class="col-md-6">
+                      <label class="form-label-admin" for="metaCanonical">
+                        Canonical URL
+                      </label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="metaCanonical" class="form-control form-control-seo border-start-0" placeholder="https://bethechangehealth.com/page.html">
+                      </div>
+                      <div class="form-helper-text">
+                        Authoritative canonical address to prevent duplicate content indexing.
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- ----------------------------------------- -->
+                <!-- SECTION 3 — SOCIAL / OPEN GRAPH           -->
+                <!-- ----------------------------------------- -->
+                <div class="tab-pane fade" id="tab-og" role="tabpanel">
+                  <div class="row g-4 mb-2">
+                    
+                    <div class="col-12">
+                      <label class="form-label-admin" for="ogTitle">
+                        OG Title
+                      </label>
+                      <input type="text" id="ogTitle" class="form-control form-control-seo" placeholder="Social card title (defaults to SEO title if blank)">
+                      <div class="form-helper-text">
+                        Headline displayed when this page is shared on Facebook, LinkedIn, X, or messaging apps.
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label-admin" for="ogDesc">
+                        OG Description
+                      </label>
+                      <textarea id="ogDesc" class="form-control form-control-seo" rows="3" placeholder="Social card summary text..."></textarea>
+                      <div class="form-helper-text">
+                        Preview snippet shown underneath the title on social media feeds and chat links.
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label-admin" for="ogImage">
+                        OG Image / Social Share Asset Path
+                      </label>
+                      <div class="input-group mb-2">
+                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-image"></i></span>
+                        <input type="text" id="ogImage" class="form-control form-control-seo border-start-0" placeholder="assets/uploads/2024/08/approach.jpg">
+                      </div>
+                      
+                      <!-- Professional Drag & Drop / Asset Upload Indicator -->
+                      <div class="og-upload-dropzone">
+                        <i class="bi bi-cloud-arrow-up text-teal fs-3 d-block mb-1"></i>
+                        <div class="fw-semibold small" style="color: var(--seo-navy);">Upload or Link Social Share Image</div>
+                        <div class="text-muted small">Drag &amp; drop or specify asset path above</div>
+                        <div class="text-muted small mt-1">Recommended dimensions: <strong>1200 × 630 px</strong> (Aspect ratio: 1.91:1)</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- ----------------------------------------- -->
+                <!-- SECTION 2 — SEARCH ENGINE SETTINGS        -->
+                <!-- ----------------------------------------- -->
+                <div class="tab-pane fade" id="tab-robots" role="tabpanel">
+                  <div class="row g-3 mb-2">
+                    
+                    <!-- Search Engine Visibility & Indexing -->
+                    <div class="col-12">
+                      <div class="directive-card-row">
+                        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+                          <div>
+                            <div class="directive-title">Search Engine Visibility</div>
+                            <div class="directive-desc mb-0">Allow or prevent search engines from cataloging and displaying this page in search results.</div>
+                          </div>
+                        </div>
+                        <select id="robotsIndex" class="form-select form-select-seo">
+                          <option value="index" selected>index — Allow search engines to index this website page (Recommended)</option>
+                          <option value="noindex">noindex — Prevent search engines from indexing this page</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Follow Links Directive -->
+                    <div class="col-12">
+                      <div class="directive-card-row">
+                        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+                          <div>
+                            <div class="directive-title">Follow Links</div>
+                            <div class="directive-desc mb-0">Instruct search engine crawlers whether to follow links found on this page.</div>
+                          </div>
+                        </div>
+                        <select id="robotsFollow" class="form-select form-select-seo">
+                          <option value="follow" selected>follow — Allow crawlers to follow links on this page (Recommended)</option>
+                          <option value="nofollow">nofollow — Do not follow links on this page</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Compiled Directive Code Snippet -->
+                    <div class="col-12">
+                      <div class="p-3 bg-light rounded-3 border">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                          <strong class="small text-navy"><i class="bi bi-code-slash text-teal me-1"></i> Compiled Robots Meta Directive:</strong>
+                          <span class="badge bg-secondary-subtle text-secondary small">Live Output</span>
+                        </div>
+                        <div class="bg-white p-2.5 rounded border font-monospace small text-primary mt-2">
+                          <code id="robotsCompiledTag">&lt;meta name="robots" content="index, follow"&gt;</code>
+                        </div>
+                        <p class="text-muted small mb-0 mt-2">
+                          This compiled tag is placed in the &lt;head&gt; section to inform automated web crawlers.
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- RIGHT COLUMN: Previews & Directory (~33%)  -->
+          <!-- ========================================== -->
           <div class="col-lg-4">
+
+            <!-- Card 1: Real-Time Previews (Google & Social) -->
+            <div class="card-admin mb-4">
+              <div class="card-head d-flex justify-content-between align-items-center">
+                <div>
+                  <h2>Live Previews</h2>
+                  <p>Real-time search and social card simulation</p>
+                </div>
+                <span class="badge bg-light text-primary border"><i class="bi bi-eye me-1"></i> Live</span>
+              </div>
+              <div class="card-body-admin">
+
+                <!-- Google SERP Snippet Preview -->
+                <div class="mb-4">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-semibold small" style="color: var(--seo-navy);">
+                      <i class="bi bi-google text-primary me-1"></i> Search Result Preview
+                    </span>
+                    <span class="badge bg-light text-muted border" style="font-size: 0.7rem;">Google Desktop</span>
+                  </div>
+                  <div class="serp-card">
+                    <div class="serp-header-meta">
+                      <div class="serp-favicon">
+                        <i class="bi bi-globe"></i>
+                      </div>
+                      <div class="serp-source">
+                        <span class="serp-site-name">Be The Change Health &amp; Wellness Center</span>
+                        <span class="serp-url" id="serpUrlPreview">https://bethechangehealth.com/</span>
+                      </div>
+                    </div>
+                    <div class="serp-title" id="serpTitlePreview">Title Preview</div>
+                    <p class="serp-desc" id="serpDescPreview">Meta description preview will appear here as you type.</p>
+                  </div>
+                </div>
+
+                <!-- Social Card Preview -->
+                <div>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-semibold small" style="color: var(--seo-navy);">
+                      <i class="bi bi-card-image text-teal me-1"></i> Social Sharing Preview
+                    </span>
+                    <span class="badge bg-light text-muted border" style="font-size: 0.7rem;">Open Graph</span>
+                  </div>
+                  <div class="og-preview-card">
+                    <div class="og-preview-img">
+                      <img id="ogPreviewImgTag" src="../../Frontend/assets/uploads/2024/08/approach.jpg" alt="Social Share Card">
+                    </div>
+                    <div class="og-preview-body">
+                      <div class="og-preview-domain">bethechangehealth.com</div>
+                      <div class="og-preview-title" id="ogTitlePreview">OG Title Preview</div>
+                      <p class="og-preview-desc" id="ogDescPreview">OG description preview.</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Card 2: Website Page Directory -->
             <div class="card-admin mb-4">
               <div class="card-head">
                 <div>
@@ -141,167 +899,75 @@
                   <p>Choose any frontend page to edit its metadata</p>
                 </div>
               </div>
-              <div class="card-body-admin p-2">
+              <div class="card-body-admin p-3">
                 <!-- Search Filter -->
-                <div class="input-group input-group-sm mb-3 px-2 pt-2">
-                  <span class="input-group-text"><i class="bi bi-search"></i></span>
-                  <input type="text" id="pageSearchInp" class="form-control" placeholder="Search pages...">
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                  <input type="text" id="pageSearchInp" class="form-control border-start-0" placeholder="Search pages by name or file...">
                 </div>
 
-                <!-- Page Category Accordion / List -->
-                <div style="max-height: 580px; overflow-y: auto;" id="pageListContainer">
+                <!-- Page Category List -->
+                <div class="seo-page-list-scroll" id="pageListContainer">
                   <!-- Dynamically populated page list -->
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Right Column: SEO Configuration Panel & Previews -->
-          <div class="col-lg-8">
-            <div class="card-admin mb-4">
-              <div class="card-head d-flex justify-content-between align-items-center">
+            <!-- Card 3: SEO Optimization Guidelines -->
+            <div class="card-admin">
+              <div class="card-head">
                 <div>
-                  <h2 id="currentPageHeading">Editing: Homepage</h2>
-                  <p id="currentPageFile" class="text-muted small mb-0">Frontend/index.html</p>
+                  <h2>SEO Best Practices</h2>
+                  <p>Healthcare search optimization checklist</p>
                 </div>
-                <span class="badge bg-primary" id="currentPageCategory">Core Pages</span>
               </div>
               <div class="card-body-admin">
-                <!-- Nav Tabs for SEO vs Open Graph -->
-                <ul class="nav nav-tabs mb-4" id="seoTabs" role="tablist">
-                  <li class="nav-item">
-                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-search" type="button">
-                      <i class="bi bi-google me-1"></i> Google Search Metadata
-                    </button>
-                  </li>
-                  <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-og" type="button">
-                      <i class="bi bi-share me-1"></i> Open Graph &amp; Social Cards
-                    </button>
-                  </li>
-                  <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-robots" type="button">
-                      <i class="bi bi-robot me-1"></i> Robots &amp; Indexing
-                    </button>
-                  </li>
-                </ul>
-
-                <div class="tab-content">
-                  <!-- Tab 1: Google Search Metadata -->
-                  <div class="tab-pane fade show active" id="tab-search">
-                    <div class="row g-3 mb-4">
-                      <div class="col-12">
-                        <label class="form-label-admin">SEO Meta Title Tag</label>
-                        <input type="text" id="metaTitle" class="form-control">
-                        <div class="d-flex justify-content-between mt-1">
-                          <span class="small text-muted">Optimal: 50–60 characters</span>
-                          <span class="small text-muted" id="metaTitleCount">0 chars</span>
-                        </div>
-                      </div>
-
-                      <div class="col-12">
-                        <label class="form-label-admin">SEO Meta Description</label>
-                        <textarea id="metaDesc" class="form-control" rows="3"></textarea>
-                        <div class="d-flex justify-content-between mt-1">
-                          <span class="small text-muted">Optimal: 150–160 characters</span>
-                          <span class="small text-muted" id="metaDescCount">0 chars</span>
-                        </div>
-                      </div>
-
-                      <div class="col-md-7">
-                        <label class="form-label-admin">Canonical URL</label>
-                        <input type="text" id="metaCanonical" class="form-control">
-                      </div>
-
-                      <div class="col-md-5">
-                        <label class="form-label-admin">Focus Keywords (Comma-separated)</label>
-                        <input type="text" id="metaKeywords" class="form-control" placeholder="e.g. integrative medicine, columbia md">
-                      </div>
-                    </div>
-
-                    <!-- Live Google SERP Snippet Preview -->
-                    <h6 class="fw-semibold mb-2"><i class="bi bi-eye text-primary me-1"></i> Real-Time Google Search Snippet Preview</h6>
-                    <div class="serp-card mb-2">
-                      <div class="serp-title" id="serpTitlePreview">Title Preview</div>
-                      <div class="serp-url" id="serpUrlPreview">https://bethechangehealth.com/</div>
-                      <div class="serp-desc" id="serpDescPreview">Meta description preview will appear here as you type.</div>
-                    </div>
-                  </div>
-
-                  <!-- Tab 2: Open Graph & Social Cards -->
-                  <div class="tab-pane fade" id="tab-og">
-                    <div class="row g-4 mb-4">
-                      <div class="col-lg-6">
-                        <div class="mb-3">
-                          <label class="form-label-admin">OG Title (Facebook / LinkedIn / X)</label>
-                          <input type="text" id="ogTitle" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label-admin">OG Description</label>
-                          <textarea id="ogDesc" class="form-control" rows="3"></textarea>
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label-admin">OG Share Image URL / Path</label>
-                          <input type="text" id="ogImage" class="form-control mb-2">
-                        </div>
-                      </div>
-
-                      <!-- Social Card Preview -->
-                      <div class="col-lg-6">
-                        <label class="form-label-admin mb-2"><i class="bi bi-card-image text-primary me-1"></i> Social Share Card Preview</label>
-                        <div class="og-preview-card">
-                          <div class="og-preview-img">
-                            <img id="ogPreviewImgTag" src="../../Frontend/assets/uploads/2024/08/approach.jpg" alt="Social Share Card">
-                          </div>
-                          <div class="og-preview-body">
-                            <div class="og-preview-domain">bethechangehealth.com</div>
-                            <div class="og-preview-title" id="ogTitlePreview">OG Title Preview</div>
-                            <p class="og-preview-desc" id="ogDescPreview">OG description preview.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Tab 3: Robots & Directives -->
-                  <div class="tab-pane fade" id="tab-robots">
-                    <div class="row g-3">
-                      <div class="col-md-6">
-                        <label class="form-label-admin">Search Indexing Directive (Robots Meta)</label>
-                        <select id="robotsIndex" class="form-select">
-                          <option value="index" selected>index — Allow search engines to index this page (Default)</option>
-                          <option value="noindex">noindex — Prevent search engines from indexing this page</option>
-                        </select>
-                      </div>
-                      <div class="col-md-6">
-                        <label class="form-label-admin">Link Following Directive</label>
-                        <select id="robotsFollow" class="form-select">
-                          <option value="follow" selected>follow — Allow following links on this page (Default)</option>
-                          <option value="nofollow">nofollow — Do not follow outbound links</option>
-                        </select>
-                      </div>
-                      <div class="col-12 mt-3">
-                        <div class="p-3 bg-light rounded border">
-                          <strong class="small d-block mb-1">Compiled Meta Tag:</strong>
-                          <code id="robotsCompiledTag">&lt;meta name="robots" content="index, follow"&gt;</code>
-                        </div>
-                      </div>
-                    </div>
+                <div class="d-flex align-items-start gap-2 mb-2 pb-2 border-bottom">
+                  <i class="bi bi-check2-circle text-success fs-5"></i>
+                  <div>
+                    <strong class="d-block small text-navy">Title Length (50–60 chars)</strong>
+                    <span class="text-muted small">Prevents truncation in desktop and mobile SERPs.</span>
                   </div>
                 </div>
-
+                <div class="d-flex align-items-start gap-2 mb-2 pb-2 border-bottom">
+                  <i class="bi bi-check2-circle text-success fs-5"></i>
+                  <div>
+                    <strong class="d-block small text-navy">Description (150–160 chars)</strong>
+                    <span class="text-muted small">Include location and care specializations for higher CTR.</span>
+                  </div>
+                </div>
+                <div class="d-flex align-items-start gap-2 mb-2 pb-2 border-bottom">
+                  <i class="bi bi-check2-circle text-success fs-5"></i>
+                  <div>
+                    <strong class="d-block small text-navy">Canonical Tag Protection</strong>
+                    <span class="text-muted small">Protects authoritative URLs from duplicate indexing.</span>
+                  </div>
+                </div>
+                <div class="d-flex align-items-start gap-2">
+                  <i class="bi bi-check2-circle text-success fs-5"></i>
+                  <div>
+                    <strong class="d-block small text-navy">Social Image (1200×630 px)</strong>
+                    <span class="text-muted small">Standard 1.91:1 ratio for Facebook and LinkedIn.</span>
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
+
         </div>
 
-        <!-- Sticky Actions Bar -->
-        <div class="sticky-actions d-flex justify-content-between align-items-center">
+        <!-- ========================================== -->
+        <!-- Sticky Bottom Actions Bar                  -->
+        <!-- ========================================== -->
+        <div class="sticky-actions-seo">
           <div>
-            <span id="saveStatus" class="text-muted small">All changes up to date</span>
+            <span id="saveStatus" class="text-muted small"><i class="bi bi-clock-history me-1"></i> All changes up to date</span>
           </div>
           <div class="d-flex gap-2">
-            <button class="btn btn-outline-secondary" type="button" id="resetBtn">Reset Current Page</button>
+            <button class="btn-secondary-admin" type="button" id="resetBtn">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Current Page
+            </button>
             <button class="btn-btc" type="button" id="savePageBtn">
               <i class="bi bi-cloud-check me-1"></i> Save SEO Settings
             </button>
