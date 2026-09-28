@@ -4786,3 +4786,324 @@ textarea.form-control {
   }
 }
 
+/* ============================================================
+   CARE OPERATIONS: SET BUSY TIME & CALENDAR AVAILABILITY BLOCKING
+   ============================================================ */
+.cal-legend-dot.busy-blocked {
+  background: #64748b;
+}
+
+.badge-blocked,
+.badge-busy {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid rgba(100, 116, 139, 0.28);
+  font-weight: 600;
+}
+
+.cal-event-card.status-busy,
+.cal-event-card.status-blocked {
+  border-left-color: #64748b;
+  background: #f8fafc;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(100, 116, 139, 0.04) 10px, rgba(100, 116, 139, 0.04) 20px);
+}
+
+.cal-event-card.status-busy:hover,
+.cal-event-card.status-blocked:hover {
+  border-color: #64748b;
+  background-color: #f1f5f9;
+  box-shadow: 0 4px 12px rgba(100, 116, 139, 0.15);
+}
+
+.cal-week-slot-cell.slot-blocked-cell {
+  background: rgba(241, 245, 249, 0.65);
+}
+
+.busy-time-row {
+  background: #f8fafc !important;
+}
+
+.busy-time-row:hover td {
+  background: #f1f5f9 !important;
+}
+
+.busy-preview-card {
+  background: #f8fafc;
+  border: 1px solid rgba(0, 48, 72, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.busy-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.busy-preview-item small {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--btc-muted);
+  margin-bottom: 2px;
+}
+
+.busy-preview-item strong {
+  font-size: 0.85rem;
+  color: var(--btc-navy);
+}
+
+/* Customer Booking Slot Picker Styles */
+.booking-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.6rem;
+}
+
+.booking-slot-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.5rem;
+  border-radius: 8px;
+  border: 1.5px solid rgba(0, 48, 72, 0.14);
+  background: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--btc-navy);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: center;
+  user-select: none;
+}
+
+.booking-slot-btn:hover:not(:disabled) {
+  border-color: var(--btc-teal);
+  background: var(--btc-teal-soft);
+  color: #1d5f6e;
+}
+
+.booking-slot-btn.selected {
+  background: var(--btc-teal);
+  border-color: var(--btc-teal);
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(47, 147, 168, 0.35);
+}
+
+.booking-slot-btn.selected .slot-status-label {
+  color: #ffffff;
+  opacity: 0.95;
+}
+
+.booking-slot-btn:disabled,
+.booking-slot-btn.disabled-blocked {
+  background: #f8fafc;
+  border-color: rgba(100, 116, 139, 0.2);
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.slot-status-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.slot-status-label.available {
+  color: #059669;
+}
+
+.slot-status-label.blocked {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* ============================================================
+   SET BUSY TIME MODAL — CUSTOM HEALTHCARE SELECT DROPDOWNS
+   ============================================================ */
+#busyTimeModal .custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+#busyTimeModal .custom-select-trigger {
+  min-height: 44px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 48, 72, 0.16);
+  border-radius: 9px;
+  padding: 0.45rem 0.85rem;
+  box-shadow: 0 1px 3px rgba(0, 48, 72, 0.04);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+  user-select: none;
+}
+
+#busyTimeModal .custom-select-trigger:hover {
+  border-color: #2F93A8;
+  background-color: #F4FAFB;
+}
+
+#busyTimeModal .custom-select-trigger:focus-visible,
+#busyTimeModal .custom-select-trigger.active {
+  border-color: #2F93A8;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(47, 147, 168, 0.2);
+  outline: none;
+}
+
+#busyTimeModal .custom-select-wrapper.open {
+  z-index: 1095 !important;
+}
+
+#busyTimeModal .custom-select-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  z-index: 1100 !important;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 48, 72, 0.14);
+  background: #ffffff;
+  box-shadow: 0 16px 36px rgba(0, 48, 72, 0.16), 0 3px 10px rgba(0, 0, 0, 0.05);
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.4rem;
+  animation: selectPanelFadeIn 0.16s ease-out;
+}
+
+/* Custom minimal scrollbar */
+#busyTimeModal .custom-select-panel::-webkit-scrollbar {
+  width: 5px;
+}
+#busyTimeModal .custom-select-panel::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 999px;
+}
+#busyTimeModal .custom-select-panel::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+#busyTimeModal .custom-select-panel::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+#busyTimeModal .custom-select-option {
+  padding: 0.55rem 0.75rem;
+  border-radius: 7px;
+  margin-bottom: 2px;
+  transition: all 0.14s ease;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+#busyTimeModal .custom-select-option:last-child {
+  margin-bottom: 0;
+}
+
+#busyTimeModal .custom-select-option:hover {
+  background: #F4FAFB;
+  border-color: rgba(47, 147, 168, 0.15);
+}
+
+#busyTimeModal .custom-select-option.selected {
+  background: #EAF5F6 !important;
+  border-color: rgba(47, 147, 168, 0.35) !important;
+}
+
+#busyTimeModal .custom-select-option .option-primary {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #0B3A53;
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+#busyTimeModal .custom-select-option.selected .option-primary {
+  color: #0B3A53;
+  font-weight: 700;
+}
+
+#busyTimeModal .custom-select-option .option-secondary {
+  font-size: 0.73rem;
+  color: #64748b;
+  margin-top: 2px;
+  line-height: 1.3;
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+#busyTimeModal .custom-select-option .option-check {
+  color: #2F93A8;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+#busyTimeModal .custom-select-trigger .custom-select-selected-content {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#busyTimeModal .custom-select-trigger .select-leading-icon {
+  font-size: 1.1rem;
+  color: #2F93A8;
+  flex-shrink: 0;
+}
+
+#busyTimeModal .custom-select-trigger .custom-select-text-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.25;
+  min-width: 0;
+}
+
+#busyTimeModal .custom-select-trigger .custom-select-primary-text {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #0B3A53;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#busyTimeModal .custom-select-trigger .custom-select-secondary-text {
+  font-size: 0.72rem;
+  color: #6b7280;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#busyTimeModal .custom-select-trigger .custom-select-chevron {
+  color: #64748b;
+  font-size: 0.75rem;
+  transition: transform 0.2s ease, color 0.15s ease;
+  flex-shrink: 0;
+  margin-left: 0.4rem;
+}
+
+#busyTimeModal .custom-select-trigger.active .custom-select-chevron {
+  transform: rotate(180deg);
+  color: #2F93A8;
+}
+
