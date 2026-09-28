@@ -11,6 +11,169 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../../assets/css/style.css" rel="stylesheet">
+  <style id="busy-modal-dropdown-styles">
+    /* Busy Time Modal Dropdown Positioning & Stacking */
+    #busyTimeModal .dropdown-row-reason {
+      position: relative;
+      z-index: 30;
+    }
+    #busyTimeModal .dropdown-row-provider {
+      position: relative;
+      z-index: 20;
+    }
+    #busyTimeModal .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    #busyTimeModal .custom-select-wrapper.open {
+      z-index: 1060 !important;
+    }
+
+    /* Solid, Opaque Floating Dropdown Layer */
+    #busyTimeModal .custom-select-panel {
+      position: absolute !important;
+      top: calc(100% + 4px) !important;
+      bottom: auto !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      z-index: 1080 !important;
+      background-color: #ffffff !important;
+      border: 1px solid rgba(0, 48, 72, 0.16) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 16px 36px rgba(0, 48, 72, 0.18), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+      max-height: 260px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: none;
+      animation: selectPanelFadeIn 0.15s ease-out;
+    }
+
+    #busyTimeModal .custom-select-wrapper.open .custom-select-panel {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    /* Intelligent Upward Positioning when space below is tight */
+    #busyTimeModal .custom-select-wrapper.open-upward .custom-select-panel {
+      top: auto !important;
+      bottom: calc(100% + 4px) !important;
+      box-shadow: 0 -16px 36px rgba(0, 48, 72, 0.18), 0 -4px 12px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    /* Custom slim scrollbar */
+    #busyTimeModal .custom-select-panel::-webkit-scrollbar {
+      width: 5px;
+    }
+    #busyTimeModal .custom-select-panel::-webkit-scrollbar-track {
+      background: #f8fafc;
+      border-radius: 999px;
+    }
+    #busyTimeModal .custom-select-panel::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+    #busyTimeModal .custom-select-panel::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Each Dropdown Option as a clean, solid card row with dividers */
+    #busyTimeModal .custom-select-option {
+      padding: 0.65rem 0.85rem !important;
+      margin: 0 !important;
+      border: none !important;
+      border-bottom: 1px solid rgba(0, 48, 72, 0.07) !important;
+      border-radius: 0 !important;
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: space-between !important;
+      gap: 0.75rem !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      background-color: #ffffff !important;
+      box-sizing: border-box !important;
+      transition: background-color 0.12s ease !important;
+      min-height: auto !important;
+    }
+
+    #busyTimeModal .custom-select-option:first-child {
+      border-top-left-radius: 9px !important;
+      border-top-right-radius: 9px !important;
+    }
+
+    #busyTimeModal .custom-select-option:last-child {
+      border-bottom: none !important;
+      border-bottom-left-radius: 9px !important;
+      border-bottom-right-radius: 9px !important;
+    }
+
+    #busyTimeModal .custom-select-option:hover {
+      background-color: #F4FAFB !important;
+    }
+
+    #busyTimeModal .custom-select-option.selected {
+      background-color: #EAF5F6 !important;
+    }
+
+    #busyTimeModal .custom-select-option .option-content {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.22rem !important;
+      min-width: 0 !important;
+      flex: 1 1 auto !important;
+    }
+
+    #busyTimeModal .custom-select-option .option-primary {
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      color: #0B3A53 !important;
+      line-height: 1.3 !important;
+      word-break: normal !important;
+      overflow-wrap: break-word !important;
+      white-space: normal !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.45rem !important;
+    }
+
+    #busyTimeModal .custom-select-option.selected .option-primary {
+      color: #0B3A53 !important;
+      font-weight: 700 !important;
+    }
+
+    #busyTimeModal .custom-select-option .option-secondary {
+      font-size: 0.75rem !important;
+      color: #55697c !important;
+      line-height: 1.35 !important;
+      margin: 0 !important;
+      word-break: normal !important;
+      overflow-wrap: break-word !important;
+      white-space: normal !important;
+    }
+
+    #busyTimeModal .custom-select-option .option-check {
+      color: #2F93A8 !important;
+      font-size: 1.15rem !important;
+      font-weight: 700 !important;
+      flex-shrink: 0 !important;
+      margin-top: 2px !important;
+      display: none !important;
+    }
+
+    #busyTimeModal .custom-select-option.selected .option-check {
+      display: inline-block !important;
+    }
+
+    /* Adequate vertical scrolling room in modal-body */
+    #busyTimeModal .modal-body {
+      padding-bottom: 3.5rem !important;
+    }
+  </style>
 </head>
 <body data-page="appointments">
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
@@ -2274,10 +2437,10 @@ First available</textarea>
             </div>
 
             <!-- Reason Dropdown & Custom Reason -->
-            <div class="row g-3 mb-3">
+            <div class="row g-3 mb-3 dropdown-row-reason">
               <div class="col-md-6" id="busyReasonCol">
                 <label class="form-label-admin" for="busyReasonTrigger">Reason / Category *</label>
-                <div class="custom-select-wrapper" id="busyReasonWrapper">
+                <div class="custom-select-wrapper" id="busyReasonWrapper" data-cs-init="true">
                   <div class="custom-select-trigger" id="busyReasonTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select reason for busy period">
                     <div class="custom-select-selected-content">
                       <i class="bi bi-people-fill select-leading-icon" id="busyReasonLeadingIcon"></i>
@@ -2288,7 +2451,16 @@ First available</textarea>
                     </div>
                     <i class="bi bi-chevron-down custom-select-chevron"></i>
                   </div>
-                  <input type="hidden" id="busyReasonSelect" value="Meeting">
+                  <select class="d-none" id="busyReasonSelect" name="busy_reason" aria-label="Reason / Category">
+                    <option value="Urgent Work">Urgent Work</option>
+                    <option value="Meeting" selected>Meeting</option>
+                    <option value="Holiday">Holiday</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Staff Unavailable">Staff Unavailable</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Special Event">Special Event</option>
+                    <option value="Other">Other</option>
+                  </select>
 
                   <div class="custom-select-panel" id="busyReasonPanel" role="listbox" style="display: none;">
                     <div class="custom-select-option" data-value="Urgent Work" data-primary="Urgent Work" data-secondary="Clinical emergency or urgent administrative tasks" data-icon="exclamation-octagon-fill" role="option">
@@ -2356,21 +2528,24 @@ First available</textarea>
               </div>
               <div class="col-md-6" id="busyStatusCol">
                 <label class="form-label-admin" for="busyStatusTrigger">Status</label>
-                <div class="custom-select-wrapper" id="busyStatusWrapper">
+                <div class="custom-select-wrapper" id="busyStatusWrapper" data-cs-init="true">
                   <div class="custom-select-trigger" id="busyStatusTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select busy block status">
                     <div class="custom-select-selected-content">
                       <i class="bi bi-check-circle-fill select-leading-icon text-success" id="busyStatusLeadingIcon"></i>
                       <div class="custom-select-text-group">
-                        <span class="custom-select-primary-text" id="busyStatusPrimaryText">Active</span>
+                        <span class="custom-select-primary-text" id="busyStatusPrimaryText">Active (Enforce Blocking)</span>
                         <span class="custom-select-secondary-text" id="busyStatusSecondaryText">Appointments will be blocked on schedule and booking</span>
                       </div>
                     </div>
                     <i class="bi bi-chevron-down custom-select-chevron"></i>
                   </div>
-                  <input type="hidden" id="busyStatusSelect" value="Active">
+                  <select class="d-none" id="busyStatusSelect" name="busy_status" aria-label="Status">
+                    <option value="Active" selected>Active (Enforce Blocking)</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
 
                   <div class="custom-select-panel" id="busyStatusPanel" role="listbox" style="display: none;">
-                    <div class="custom-select-option selected" data-value="Active" data-primary="Active" data-secondary="Appointments will be blocked on schedule and booking" data-icon="check-circle-fill text-success" role="option" aria-selected="true">
+                    <div class="custom-select-option selected" data-value="Active" data-primary="Active (Enforce Blocking)" data-secondary="Appointments will be blocked on schedule and booking" data-icon="check-circle-fill text-success" role="option" aria-selected="true">
                       <div class="option-content">
                         <span class="option-primary"><i class="bi bi-check-circle-fill text-success me-2"></i>Active (Enforce Blocking)</span>
                         <span class="option-secondary">Appointments will be blocked on schedule and booking</span>
@@ -2390,10 +2565,10 @@ First available</textarea>
             </div>
 
             <!-- Provider & Location -->
-            <div class="row g-3 mb-3">
+            <div class="row g-3 mb-3 dropdown-row-provider">
               <div class="col-md-6" id="busyProviderCol">
                 <label class="form-label-admin" for="busyProviderTrigger">Provider / Staff *</label>
-                <div class="custom-select-wrapper" id="busyProviderWrapper">
+                <div class="custom-select-wrapper" id="busyProviderWrapper" data-cs-init="true">
                   <div class="custom-select-trigger" id="busyProviderTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select practitioner or staff">
                     <div class="custom-select-selected-content">
                       <span class="provider-avatar-chip" id="busyProviderChip">SA</span>
@@ -2404,7 +2579,11 @@ First available</textarea>
                     </div>
                     <i class="bi bi-chevron-down custom-select-chevron"></i>
                   </div>
-                  <input type="hidden" id="busyProviderSelect" value="Sultana Afrooz, D.O.">
+                  <select class="d-none" id="busyProviderSelect" name="busy_provider" aria-label="Provider / Staff">
+                    <option value="All Providers">All Providers (Clinic-wide Block)</option>
+                    <option value="Sultana Afrooz, D.O." selected>Dr. Sultana Afrooz, D.O.</option>
+                    <option value="Jessica Needle, N.D.">Dr. Jessica Needle, N.D.</option>
+                  </select>
 
                   <div class="custom-select-panel" id="busyProviderPanel" role="listbox" style="display: none;">
                     <div class="custom-select-option" data-value="All Providers" data-primary="All Providers (Clinic-wide Block)" data-secondary="Block schedule for all clinicians and departments" data-chip="ALL" data-icon="hospital" role="option">
@@ -2413,17 +2592,17 @@ First available</textarea>
                           <span class="provider-avatar-chip" style="background:#0B3A53; color:#fff;">ALL</span>
                           <span class="option-primary">All Providers (Clinic-wide Block)</span>
                         </div>
-                        <span class="option-secondary ms-4 ps-2">Block schedule for all clinicians and departments</span>
+                        <span class="option-secondary">Block schedule for all clinicians and departments</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
-                    <div class="custom-select-option selected" data-value="Sultana Afrooz, D.O." data-primary="Dr. Sultana Afrooz, D.O." data-secondary="Integrative & Functional Medicine Physician" data-chip="SA" role="option" aria-selected="true">
+                    <div class="custom-select-option selected" data-value="Sultana Afrooz, D.O." data-primary="Dr. Sultana Afrooz, D.O." data-secondary="Integrative &amp; Functional Medicine Physician" data-chip="SA" role="option" aria-selected="true">
                       <div class="option-content">
                         <div class="d-flex align-items-center gap-2">
                           <span class="provider-avatar-chip">SA</span>
                           <span class="option-primary">Dr. Sultana Afrooz, D.O.</span>
                         </div>
-                        <span class="option-secondary ms-4 ps-2">Integrative &amp; Functional Medicine Physician</span>
+                        <span class="option-secondary">Integrative &amp; Functional Medicine Physician</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
@@ -2433,7 +2612,7 @@ First available</textarea>
                           <span class="provider-avatar-chip chip-teal">JN</span>
                           <span class="option-primary">Dr. Jessica Needle, N.D.</span>
                         </div>
-                        <span class="option-secondary ms-4 ps-2">Naturopathic Medicine Doctor</span>
+                        <span class="option-secondary">Naturopathic Medicine Doctor</span>
                       </div>
                       <i class="bi bi-check2 option-check"></i>
                     </div>
@@ -2443,7 +2622,7 @@ First available</textarea>
               </div>
               <div class="col-md-6" id="busyLocationCol">
                 <label class="form-label-admin" for="busyLocationTrigger">Location / Room</label>
-                <div class="custom-select-wrapper" id="busyLocationWrapper">
+                <div class="custom-select-wrapper" id="busyLocationWrapper" data-cs-init="true">
                   <div class="custom-select-trigger" id="busyLocationTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select location or procedure room">
                     <div class="custom-select-selected-content">
                       <i class="bi bi-building select-leading-icon text-teal" id="busyLocationLeadingIcon"></i>
@@ -2454,7 +2633,15 @@ First available</textarea>
                     </div>
                     <i class="bi bi-chevron-down custom-select-chevron"></i>
                   </div>
-                  <input type="hidden" id="busyLocationSelect" value="All Locations">
+                  <select class="d-none" id="busyLocationSelect" name="busy_location" aria-label="Location / Room">
+                    <option value="All Locations" selected>All Locations &amp; Rooms</option>
+                    <option value="Suite 301 · Exam & Treatment Rooms">Suite 301 · Exam &amp; Treatment Rooms</option>
+                    <option value="Suite 301 · Ozone Therapy Room">Suite 301 · Ozone Therapy Room</option>
+                    <option value="Suite 301 · HBOT Chamber 1">Suite 301 · HBOT Chamber 1</option>
+                    <option value="Suite 301 · Hydrotherapy Suite B">Suite 301 · Hydrotherapy Suite B</option>
+                    <option value="Suite 301 · IV Infusion Lounge">Suite 301 · IV Infusion Lounge</option>
+                    <option value="Telehealth Video Rooms (Virtual)">Telehealth Video Rooms (Virtual)</option>
+                  </select>
 
                   <div class="custom-select-panel" id="busyLocationPanel" role="listbox" style="display: none;">
                     <div class="custom-select-option selected" data-value="All Locations" data-primary="All Locations & Rooms" data-secondary="Block availability across all clinic rooms" data-icon="building" role="option" aria-selected="true">
@@ -3515,11 +3702,15 @@ First available</textarea>
     function handleBusySingleDayToggle() {
       var isSingle = document.getElementById("busySingleDayCheck").checked;
       var endCol = document.getElementById("busyEndDateCol");
+      var endInput = document.getElementById("busyEndDate");
       if (endCol) {
         endCol.style.display = isSingle ? "none" : "block";
       }
-      if (isSingle) {
-        document.getElementById("busyEndDate").value = document.getElementById("busyStartDate").value;
+      if (endInput) {
+        endInput.disabled = isSingle;
+        if (isSingle) {
+          endInput.value = document.getElementById("busyStartDate").value;
+        }
       }
       updateBusyPreview();
     }
@@ -3530,13 +3721,20 @@ First available</textarea>
       var endInput = document.getElementById("busyEndTime");
       if (startInput) startInput.disabled = isAllDay;
       if (endInput) endInput.disabled = isAllDay;
+      var timeRow = document.getElementById("busyTimeInputsRow");
+      if (timeRow) {
+        timeRow.style.opacity = isAllDay ? "0.45" : "1";
+        timeRow.style.pointerEvents = isAllDay ? "none" : "auto";
+      }
       updateBusyPreview();
     }
 
     function handleBusyDateChange() {
       var isSingle = document.getElementById("busySingleDayCheck").checked;
       if (isSingle) {
-        document.getElementById("busyEndDate").value = document.getElementById("busyStartDate").value;
+        var startVal = document.getElementById("busyStartDate").value;
+        var endInput = document.getElementById("busyEndDate");
+        if (endInput) endInput.value = startVal;
       }
       updateBusyPreview();
     }
@@ -3599,7 +3797,7 @@ First available</textarea>
       hiddenInput.value = targetVal;
 
       if (targetVal === "Active") {
-        prim.textContent = "Active";
+        prim.textContent = "Active (Enforce Blocking)";
         if (sec) sec.textContent = "Appointments will be blocked on schedule and booking";
         if (icon) icon.className = "bi bi-check-circle-fill select-leading-icon text-success";
       } else {
@@ -3629,7 +3827,7 @@ First available</textarea>
       var targetVal = providerVal || "All Providers";
       hiddenInput.value = targetVal;
 
-      if (targetVal === "All Providers") {
+      if (targetVal === "All Providers" || targetVal === "All Providers (Clinic-wide Block)") {
         prim.textContent = "All Providers (Clinic-wide Block)";
         if (sec) sec.textContent = "Block schedule for all clinicians and departments";
         if (chip) {
@@ -3681,6 +3879,7 @@ First available</textarea>
 
       var locMap = {
         "All Locations": { prim: "All Locations & Rooms", sec: "Block availability across all clinic rooms", icon: "bi-building text-teal" },
+        "All Locations & Rooms": { prim: "All Locations & Rooms", sec: "Block availability across all clinic rooms", icon: "bi-building text-teal" },
         "Suite 301 · Exam & Treatment Rooms": { prim: "Suite 301 · Exam & Treatment Rooms", sec: "General examination and patient consult rooms", icon: "bi-door-closed text-secondary" },
         "Suite 301 · Ozone Therapy Room": { prim: "Suite 301 · Ozone Therapy Room", sec: "Dedicated ozone therapy & autohemotherapy suite", icon: "bi-heart-pulse text-teal" },
         "Suite 301 · HBOT Chamber 1": { prim: "Suite 301 · HBOT Chamber 1", sec: "Hyperbaric oxygen chamber clinical suite", icon: "bi-capsule text-primary" },
@@ -3707,70 +3906,165 @@ First available</textarea>
     function initBusyModalCustomSelects() {
       var modal = document.getElementById("busyTimeModal");
       if (!modal) return;
+      if (modal.getAttribute("data-busy-selects-bound") === "true") return;
+      modal.setAttribute("data-busy-selects-bound", "true");
 
-      var reasonPanel = document.getElementById("busyReasonPanel");
-      if (reasonPanel) {
-        reasonPanel.querySelectorAll(".custom-select-option").forEach(function(opt) {
-          opt.addEventListener("click", function(e) {
-            e.stopPropagation();
-            var val = opt.getAttribute("data-value");
-            setCustomSelectBusyReason(val);
-            reasonPanel.style.display = "none";
-            var trig = document.getElementById("busyReasonTrigger");
-            var wrp = document.getElementById("busyReasonWrapper");
-            if (trig) { trig.classList.remove("active"); trig.setAttribute("aria-expanded", "false"); }
-            if (wrp) wrp.classList.remove("open");
-          });
+      var configs = [
+        {
+          wrapperId: "busyReasonWrapper",
+          triggerId: "busyReasonTrigger",
+          panelId: "busyReasonPanel",
+          selectId: "busyReasonSelect",
+          setter: setCustomSelectBusyReason
+        },
+        {
+          wrapperId: "busyStatusWrapper",
+          triggerId: "busyStatusTrigger",
+          panelId: "busyStatusPanel",
+          selectId: "busyStatusSelect",
+          setter: setCustomSelectBusyStatus
+        },
+        {
+          wrapperId: "busyProviderWrapper",
+          triggerId: "busyProviderTrigger",
+          panelId: "busyProviderPanel",
+          selectId: "busyProviderSelect",
+          setter: setCustomSelectBusyProvider
+        },
+        {
+          wrapperId: "busyLocationWrapper",
+          triggerId: "busyLocationTrigger",
+          panelId: "busyLocationPanel",
+          selectId: "busyLocationSelect",
+          setter: setCustomSelectBusyLocation
+        }
+      ];
+
+      function closeAllBusySelects() {
+        configs.forEach(function(cfg) {
+          var p = document.getElementById(cfg.panelId);
+          var t = document.getElementById(cfg.triggerId);
+          var w = document.getElementById(cfg.wrapperId);
+          if (p) p.style.display = "none";
+          if (t) {
+            t.classList.remove("active");
+            t.setAttribute("aria-expanded", "false");
+          }
+          if (w) {
+            w.classList.remove("open");
+            w.classList.remove("open-upward");
+          }
         });
+        var rowReason = modal.querySelector(".dropdown-row-reason");
+        var rowProvider = modal.querySelector(".dropdown-row-provider");
+        if (rowReason) rowReason.style.zIndex = "30";
+        if (rowProvider) rowProvider.style.zIndex = "20";
       }
 
-      var statusPanel = document.getElementById("busyStatusPanel");
-      if (statusPanel) {
-        statusPanel.querySelectorAll(".custom-select-option").forEach(function(opt) {
-          opt.addEventListener("click", function(e) {
-            e.stopPropagation();
-            var val = opt.getAttribute("data-value");
-            setCustomSelectBusyStatus(val);
-            statusPanel.style.display = "none";
-            var trig = document.getElementById("busyStatusTrigger");
-            var wrp = document.getElementById("busyStatusWrapper");
-            if (trig) { trig.classList.remove("active"); trig.setAttribute("aria-expanded", "false"); }
-            if (wrp) wrp.classList.remove("open");
-          });
-        });
-      }
+      configs.forEach(function(cfg) {
+        var wrapper = document.getElementById(cfg.wrapperId);
+        var trigger = document.getElementById(cfg.triggerId);
+        var panel = document.getElementById(cfg.panelId);
+        var selectEl = document.getElementById(cfg.selectId);
+        if (!wrapper || !trigger || !panel) return;
 
-      var provPanel = document.getElementById("busyProviderPanel");
-      if (provPanel) {
-        provPanel.querySelectorAll(".custom-select-option").forEach(function(opt) {
-          opt.addEventListener("click", function(e) {
-            e.stopPropagation();
-            var val = opt.getAttribute("data-value");
-            setCustomSelectBusyProvider(val);
-            provPanel.style.display = "none";
-            var trig = document.getElementById("busyProviderTrigger");
-            var wrp = document.getElementById("busyProviderWrapper");
-            if (trig) { trig.classList.remove("active"); trig.setAttribute("aria-expanded", "false"); }
-            if (wrp) wrp.classList.remove("open");
-          });
-        });
-      }
+        // Prevent script.js duplicate listener
+        wrapper.setAttribute("data-cs-init", "true");
 
-      var locPanel = document.getElementById("busyLocationPanel");
-      if (locPanel) {
-        locPanel.querySelectorAll(".custom-select-option").forEach(function(opt) {
+        trigger.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var isOpen = wrapper.classList.contains("open") || panel.style.display === "block";
+          closeAllBusySelects();
+          if (!isOpen) {
+            // Intelligent upward or downward positioning
+            var modalBody = modal.querySelector(".modal-body") || modal;
+            if (modalBody && typeof modalBody.getBoundingClientRect === "function" && typeof trigger.getBoundingClientRect === "function") {
+              var bodyRect = modalBody.getBoundingClientRect();
+              var triggerRect = trigger.getBoundingClientRect();
+              var spaceBelow = bodyRect.bottom - triggerRect.bottom;
+              var spaceAbove = triggerRect.top - bodyRect.top;
+
+              // If limited space below (< 240px) and more space above, open upward
+              if (spaceBelow < 240 && spaceAbove > spaceBelow) {
+                wrapper.classList.add("open-upward");
+              } else {
+                wrapper.classList.remove("open-upward");
+              }
+            }
+
+            panel.style.display = "block";
+            wrapper.classList.add("open");
+            trigger.classList.add("active");
+            trigger.setAttribute("aria-expanded", "true");
+
+            // Elevate parent row's stacking context cleanly above other rows
+            var rowReason = modal.querySelector(".dropdown-row-reason");
+            var rowProvider = modal.querySelector(".dropdown-row-provider");
+            if (wrapper.id === "busyReasonWrapper" || wrapper.id === "busyStatusWrapper") {
+              if (rowReason) rowReason.style.zIndex = "1050";
+              if (rowProvider) rowProvider.style.zIndex = "10";
+            } else {
+              if (rowProvider) rowProvider.style.zIndex = "1050";
+              if (rowReason) rowReason.style.zIndex = "10";
+            }
+
+            var selectedOpt = panel.querySelector(".custom-select-option.selected");
+            if (selectedOpt && typeof selectedOpt.scrollIntoView === "function") {
+              try { selectedOpt.scrollIntoView({ block: "nearest" }); } catch (err) {}
+            }
+          }
+        });
+
+        trigger.addEventListener("keydown", function(e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            trigger.click();
+          } else if (e.key === "Escape") {
+            closeAllBusySelects();
+          } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+            if (!wrapper.classList.contains("open")) {
+              trigger.click();
+              return;
+            }
+            var opts = Array.from(panel.querySelectorAll(".custom-select-option"));
+            if (!opts.length) return;
+            var curIdx = opts.findIndex(function(o) { return o.classList.contains("selected"); });
+            var nextIdx = e.key === "ArrowDown" ? curIdx + 1 : curIdx - 1;
+            if (nextIdx >= 0 && nextIdx < opts.length) {
+              opts[nextIdx].click();
+            }
+          }
+        });
+
+        panel.querySelectorAll(".custom-select-option").forEach(function(opt) {
           opt.addEventListener("click", function(e) {
+            e.preventDefault();
             e.stopPropagation();
             var val = opt.getAttribute("data-value");
-            setCustomSelectBusyLocation(val);
-            locPanel.style.display = "none";
-            var trig = document.getElementById("busyLocationTrigger");
-            var wrp = document.getElementById("busyLocationWrapper");
-            if (trig) { trig.classList.remove("active"); trig.setAttribute("aria-expanded", "false"); }
-            if (wrp) wrp.classList.remove("open");
+            cfg.setter(val);
+            if (selectEl) {
+              selectEl.value = val;
+              selectEl.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+            closeAllBusySelects();
+            trigger.focus();
           });
         });
-      }
+
+        if (selectEl) {
+          selectEl.addEventListener("change", function() {
+            cfg.setter(selectEl.value);
+          });
+        }
+      });
+
+      document.addEventListener("click", function(e) {
+        if (!e.target.closest("#busyTimeModal .custom-select-wrapper")) {
+          closeAllBusySelects();
+        }
+      });
     }
 
     function handleBusyReasonChange() {
@@ -3903,12 +4197,18 @@ First available</textarea>
       document.getElementById("busyEndDate").value = "2026-09-24";
       document.getElementById("busySingleDayCheck").checked = true;
       document.getElementById("busyEndDateCol").style.display = "none";
+      document.getElementById("busyEndDate").disabled = true;
 
       document.getElementById("busyAllDayCheck").checked = false;
       document.getElementById("busyStartTime").disabled = false;
       document.getElementById("busyEndTime").disabled = false;
       document.getElementById("busyStartTime").value = "10:00";
       document.getElementById("busyEndTime").value = "13:00";
+      var timeRow = document.getElementById("busyTimeInputsRow");
+      if (timeRow) {
+        timeRow.style.opacity = "1";
+        timeRow.style.pointerEvents = "auto";
+      }
 
       document.getElementById("busyCustomReasonInput").value = "";
       setCustomSelectBusyReason("Meeting");
@@ -3945,12 +4245,18 @@ First available</textarea>
       var isSingle = (item.startDate === (item.endDate || item.startDate));
       document.getElementById("busySingleDayCheck").checked = isSingle;
       document.getElementById("busyEndDateCol").style.display = isSingle ? "none" : "block";
+      document.getElementById("busyEndDate").disabled = isSingle;
 
       document.getElementById("busyAllDayCheck").checked = !!item.allDay;
       document.getElementById("busyStartTime").disabled = !!item.allDay;
       document.getElementById("busyEndTime").disabled = !!item.allDay;
       document.getElementById("busyStartTime").value = item.startTime || "10:00";
       document.getElementById("busyEndTime").value = item.endTime || "13:00";
+      var timeRow = document.getElementById("busyTimeInputsRow");
+      if (timeRow) {
+        timeRow.style.opacity = item.allDay ? "0.45" : "1";
+        timeRow.style.pointerEvents = item.allDay ? "none" : "auto";
+      }
 
       var knownReasons = ["Urgent Work", "Meeting", "Holiday", "Maintenance", "Staff Unavailable", "Personal", "Special Event"];
       if (knownReasons.indexOf(item.reason) !== -1) {
@@ -4186,14 +4492,15 @@ First available</textarea>
       var html = '<div class="cal-event-card status-busy" onclick="openBusyTimeDetail(\'' + busy.id + '\')" title="Blocked Availability: ' + busy.reason + ' (' + timeDisplay + ')">';
 
       html += '<div class="cal-event-top-line">' +
-                '<span class="cal-event-time text-secondary"><i class="bi bi-lock-fill me-1 text-secondary"></i> ' + timeDisplay + '</span>' +
+                '<span class="cal-event-time text-secondary"><i class="bi bi-lock-fill me-1 text-secondary"></i> <strong>Busy / Blocked</strong></span>' +
                 '<span class="badge-admin badge-blocked" style="font-size:0.62rem; padding:1px 5px;">Blocked</span>' +
               '</div>';
 
-      html += '<div class="cal-event-patient text-dark fw-bold"><i class="bi bi-slash-circle me-1 text-secondary"></i>BUSY TIME: ' + busy.reason + '</div>';
+      html += '<div class="cal-event-patient text-dark fw-bold">' + timeDisplay + '</div>';
+      html += '<div class="cal-event-service text-navy fw-semibold"><i class="bi bi-slash-circle me-1 text-teal"></i>' + busy.reason + '</div>';
 
       if (!isWeekView) {
-        html += '<div class="cal-event-service text-muted small">' + busy.provider + ' · ' + (busy.location.indexOf("All") !== -1 ? "All Rooms" : busy.location) + '</div>';
+        html += '<div class="cal-event-service text-muted small mt-1">' + busy.provider + ' · ' + (busy.location.indexOf("All") !== -1 ? "All Rooms" : busy.location) + '</div>';
       }
 
       html += '<div class="cal-event-bottom-line">' +

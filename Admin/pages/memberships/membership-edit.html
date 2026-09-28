@@ -174,26 +174,35 @@
                 </div>
                 <div class="card-body-admin">
                   <div class="row g-3">
-                    <div class="col-md-4">
+                    <div class="col-12">
                       <label class="form-label-admin" for="plan-appt-discount">
                         <i class="bi bi-calendar-check text-teal me-1"></i> Appointments Discount
                       </label>
-                      <input class="form-control" id="plan-appt-discount" placeholder="e.g. 10% off All Appointments">
+                      <div class="d-flex align-items-center flex-wrap gap-2">
+                        <input type="number" class="form-control discount-number-input" id="plan-appt-discount" placeholder="10" min="0" max="100">
+                        <span class="discount-suffix-text">% off All Appointments</span>
+                      </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12">
                       <label class="form-label-admin" for="plan-iv-discount">
                         <i class="bi bi-droplet-fill text-teal me-1"></i> IV Therapy Discount
                       </label>
-                      <input class="form-control" id="plan-iv-discount" placeholder="e.g. 20% off All IV Therapies">
+                      <div class="d-flex align-items-center flex-wrap gap-2">
+                        <input type="number" class="form-control discount-number-input" id="plan-iv-discount" placeholder="20" min="0" max="100">
+                        <span class="discount-suffix-text">% off All IV Therapies</span>
+                      </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12">
                       <label class="form-label-admin" for="plan-sauna-discount">
                         <i class="bi bi-sun-fill text-teal me-1"></i> Infrared Sauna Discount
                       </label>
-                      <input class="form-control" id="plan-sauna-discount" placeholder="e.g. 20% off All Infrared Sauna Therapy">
+                      <div class="d-flex align-items-center flex-wrap gap-2">
+                        <input type="number" class="form-control discount-number-input" id="plan-sauna-discount" placeholder="20" min="0" max="100">
+                        <span class="discount-suffix-text">% off All Infrared Sauna Therapy</span>
+                      </div>
                     </div>
                   </div>
-                  <p class="help mt-2 mb-0">Leave blank if the tier does not include a specific discount (e.g. Standard tier omits the sauna discount).</p>
+                  <p class="help mt-3 mb-0">Leave blank if the tier does not include a specific discount (e.g. Standard tier omits the sauna discount).</p>
                 </div>
               </div>
 
@@ -306,13 +315,35 @@
                 </div>
               </div>
 
+              <!-- Floating Sticky Action Bar for Plan Editor -->
+              <div class="membership-action-bar mt-4">
+                <div class="action-bar-status">
+                  <i class="bi bi-clock-history text-teal"></i>
+                  <span>Last saved: <strong id="plan-last-saved" class="text-dark">Not saved yet</strong></span>
+                </div>
+                <div class="action-bar-buttons">
+                  <a class="btn-action-discard" href="memberships.html">
+                    <i class="bi bi-x-lg"></i> Discard / Back
+                  </a>
+                  <a class="btn-action-preview" href="membership-preview.html">
+                    <i class="bi bi-display"></i> Live Preview Screen
+                  </a>
+                  <button class="btn-action-draft" type="button" id="btn-save-draft">
+                    <i class="bi bi-check2"></i> Save Draft
+                  </button>
+                  <button class="btn-action-publish" type="button" id="btn-publish-plan">
+                    <i class="bi bi-broadcast"></i> Publish to Live Website
+                  </button>
+                </div>
+              </div>
+
             </div>
 
             <!-- Live Card Preview & Publishing Controls Column -->
             <div class="col-xl-5 col-lg-5">
               
               <!-- Real-time Live Card Preview Widget -->
-              <div class="card-admin mb-4 sticky-top" style="top: 80px; z-index: 10;">
+              <div class="card-admin mb-4 membership-preview-sticky">
                 <div class="card-head">
                   <div>
                     <h3 class="d-flex align-items-center gap-2">
@@ -350,27 +381,6 @@
             </div>
           </div>
         </form>
-
-        <!-- Sticky Bottom Floating Actions Bar -->
-        <div class="sticky-actions mt-4 justify-content-between align-items-center">
-          <div class="d-flex align-items-center gap-2">
-            <span class="text-muted small"><i class="bi bi-clock-history me-1"></i> Last saved: <span id="plan-last-saved">Not saved yet</span></span>
-          </div>
-          <div class="d-flex gap-2">
-            <a class="btn-btc-outline" href="memberships.html">
-              <i class="bi bi-x-lg me-1"></i> Discard / Back
-            </a>
-            <a class="btn-btc-outline" href="membership-preview.html">
-              <i class="bi bi-display me-1"></i> Live Preview Screen
-            </a>
-            <button class="btn-btc" type="button" id="btn-save-draft">
-              <i class="bi bi-check2 me-1"></i> Save Draft
-            </button>
-            <button class="btn-btc" style="background:var(--btc-navy)" type="button" id="btn-publish-plan">
-              <i class="bi bi-broadcast me-1"></i> Publish to Live Website
-            </button>
-          </div>
-        </div>
 
       </main>
     </div>

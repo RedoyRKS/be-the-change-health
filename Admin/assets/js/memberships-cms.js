@@ -516,6 +516,21 @@
     if (el) el.value = value == null ? "" : value;
   }
 
+  function extractDiscountNum(val) {
+    if (val === null || val === undefined) return "";
+    var match = String(val).match(/\d+/);
+    return match ? match[0] : "";
+  }
+
+  function formatDiscountVal(inputVal, suffix) {
+    if (!inputVal && inputVal !== 0) return "";
+    var digits = String(inputVal).replace(/[^0-9]/g, "");
+    if (!digits) return "";
+    var num = parseInt(digits, 10);
+    if (isNaN(num) || num <= 0) return "";
+    return num + suffix;
+  }
+
   function currentPlanId() {
     var hidden = document.getElementById("plan-id");
     return hidden ? hidden.value : param("plan");
@@ -537,9 +552,9 @@
       priceLabel: priceLabel,
       enrollment: val("plan-enrollment") || "open",
       featured: !!(featured && featured.checked),
-      appointmentDiscount: val("plan-appt-discount").trim(),
-      ivDiscount: val("plan-iv-discount").trim(),
-      saunaDiscount: val("plan-sauna-discount").trim(),
+      appointmentDiscount: formatDiscountVal(val("plan-appt-discount"), "% off All Appointments"),
+      ivDiscount: formatDiscountVal(val("plan-iv-discount"), "% off All IV Therapies"),
+      saunaDiscount: formatDiscountVal(val("plan-sauna-discount"), "% off All Infrared Sauna Therapy"),
       perkNote: val("plan-perk-note").trim(),
       servicesCount: parseInt(val("plan-services-count"), 10) || 2,
       servicesFrequency: val("plan-services-freq") || "month",
@@ -608,9 +623,9 @@
     setVal("plan-period", plan.period);
     setVal("plan-price-label", plan.priceLabel);
     setVal("plan-enrollment", plan.enrollment || "open");
-    setVal("plan-appt-discount", plan.appointmentDiscount);
-    setVal("plan-iv-discount", plan.ivDiscount);
-    setVal("plan-sauna-discount", plan.saunaDiscount);
+    setVal("plan-appt-discount", extractDiscountNum(plan.appointmentDiscount));
+    setVal("plan-iv-discount", extractDiscountNum(plan.ivDiscount));
+    setVal("plan-sauna-discount", extractDiscountNum(plan.saunaDiscount));
     setVal("plan-perk-note", plan.perkNote);
     setVal("plan-services-count", plan.servicesCount);
     setVal("plan-services-freq", plan.servicesFrequency || "month");
@@ -734,6 +749,13 @@
     var form = document.getElementById("membership-plan-form");
     if (form) {
       form.addEventListener("input", function (e) {
+        if (e.target.id === "plan-appt-discount" || e.target.id === "plan-iv-discount" || e.target.id === "plan-sauna-discount") {
+          var raw = e.target.value;
+          var cleaned = raw.replace(/[^0-9]/g, "");
+          if (raw !== cleaned) {
+            e.target.value = cleaned;
+          }
+        }
         if (e.target.id === "plan-price" || e.target.id === "plan-period") {
           var pVal = val("plan-price");
           var perVal = val("plan-period");

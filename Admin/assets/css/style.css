@@ -2569,6 +2569,220 @@ textarea.form-control {
   object-fit: cover;
 }
 
+/* Membership Plan Editor Discount Fields */
+.discount-number-input {
+  width: 95px !important;
+  max-width: 100px;
+  flex: 0 0 95px;
+  text-align: center;
+  font-weight: 600;
+}
+.discount-number-input::-webkit-inner-spin-button,
+.discount-number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.discount-number-input[type=number] {
+  -moz-appearance: textfield;
+}
+.discount-suffix-text {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--btc-navy);
+  user-select: none;
+}
+
+/* ============================================================
+   MEMBERSHIP PLAN EDITOR — STICKY BOTTOM ACTION BAR & PREVIEW
+   ============================================================ */
+.membership-action-bar {
+  position: sticky;
+  bottom: 0.85rem;
+  z-index: 95;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 48, 72, 0.14) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 48, 72, 0.08), 0 1px 4px rgba(0, 48, 72, 0.04) !important;
+  padding: 0.85rem 1.15rem !important;
+  margin-top: 1.75rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.membership-action-bar .action-bar-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: #64748b;
+  user-select: none;
+}
+
+.membership-action-bar .action-bar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: nowrap;
+}
+
+.membership-action-bar .btn-action-discard,
+.membership-action-bar .btn-action-preview,
+.membership-action-bar .btn-action-draft,
+.membership-action-bar .btn-action-publish {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.52rem 0.85rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  border-radius: 8px;
+  line-height: 1.35;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.16s ease;
+  box-shadow: 0 1px 2px rgba(0, 48, 72, 0.04);
+}
+
+/* Discard / Back: white background, dark navy text, outlined */
+.membership-action-bar .btn-action-discard {
+  background: #ffffff;
+  color: var(--btc-navy);
+  border: 1.5px solid rgba(0, 48, 72, 0.24);
+}
+.membership-action-bar .btn-action-discard:hover {
+  background: #f1f8fa;
+  color: var(--btc-navy);
+  border-color: var(--btc-navy);
+  transform: translateY(-1px);
+}
+
+/* Live Preview Screen: white background, dark navy text, outlined */
+.membership-action-bar .btn-action-preview {
+  background: #ffffff;
+  color: var(--btc-navy);
+  border: 1.5px solid rgba(0, 48, 72, 0.24);
+}
+.membership-action-bar .btn-action-preview:hover {
+  background: #f1f8fa;
+  color: var(--btc-navy);
+  border-color: var(--btc-navy);
+  transform: translateY(-1px);
+}
+
+/* Save Draft: teal background, white text */
+.membership-action-bar .btn-action-draft {
+  background: var(--btc-teal);
+  color: #ffffff;
+  border: 1.5px solid var(--btc-teal);
+}
+.membership-action-bar .btn-action-draft:hover {
+  background: #27798b;
+  border-color: #27798b;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(48, 140, 160, 0.28);
+}
+
+/* Publish to Live Website: dark navy background, white text */
+.membership-action-bar .btn-action-publish {
+  background: var(--btc-navy);
+  color: #ffffff;
+  border: 1.5px solid var(--btc-navy);
+}
+.membership-action-bar .btn-action-publish:hover {
+  background: var(--btc-navy-deep);
+  border-color: var(--btc-navy-deep);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 48, 72, 0.28);
+}
+
+/* Desktop Wide (> 1400px) */
+@media (min-width: 1400px) {
+  .membership-action-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .membership-action-bar .action-bar-buttons {
+    justify-content: flex-end;
+  }
+}
+
+/* Desktop Medium (992px to 1399px) */
+@media (max-width: 1399px) and (min-width: 992px) {
+  .membership-action-bar .action-bar-buttons {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
+/* Tablet (576px to 991px) */
+@media (max-width: 991px) and (min-width: 576px) {
+  .membership-action-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .membership-action-bar .action-bar-buttons {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+/* Mobile (< 576px) */
+@media (max-width: 575px) {
+  .membership-action-bar {
+    flex-direction: column;
+    padding: 0.75rem !important;
+    bottom: 0.5rem;
+  }
+  .membership-action-bar .action-bar-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    width: 100%;
+  }
+  .membership-action-bar .btn-action-discard,
+  .membership-action-bar .btn-action-preview,
+  .membership-action-bar .btn-action-draft,
+  .membership-action-bar .btn-action-publish {
+    width: 100%;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.76rem;
+    text-align: center;
+  }
+}
+
+/* Right-side Preview Column Independently Scrollable on Compact Viewports */
+.membership-preview-sticky {
+  position: sticky;
+  top: 80px;
+  z-index: 10;
+  max-height: calc(100vh - 95px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.membership-preview-sticky::-webkit-scrollbar {
+  width: 5px;
+}
+.membership-preview-sticky::-webkit-scrollbar-track {
+  background: transparent;
+}
+.membership-preview-sticky::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.membership-preview-sticky::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 /* Blog CMS enhancements */
 .table-thumb {
   width: 72px;
@@ -4922,15 +5136,95 @@ textarea.form-control {
 }
 
 /* ============================================================
-   SET BUSY TIME MODAL — CUSTOM HEALTHCARE SELECT DROPDOWNS
+   SET BUSY TIME MODAL — COMPREHENSIVE HEALTHCARE CMS STYLING
    ============================================================ */
+#busyTimeModal .modal-dialog {
+  max-width: 780px;
+}
+
+#busyTimeModal .modal-content {
+  border-radius: 14px;
+  border: 1px solid rgba(0, 48, 72, 0.12);
+  box-shadow: 0 18px 48px rgba(11, 58, 83, 0.14);
+}
+
+#busyTimeModal .modal-header {
+  border-bottom: 1px solid rgba(0, 48, 72, 0.08);
+  padding: 1.15rem 1.5rem;
+  background: #ffffff;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+#busyTimeModal .modal-title {
+  color: #0B3A53;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+#busyTimeModal .modal-body {
+  padding: 1.35rem 1.5rem;
+  background: #ffffff;
+}
+
+#busyTimeModal .modal-footer {
+  border-top: 1px solid rgba(0, 48, 72, 0.08);
+  padding: 1rem 1.5rem;
+  background: #fafbfc;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+#busyTimeModal .card.bg-light {
+  background: #f8fafc !important;
+  border: 1px solid rgba(0, 48, 72, 0.08) !important;
+  border-radius: 10px;
+}
+
+#busyTimeModal .form-control {
+  min-height: 46px;
+  border-radius: 9px;
+  border: 1px solid rgba(0, 48, 72, 0.16);
+  background: #ffffff;
+  color: #0B3A53;
+  font-size: 0.88rem;
+  box-shadow: 0 1px 3px rgba(0, 48, 72, 0.04);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+#busyTimeModal .form-control:focus {
+  border-color: #2F93A8;
+  box-shadow: 0 0 0 3px rgba(47, 147, 168, 0.2);
+  outline: none;
+}
+
+#busyTimeModal textarea.form-control {
+  min-height: 80px;
+  padding: 0.65rem 0.85rem;
+}
+
+#busyTimeModal .form-label-admin {
+  font-weight: 600;
+  color: #0B3A53;
+  font-size: 0.84rem;
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+#busyTimeModal .form-text {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 0.3rem;
+}
+
+/* Custom Healthcare Select Dropdowns */
 #busyTimeModal .custom-select-wrapper {
   position: relative;
   width: 100%;
 }
 
 #busyTimeModal .custom-select-trigger {
-  min-height: 44px;
+  min-height: 46px;
   background: #ffffff;
   border: 1px solid rgba(0, 48, 72, 0.16);
   border-radius: 9px;
@@ -4958,28 +5252,63 @@ textarea.form-control {
   outline: none;
 }
 
-#busyTimeModal .custom-select-wrapper.open {
-  z-index: 1095 !important;
+#busyTimeModal .dropdown-row-reason {
+  position: relative;
+  z-index: 30;
 }
 
-#busyTimeModal .custom-select-panel {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
+#busyTimeModal .dropdown-row-provider {
+  position: relative;
+  z-index: 20;
+}
+
+#busyTimeModal .custom-select-wrapper {
+  position: relative;
   width: 100%;
-  z-index: 1100 !important;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 48, 72, 0.14);
-  background: #ffffff;
-  box-shadow: 0 16px 36px rgba(0, 48, 72, 0.16), 0 3px 10px rgba(0, 0, 0, 0.05);
-  max-height: 260px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0.4rem;
-  animation: selectPanelFadeIn 0.16s ease-out;
 }
 
-/* Custom minimal scrollbar */
+#busyTimeModal .custom-select-wrapper.open {
+  z-index: 1060 !important;
+}
+
+/* Solid, Opaque Floating Dropdown Layer */
+#busyTimeModal .custom-select-panel {
+  position: absolute !important;
+  top: calc(100% + 4px) !important;
+  bottom: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  z-index: 1080 !important;
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 48, 72, 0.16) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 16px 36px rgba(0, 48, 72, 0.18), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  max-height: 260px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: none;
+  animation: selectPanelFadeIn 0.15s ease-out;
+}
+
+#busyTimeModal .custom-select-wrapper.open .custom-select-panel {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Intelligent Upward Positioning when space below is tight */
+#busyTimeModal .custom-select-wrapper.open-upward .custom-select-panel {
+  top: auto !important;
+  bottom: calc(100% + 4px) !important;
+  box-shadow: 0 -16px 36px rgba(0, 48, 72, 0.18), 0 -4px 12px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Custom slim scrollbar */
 #busyTimeModal .custom-select-panel::-webkit-scrollbar {
   width: 5px;
 }
@@ -4995,63 +5324,95 @@ textarea.form-control {
   background: #94a3b8;
 }
 
+/* Each Dropdown Option as a clean, solid card row with dividers */
 #busyTimeModal .custom-select-option {
-  padding: 0.55rem 0.75rem;
-  border-radius: 7px;
-  margin-bottom: 2px;
-  transition: all 0.14s ease;
-  border: 1px solid transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  cursor: pointer;
-  user-select: none;
+  padding: 0.65rem 0.85rem !important;
+  margin: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(0, 48, 72, 0.07) !important;
+  border-radius: 0 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 0.75rem !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  background-color: #ffffff !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.12s ease !important;
+  min-height: auto !important;
+}
+
+#busyTimeModal .custom-select-option:first-child {
+  border-top-left-radius: 9px !important;
+  border-top-right-radius: 9px !important;
 }
 
 #busyTimeModal .custom-select-option:last-child {
-  margin-bottom: 0;
+  border-bottom: none !important;
+  border-bottom-left-radius: 9px !important;
+  border-bottom-right-radius: 9px !important;
 }
 
 #busyTimeModal .custom-select-option:hover {
-  background: #F4FAFB;
-  border-color: rgba(47, 147, 168, 0.15);
+  background-color: #F4FAFB !important;
 }
 
 #busyTimeModal .custom-select-option.selected {
-  background: #EAF5F6 !important;
-  border-color: rgba(47, 147, 168, 0.35) !important;
+  background-color: #EAF5F6 !important;
+}
+
+#busyTimeModal .custom-select-option .option-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.22rem !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
 }
 
 #busyTimeModal .custom-select-option .option-primary {
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: #0B3A53;
-  word-break: normal;
-  overflow-wrap: break-word;
-  white-space: normal;
-  line-height: 1.35;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: #0B3A53 !important;
+  line-height: 1.3 !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
 }
 
 #busyTimeModal .custom-select-option.selected .option-primary {
-  color: #0B3A53;
-  font-weight: 700;
+  color: #0B3A53 !important;
+  font-weight: 700 !important;
 }
 
 #busyTimeModal .custom-select-option .option-secondary {
-  font-size: 0.73rem;
-  color: #64748b;
-  margin-top: 2px;
-  line-height: 1.3;
-  word-break: normal;
-  overflow-wrap: break-word;
-  white-space: normal;
+  font-size: 0.75rem !important;
+  color: #55697c !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
 }
 
 #busyTimeModal .custom-select-option .option-check {
-  color: #2F93A8;
-  font-size: 1.1rem;
-  font-weight: 700;
+  color: #2F93A8 !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+  display: none !important;
+}
+
+#busyTimeModal .custom-select-option.selected .option-check {
+  display: inline-block !important;
+}
+
+#busyTimeModal .modal-body {
+  padding-bottom: 3.5rem !important;
 }
 
 #busyTimeModal .custom-select-trigger .custom-select-selected-content {
