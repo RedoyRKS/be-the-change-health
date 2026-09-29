@@ -402,12 +402,15 @@
           }
         });
 
-        // Keyboard: open on focus within dropdown, close when focus leaves
+        // Keyboard / desktop focus: open on focus within dropdown, close when focus leaves.
+        // Skip on mobile — touch fires focusin then click, which would open then immediately close.
         if (li.classList.contains("dropdown")) {
           li.addEventListener("focusin", function () {
+            if (isMobileNav()) return;
             openDropdown(li);
           });
           li.addEventListener("focusout", function (e) {
+            if (isMobileNav()) return;
             var related = e.relatedTarget;
             if (related && li.contains(related)) return;
             closeDropdown(li);
@@ -444,6 +447,7 @@
           "click",
           function (e) {
             e.preventDefault();
+            e.stopPropagation();
             e.stopImmediatePropagation();
             if (isMobileNav()) {
               toggleSubmenu(trigger);
