@@ -37,11 +37,13 @@
 
     <section class="section blog-listing">
       <div class="container">
-        <div class="blog-toolbar" data-aos="fade-up">
+        <div class="blog-toolbar">
           <form class="blog-search" id="blog-search-form" role="search" action="#" method="get">
             <label class="visually-hidden" for="blog-search">Search articles</label>
-            <i class="bi bi-search" aria-hidden="true"></i>
-            <input type="search" id="blog-search" name="q" placeholder="Search articles…" autocomplete="off">
+            <div class="blog-search-field">
+              <i class="bi bi-search" aria-hidden="true"></i>
+              <input type="search" id="blog-search" name="q" placeholder="Search articles…" autocomplete="off">
+            </div>
           </form>
           <div class="blog-categories" role="tablist" aria-label="Blog categories">
             <button type="button" class="blog-cat-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
