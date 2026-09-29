@@ -16,7 +16,7 @@
   <link href="assets/vendor/theme/css/main.css" rel="stylesheet">
   <link href="assets/css/theme.css" rel="stylesheet">
 </head>
-<body class="index-page page-inner">
+<body class="index-page page-inner page-contact">
 
   <div data-site-header></div>
   <script src="assets/js/site-header.js"></script>
@@ -25,7 +25,7 @@
     <section class="page-hero section">
       <div class="container" data-aos="fade-up">
         <h1>Contact</h1>
-        <p>Reach our Columbia, MD team by text, phone, or message we’re here to help.</p>
+        <p>Reach our Columbia, MD team by text, phone we’re here to help.</p>
         <nav class="page-breadcrumb" aria-label="breadcrumb">
           <ol>
             <li><a href="index.html">Home</a></li>
@@ -60,9 +60,10 @@
     </section>
 
     <!-- Channel cards -->
-    <section class="section contact-channels pt-0">
+    <section class="section contact-channels">
       <div class="container">
         <div class="contact-section-intro" data-aos="fade-up">
+          <span class="contact-eyebrow">Connect</span>
           <h2>Ways to Reach Us</h2>
           <p>Choose the option that works best for you — our Columbia team responds promptly during office hours.</p>
         </div>
@@ -73,6 +74,7 @@
               <h3>Text</h3>
               <p>Best for appointment requests and quick questions.</p>
               <span class="contact-channel-value">301-970-9724</span>
+              <span class="contact-channel-link">Send a text <i class="bi bi-arrow-right"></i></span>
             </a>
           </div>
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="80">
@@ -82,6 +84,7 @@
               <p>Speak with our team during business hours.</p>
               <span class="contact-channel-value">301-970-9724</span>
               <span class="contact-channel-meta">Fax: 301-359-1986</span>
+              <span class="contact-channel-link">Call now <i class="bi bi-arrow-right"></i></span>
             </a>
           </div>
           <div class="col-md-4" data-aos="fade-up" data-aos-delay="160">
@@ -89,7 +92,8 @@
               <span class="contact-channel-icon" aria-hidden="true"><i class="bi bi-envelope"></i></span>
               <h3>Email</h3>
               <p>Send a general inquiry anytime — we’ll follow up.</p>
-              <span class="contact-channel-value contact-channel-value--sm">admin@bethechangewellnesscenter.com</span>
+              <span class="contact-channel-value contact-channel-value--sm">admin@bethechange.com</span>
+              <span class="contact-channel-link">Email us <i class="bi bi-arrow-right"></i></span>
             </a>
           </div>
         </div>
@@ -100,121 +104,109 @@
     <section class="section contact-message" id="message">
       <div class="container">
         <div class="contact-section-intro" data-aos="fade-up">
-          <span class="contact-aside-label">Inquiries</span>
+          <span class="contact-eyebrow">Inquiries</span>
           <h2>Send Us A Message</h2>
           <p>Have a question about services, memberships, or becoming a new patient? Send a message and our team will follow up. Required fields are marked with *</p>
         </div>
 
-        <div class="contact-message-layout">
-          <div class="contact-message-form-card" data-aos="fade-up">
-            <div id="contact-success" class="appointment-alert success" hidden role="status">
-              <i class="bi bi-check-circle-fill"></i>
-              <div>
-                <strong>Message ready</strong>
-                <p class="mb-0">Thank you. Your message has been validated successfully. For the fastest response, text or call <a href="tel:3019709724">301-970-9724</a>.</p>
-              </div>
+        <div class="contact-message-panel" data-aos="fade-up" data-aos-delay="60">
+          <div id="contact-success" class="appointment-alert success" hidden role="status">
+            <i class="bi bi-check-circle-fill"></i>
+            <div>
+              <strong>Message ready</strong>
+              <p class="mb-0">Thank you. Your message has been validated successfully. For the fastest response, text or call <a href="tel:3019709724">301-970-9724</a>.</p>
             </div>
-
-            <form id="contact-form" class="appointment-form contact-form" novalidate>
-              <div class="row g-4">
-                <div class="col-md-6">
-                  <label for="contactName" class="form-label">Full Name *</label>
-                  <input type="text" class="form-control" id="contactName" name="name" autocomplete="name" required minlength="2">
-                  <div class="invalid-feedback">Please enter your name.</div>
-                </div>
-                <div class="col-md-6">
-                  <label for="contactPhone" class="form-label">Phone *</label>
-                  <input type="tel" class="form-control" id="contactPhone" name="phone" autocomplete="tel" required>
-                  <div class="invalid-feedback">Please enter a valid phone number.</div>
-                </div>
-                <div class="col-md-6">
-                  <label for="contactEmail" class="form-label">Email *</label>
-                  <input type="email" class="form-control" id="contactEmail" name="email" autocomplete="email" required>
-                  <div class="invalid-feedback">Please enter a valid email address.</div>
-                </div>
-                <div class="col-md-6">
-                  <label for="contactSubject" class="form-label">Subject *</label>
-                  <select class="form-select" id="contactSubject" name="subject" required>
-                    <option value="">Select…</option>
-                    <option>Appointment question</option>
-                    <option>New patient inquiry</option>
-                    <option>Existing patient</option>
-                    <option>Services / therapies</option>
-                    <option>Memberships</option>
-                    <option>Billing / insurance</option>
-                    <option>Other</option>
-                  </select>
-                  <div class="invalid-feedback">Please select a subject.</div>
-                </div>
-                <div class="col-12">
-                  <label for="contactMessage" class="form-label">Message *</label>
-                  <textarea class="form-control" id="contactMessage" name="message" rows="6" required maxlength="1500" placeholder="How can we help?"></textarea>
-                  <div class="form-text"><span id="contact-message-count">0</span>/1500 characters</div>
-                  <div class="invalid-feedback">Please enter your message (at least 10 characters).</div>
-                </div>
-                <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="contactConsent" name="consent" required>
-                    <label class="form-check-label" for="contactConsent">
-                      I understand this form is for general inquiries and that the office may follow up by phone or email. *
-                    </label>
-                    <div class="invalid-feedback">Please confirm before submitting.</div>
-                  </div>
-                </div>
-                <div class="col-12 appointment-actions">
-                  <button type="submit" class="btn-btc" id="contact-submit">
-                    <span class="btn-label">Send Message</span>
-                  </button>
-                  <a href="sms:3019709724" class="btn-btc-outline">Prefer to Text?</a>
-                </div>
-              </div>
-            </form>
           </div>
-          
-          <!-- <aside class="contact-message-meta" data-aos="fade-up" data-aos-delay="80">
-            <div class="contact-meta-card">
-              <span class="contact-channel-icon" aria-hidden="true"><i class="bi bi-clock"></i></span>
-              <div>
-                <strong>Hours</strong>
-                <p>Mon–Fri 10:00 AM – 5:00 PM<br>Saturday &amp; Sunday: Closed</p>
+
+          <form id="contact-form" class="appointment-form contact-form" novalidate>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label for="contactName" class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="contactName" name="name" autocomplete="name" required minlength="2" placeholder="Your full name">
+                <div class="invalid-feedback">Please enter your name.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="contactPhone" class="form-label">Phone *</label>
+                <input type="tel" class="form-control" id="contactPhone" name="phone" autocomplete="tel" required placeholder="(301) 000-0000">
+                <div class="invalid-feedback">Please enter a valid phone number.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="contactEmail" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="contactEmail" name="email" autocomplete="email" required placeholder="you@example.com">
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="contactSubject" class="form-label">Subject *</label>
+                <select class="form-select" id="contactSubject" name="subject" required>
+                  <option value="">Select…</option>
+                  <option>Appointment question</option>
+                  <option>New patient inquiry</option>
+                  <option>Existing patient</option>
+                  <option>Services / therapies</option>
+                  <option>Memberships</option>
+                  <option>Billing / insurance</option>
+                  <option>Other</option>
+                </select>
+                <div class="invalid-feedback">Please select a subject.</div>
+              </div>
+              <div class="col-12">
+                <label for="contactMessage" class="form-label">Message *</label>
+                <textarea class="form-control" id="contactMessage" name="message" rows="6" required maxlength="1500" placeholder="How can we help?"></textarea>
+                <div class="form-text"><span id="contact-message-count">0</span>/1500 characters</div>
+                <div class="invalid-feedback">Please enter your message (at least 10 characters).</div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="contactConsent" name="consent" required>
+                  <label class="form-check-label" for="contactConsent">
+                    I understand this form is for general inquiries and that the office may follow up by phone or email. *
+                  </label>
+                  <div class="invalid-feedback">Please confirm before submitting.</div>
+                </div>
+              </div>
+              <div class="col-12 appointment-actions">
+                <button type="submit" class="btn-btc" id="contact-submit">
+                  <span class="btn-label">Send Message</span>
+                </button>
+                <a href="sms:3019709724" class="btn-btc-outline">Prefer to Text?</a>
               </div>
             </div>
-            <div class="contact-meta-card">
-              <span class="contact-channel-icon" aria-hidden="true"><i class="bi bi-geo-alt"></i></span>
-              <div>
-                <strong>Office</strong>
-                <p>8808 Centre Park Drive Suite 301<br>Columbia, MD 21045</p>
-              </div>
-            </div>
-            <div class="contact-meta-note">
-              <strong>Please note</strong>
-              <p class="mb-0">Our office is out-of-network. We cannot guarantee coverage for any services received in office. Now offering Telehealth appointments.</p>
-            </div>
-          </aside> -->
+          </form>
         </div>
       </div>
     </section>
 
     <!-- Visit / map -->
-    <section class="section contact-visit light-background">
+    <section class="section contact-visit">
       <div class="container">
-        <div class="row align-items-end g-4 mb-4">
-          <div class="col-lg-7" data-aos="fade-up">
-            <div class="contact-section-intro text-start mb-0">
-              <h2>Find Us</h2>
-              <p class="mb-0">Conveniently located in Columbia, MD — Centre Park Drive, Suite 301.</p>
-            </div>
-          </div>
-          <div class="col-lg-5" data-aos="fade-up" data-aos-delay="80">
-            <div class="contact-visit-card">
-              <div>
-                <strong>Be The Change Health &amp; Wellness Center</strong>
-                <p class="mb-0">8808 Centre Park Drive Suite 301<br>Columbia, MD 21045</p>
-              </div>
-              <a href="https://maps.google.com/maps/dir//Be+The+Change+Health+%26+Wellness+Center+8808+Centre+Park+Dr+Suite+301+Columbia,+MD+21045" target="_blank" rel="noopener" class="btn-btc-outline">Get Directions</a>
-            </div>
-          </div>
+        <div class="contact-section-intro" data-aos="fade-up">
+          <span class="contact-eyebrow">Location</span>
+          <h2>Find Us</h2>
+          <p>Conveniently located in Columbia, MD — Centre Park Drive, Suite 301.</p>
         </div>
+
+        <!-- <div class="contact-visit-grid" data-aos="fade-up" data-aos-delay="60">
+          <div class="contact-visit-detail">
+            <span class="contact-channel-icon" aria-hidden="true"><i class="bi bi-geo-alt"></i></span>
+            <div>
+              <strong>Office Address</strong>
+              <p>Be The Change Health &amp; Wellness Center<br>8808 Centre Park Drive Suite 301<br>Columbia, MD 21045</p>
+              <a href="https://maps.google.com/maps/dir//Be+The+Change+Health+%26+Wellness+Center+8808+Centre+Park+Dr+Suite+301+Columbia,+MD+21045" target="_blank" rel="noopener">Get Directions <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="contact-visit-detail">
+            <span class="contact-channel-icon" aria-hidden="true"><i class="bi bi-clock"></i></span>
+            <div>
+              <strong>Hours</strong>
+              <p>Mon–Fri: 10:00 AM – 5:00 PM<br>Saturday: Closed<br>Sunday: Closed</p>
+            </div>
+          </div>
+          <div class="contact-visit-note">
+            <strong>Please note</strong>
+            <p class="mb-0">Our office is out-of-network. We cannot guarantee coverage for any services received in office. Now offering Telehealth appointments.</p>
+          </div>
+        </div> -->
+
         <div class="contact-map-frame" data-aos="fade-up" data-aos-delay="100">
           <iframe
             title="Be The Change Health &amp; Wellness Center map"
