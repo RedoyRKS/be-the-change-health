@@ -12,6 +12,525 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../../assets/css/style.css" rel="stylesheet">
   <style id="busy-modal-dropdown-styles">
+    /* ============================================================
+       Add Appointment Modal (#approveModal) Custom Styles
+       ============================================================ */
+    #approveModal .modal-dialog {
+      max-width: 860px;
+      margin: 1.75rem auto;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+    }
+    #approveModal .modal-content {
+      border-radius: 12px;
+      border: 1px solid #dce6eb;
+      box-shadow: 0 16px 44px rgba(0, 48, 72, 0.16), 0 4px 12px rgba(0, 0, 0, 0.04);
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    #approveModal .modal-header {
+      background: #ffffff;
+      border-bottom: 1px solid #e1e7eb;
+      padding: 18px 24px;
+      flex-shrink: 0;
+    }
+    #approveModal .modal-header .modal-title {
+      font-size: 1.125rem;
+      color: #0B3A53;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    #approveModal .modal-header .modal-subtitle {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    #approveModal .appointment-modal-icon-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(47, 147, 168, 0.1);
+      color: #2F93A8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+    #approveModal .modal-body {
+      padding: 20px 24px;
+      flex: 1 1 auto;
+      overflow-y: auto;
+      max-height: calc(90vh - 136px);
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f8fafc;
+    }
+    #approveModal .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    #approveModal .modal-body::-webkit-scrollbar-track {
+      background: #f8fafc;
+    }
+    #approveModal .modal-body::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    #approveModal .modal-body::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    #approveModal .modal-footer {
+      background: #fafcff;
+      border-top: 1px solid #e1e7eb;
+      padding: 14px 24px;
+      flex-shrink: 0;
+    }
+
+    /* Section Headings */
+    #approveModal .appointment-section-wrap {
+      margin-bottom: 22px;
+    }
+    #approveModal .appointment-section-wrap:last-child {
+      margin-bottom: 4px;
+    }
+    #approveModal .appointment-section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #0B3A53;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #e8eef2;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Form Controls within Modal */
+    #approveModal .form-label-admin {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #0B3A53;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+      display: block;
+    }
+    #approveModal .form-control,
+    #approveModal .form-select {
+      height: 42px;
+      border: 1px solid #d7e1e7;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      color: #0B3A53;
+      padding: 0.48rem 0.8rem;
+      background-color: #ffffff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    #approveModal .form-control:focus,
+    #approveModal .form-select:focus {
+      border-color: #2F93A8;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(47, 147, 168, 0.15);
+      outline: none;
+    }
+    #approveModal .input-group {
+      height: 42px;
+    }
+    #approveModal .input-group .form-control {
+      height: 100%;
+      border-radius: 0 8px 8px 0;
+    }
+    #approveModal .input-group .input-group-text {
+      border-color: #d7e1e7;
+      background-color: #f8fafc;
+      color: #2F93A8;
+      border-radius: 8px 0 0 8px;
+      padding: 0 0.8rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+    }
+
+    /* Custom Select Dropdowns in #approveModal */
+    #approveModal .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    #approveModal .custom-select-wrapper.open {
+      z-index: 1060;
+    }
+    #approveModal .custom-select-trigger {
+      height: 42px;
+      border: 1px solid #d7e1e7;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      color: #0B3A53;
+      padding: 0 0.85rem;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    #approveModal .custom-select-trigger:hover {
+      border-color: #b8c9d4;
+    }
+    #approveModal .custom-select-trigger.active,
+    #approveModal .custom-select-wrapper.open .custom-select-trigger {
+      border-color: #2F93A8;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(47, 147, 168, 0.15);
+      outline: none;
+    }
+    #approveModal .custom-select-selected-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 0;
+      flex: 1 1 auto;
+      overflow: hidden;
+    }
+    #approveModal .custom-select-primary-text {
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: #0B3A53;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #approveModal .custom-select-chevron {
+      font-size: 0.75rem;
+      color: #7b91a0;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    #approveModal .custom-select-wrapper.open .custom-select-chevron {
+      transform: rotate(180deg);
+      color: #2F93A8;
+    }
+
+    /* Floating Options Panel */
+    #approveModal .custom-select-panel {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1080;
+      background-color: #ffffff;
+      border: 1px solid #dce6eb;
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(0, 48, 72, 0.14), 0 3px 8px rgba(0, 0, 0, 0.04);
+      max-height: 220px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 4px;
+      margin: 0;
+      display: none;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f8fafc;
+    }
+    #approveModal .custom-select-panel::-webkit-scrollbar {
+      width: 5px;
+    }
+    #approveModal .custom-select-panel::-webkit-scrollbar-track {
+      background: #f8fafc;
+      border-radius: 4px;
+    }
+    #approveModal .custom-select-panel::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    #approveModal .custom-select-panel::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    #approveModal .custom-select-wrapper.open .custom-select-panel {
+      display: block;
+    }
+    #approveModal .custom-select-wrapper.open-upward .custom-select-panel {
+      top: auto;
+      bottom: calc(100% + 4px);
+      box-shadow: 0 -12px 30px rgba(0, 48, 72, 0.14), 0 -3px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Options */
+    #approveModal .custom-select-option {
+      padding: 8px 12px;
+      margin: 1px 0;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      background-color: #ffffff;
+      color: #0B3A53;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background-color 0.12s ease, color 0.12s ease;
+    }
+    #approveModal .custom-select-option:hover {
+      background-color: #f4fafb;
+      color: #2F93A8;
+    }
+    #approveModal .custom-select-option.selected {
+      background-color: #eaf5f7;
+      color: #2F93A8;
+      font-weight: 700;
+    }
+    #approveModal .custom-select-option .option-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #approveModal .custom-select-option .option-check {
+      color: #2F93A8;
+      font-size: 1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      display: none;
+    }
+    #approveModal .custom-select-option.selected .option-check {
+      display: inline-block;
+    }
+
+    /* Dedicated Amount Field (Visually Distinct) */
+    #approveModal .appointment-amount-box {
+      height: 42px;
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #d7e1e7;
+      border-radius: 8px;
+      padding: 0 0.75rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    #approveModal .appointment-amount-box:focus-within {
+      border-color: #2F93A8;
+      box-shadow: 0 0 0 3px rgba(47, 147, 168, 0.15);
+    }
+    #approveModal .appointment-amount-currency {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #2F93A8;
+      margin-right: 0.45rem;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    #approveModal .appointment-amount-input {
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-size: 0.92rem !important;
+      font-weight: 700 !important;
+      color: #0B3A53 !important;
+      background: transparent !important;
+      width: 100%;
+      height: 100%;
+      outline: none;
+    }
+    #approveModal .appointment-amount-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: rgba(47, 147, 168, 0.12);
+      color: #2F93A8;
+      margin-left: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    /* Schedule Section - Live Selected Banner */
+    #approveModal .schedule-selection-banner {
+      background: #f4fafc;
+      border: 1px solid #dce8ee;
+      border-radius: 8px;
+      padding: 8px 14px;
+      margin-bottom: 14px;
+    }
+
+    /* Inline Calendar Widget */
+    #approveModal .appointment-calendar-card {
+      background: #ffffff;
+      border: 1px solid #dce6eb;
+      border-radius: 10px;
+      padding: 14px 16px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    #approveModal .apt-cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    #approveModal .apt-cal-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0B3A53;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+    #approveModal .apt-cal-nav {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #0B3A53;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.15s ease;
+    }
+    #approveModal .apt-cal-nav:hover {
+      background: #2F93A8;
+      color: #ffffff;
+      border-color: #2F93A8;
+    }
+    #approveModal .apt-cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #8c9ba5;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    #approveModal .apt-cal-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+    #approveModal .apt-cal-day {
+      aspect-ratio: 1;
+      height: 32px;
+      max-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #0B3A53;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      user-select: none;
+    }
+    #approveModal .apt-cal-day:hover:not(.disabled) {
+      background: #eaf5f7;
+      color: #2F93A8;
+      font-weight: 600;
+    }
+    #approveModal .apt-cal-day.disabled {
+      color: #cbd5e1;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+    #approveModal .apt-cal-day.active {
+      background: #2F93A8 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      border-radius: 7px;
+      box-shadow: 0 2px 6px rgba(47, 147, 168, 0.35);
+    }
+    #approveModal .apt-cal-day.today:not(.active) {
+      border: 1.5px solid #2F93A8;
+      color: #2F93A8;
+      font-weight: 700;
+      background: rgba(47, 147, 168, 0.06);
+    }
+
+    /* Available Time Slots Panel */
+    #approveModal .appointment-slots-card {
+      background: #ffffff;
+      border: 1px solid #dce6eb;
+      border-radius: 10px;
+      padding: 12px 14px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #approveModal .appointment-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      flex: 1;
+      align-content: start;
+    }
+    @media (max-width: 575.98px) {
+      #approveModal .appointment-slots-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    #approveModal .apt-slot-btn {
+      height: 40px;
+      background: #ffffff;
+      border: 1px solid #dce6eb;
+      border-radius: 8px;
+      padding: 0 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #0B3A53;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      user-select: none;
+    }
+    #approveModal .apt-slot-btn:hover {
+      border-color: #2F93A8;
+      background: #f4fafb;
+      color: #2F93A8;
+    }
+    #approveModal .apt-slot-btn.active {
+      background: #2F93A8;
+      border-color: #2F93A8;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(47, 147, 168, 0.28);
+    }
+    #approveModal .apt-slot-btn i {
+      font-size: 0.82rem;
+    }
+
+    /* Modal Button Sizing */
+    #approveModal .btn-btc-outline,
+    #approveModal .btn-btc {
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.86rem;
+    }
+
     /* Busy Time Modal Dropdown Positioning & Stacking */
     #busyTimeModal .dropdown-row-reason {
       position: relative;
@@ -325,9 +844,9 @@
             <button class="btn-btc-outline btn-sm-admin" type="button" id="btnTopSetBusyTime" onclick="openCreateBusyModal()" title="Temporarily block schedule availability for urgent work, meetings, holidays, or maintenance">
               <i class="bi bi-clock-history me-1"></i> Set Busy Time
             </button>
-            <button class="btn-btc-outline btn-sm-admin" type="button" id="btnTopCustomerBooking" onclick="openCustomerBookingModal()" title="Preview patient booking availability and blocked slots">
+            <a class="btn-btc-outline btn-sm-admin" href="../../../Frontend/book-appointment.html" target="_blank" rel="noopener" id="btnTopCustomerBooking" title="Preview patient booking availability and public booking page">
               <i class="bi bi-person-check me-1"></i> Customer Booking View
-            </button>
+            </a>
             <button class="btn-btc-outline btn-sm-admin" type="button" data-save="Calendar sync complete. All provider calendars up to date.">
               <i class="bi bi-arrow-repeat me-1"></i> Sync Calendars
             </button>
@@ -1614,273 +2133,392 @@
 
 
   <!-- ============================================================
-       APPROVAL UI MODAL (#approveModal)
+       ADD APPOINTMENT MODAL (#approveModal)
        ============================================================ -->
   <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header border-bottom">
-          <h5 class="modal-title text-navy fw-bold" id="approveModalLabel">
-            <i class="bi bi-check-circle-fill text-success me-2"></i>Approve Appointment Request
-          </h5>
+        <!-- MODAL HEADER -->
+        <div class="modal-header d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-3">
+            <div class="appointment-modal-icon-badge">
+              <i class="bi bi-calendar2-plus-fill"></i>
+            </div>
+            <div>
+              <h5 class="modal-title mb-0" id="approveModalLabel">Add Appointment</h5>
+              <div class="modal-subtitle">Create and schedule a new patient appointment.</div>
+            </div>
+          </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p class="text-muted small mb-3">Review the requested visit information below, configure scheduling parameters, and confirm the patient slot.</p>
 
-          <!-- Requested Summary Box -->
-          <div class="appt-modal-recap">
-            <div class="appt-modal-recap-grid">
-              <div class="appt-modal-recap-item">
-                <small>Patient</small>
-                <strong id="approveModalPatient">Elle Adams</strong>
-                <span class="badge-admin badge-new" id="approveModalPTypeBadge">New Patient</span>
+          <!-- SECTION 1 — PATIENT -->
+          <div class="appointment-section-wrap">
+            <div class="appointment-section-title">
+              <i class="bi bi-person-fill text-teal me-2"></i>Patient
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentPatientName">Patient Name</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="text" class="form-control" id="appointmentPatientName" placeholder="Enter patient name" value="Elle Adams">
+                </div>
               </div>
-              <div class="appt-modal-recap-item">
-                <small>Requested Date &amp; Time</small>
-                <strong id="approveModalRequested">Sep 24, 2026 · Morning (10:00 AM)</strong>
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentPatientEmail">Email</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control" id="appointmentPatientEmail" placeholder="Enter patient email" value="elle.adams@gmail.com">
+                </div>
               </div>
-              <div class="appt-modal-recap-item">
-                <small>Provider</small>
-                <strong id="approveModalProvider">Sultana Afrooz, D.O.</strong>
-              </div>
-              <div class="appt-modal-recap-item">
-                <small>Service</small>
-                <strong id="approveModalService">New patient consultation</strong>
-              </div>
-              <div class="appt-modal-recap-item">
-                <small>Visit Type</small>
-                <span class="badge-admin badge-tele" id="approveModalVisitBadge">Telehealth</span>
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentPatientPhone">Phone</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                  <input type="tel" class="form-control" id="appointmentPatientPhone" placeholder="Enter phone number" value="(410) 555-0142">
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Scheduling Controls Form -->
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label-admin" for="approveDateDisplay">Confirmed Date</label>
-              <div class="calendar-picker-wrapper" id="approveCalendarWrapper">
-                <div class="input-group">
-                  <span class="input-group-text bg-white border-end-0 text-teal"><i class="bi bi-calendar3"></i></span>
-                  <input type="text" class="form-control border-start-0 border-end-0 ps-0 calendar-input-trigger" id="approveDateDisplay" value="Sep 24, 2026" readonly role="button" aria-haspopup="dialog" aria-expanded="false" title="Click to choose appointment confirmation date">
-                  <button class="btn btn-outline-secondary border-start-0 bg-white text-muted px-2" type="button" id="btnToggleApproveCalendar" title="Toggle calendar popover" aria-label="Toggle calendar">
-                    <i class="bi bi-chevron-down small"></i>
-                  </button>
+          <!-- SECTION 2 — SERVICE -->
+          <div class="appointment-section-wrap">
+            <div class="appointment-section-title">
+              <i class="bi bi-clipboard2-pulse-fill text-teal me-2"></i>Service
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentService">Service</label>
+                <div class="custom-select-wrapper" id="aptModalServiceWrapper" data-cs-init="true">
+                  <div class="custom-select-trigger" id="aptModalServiceTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select service">
+                    <div class="custom-select-selected-content">
+                      <span class="custom-select-primary-text" id="aptModalServiceDisplay">Initial Integrative Consultation</span>
+                    </div>
+                    <i class="bi bi-chevron-down custom-select-chevron"></i>
+                  </div>
+                  <div class="custom-select-panel" id="aptModalServicePanel" role="listbox">
+                    <div class="custom-select-option selected" data-value="Initial Integrative Consultation" role="option">
+                      <span class="option-label">Initial Integrative Consultation</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Functional Medicine Assessment" role="option">
+                      <span class="option-label">Functional Medicine Assessment</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Acupuncture &amp; Meridian Therapy" role="option">
+                      <span class="option-label">Acupuncture &amp; Meridian Therapy</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Frequency Specific Microcurrent™" role="option">
+                      <span class="option-label">Frequency Specific Microcurrent™</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Hyperbaric Oxygen Therapy (HBOT)" role="option">
+                      <span class="option-label">Hyperbaric Oxygen Therapy (HBOT)</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="IV Nutritional Therapy" role="option">
+                      <span class="option-label">IV Nutritional Therapy</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Ozone Therapy &amp; Detoxification" role="option">
+                      <span class="option-label">Ozone Therapy &amp; Detoxification</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Naturopathic Follow-up Visit" role="option">
+                      <span class="option-label">Naturopathic Follow-up Visit</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                  </div>
+                  <select class="d-none" id="appointmentService" name="appointment_service">
+                    <option value="Initial Integrative Consultation" selected>Initial Integrative Consultation</option>
+                    <option value="Functional Medicine Assessment">Functional Medicine Assessment</option>
+                    <option value="Acupuncture &amp; Meridian Therapy">Acupuncture &amp; Meridian Therapy</option>
+                    <option value="Frequency Specific Microcurrent™">Frequency Specific Microcurrent™</option>
+                    <option value="Hyperbaric Oxygen Therapy (HBOT)">Hyperbaric Oxygen Therapy (HBOT)</option>
+                    <option value="IV Nutritional Therapy">IV Nutritional Therapy</option>
+                    <option value="Ozone Therapy &amp; Detoxification">Ozone Therapy &amp; Detoxification</option>
+                    <option value="Naturopathic Follow-up Visit">Naturopathic Follow-up Visit</option>
+                  </select>
                 </div>
-                <input type="hidden" id="approveInputDate" value="2026-09-24">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentCondition">Condition</label>
+                <div class="custom-select-wrapper" id="aptModalConditionWrapper" data-cs-init="true">
+                  <div class="custom-select-trigger" id="aptModalConditionTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select condition">
+                    <div class="custom-select-selected-content">
+                      <span class="custom-select-primary-text" id="aptModalConditionDisplay">Chronic Fatigue &amp; Long COVID</span>
+                    </div>
+                    <i class="bi bi-chevron-down custom-select-chevron"></i>
+                  </div>
+                  <div class="custom-select-panel" id="aptModalConditionPanel" role="listbox">
+                    <div class="custom-select-option selected" data-value="Chronic Fatigue &amp; Long COVID" role="option">
+                      <span class="option-label">Chronic Fatigue &amp; Long COVID</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Autoimmune &amp; Inflammatory Conditions" role="option">
+                      <span class="option-label">Autoimmune &amp; Inflammatory Conditions</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Hormonal &amp; Thyroid Optimization" role="option">
+                      <span class="option-label">Hormonal &amp; Thyroid Optimization</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Gut Health &amp; Microbiome Dysfunction" role="option">
+                      <span class="option-label">Gut Health &amp; Microbiome Dysfunction</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Musculoskeletal Pain &amp; Fibromyalgia" role="option">
+                      <span class="option-label">Musculoskeletal Pain &amp; Fibromyalgia</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Environmental Toxicity &amp; Mold Exposure" role="option">
+                      <span class="option-label">Environmental Toxicity &amp; Mold Exposure</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="General Wellness &amp; Longevity Care" role="option">
+                      <span class="option-label">General Wellness &amp; Longevity Care</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                  </div>
+                  <select class="d-none" id="appointmentCondition" name="appointment_condition">
+                    <option value="Chronic Fatigue &amp; Long COVID" selected>Chronic Fatigue &amp; Long COVID</option>
+                    <option value="Autoimmune &amp; Inflammatory Conditions">Autoimmune &amp; Inflammatory Conditions</option>
+                    <option value="Hormonal &amp; Thyroid Optimization">Hormonal &amp; Thyroid Optimization</option>
+                    <option value="Gut Health &amp; Microbiome Dysfunction">Gut Health &amp; Microbiome Dysfunction</option>
+                    <option value="Musculoskeletal Pain &amp; Fibromyalgia">Musculoskeletal Pain &amp; Fibromyalgia</option>
+                    <option value="Environmental Toxicity &amp; Mold Exposure">Environmental Toxicity &amp; Mold Exposure</option>
+                    <option value="General Wellness &amp; Longevity Care">General Wellness &amp; Longevity Care</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentAmount">Amount to be Paid</label>
+                <div class="appointment-amount-box">
+                  <span class="appointment-amount-currency">$</span>
+                  <input type="number" step="0.01" class="appointment-amount-input" id="appointmentAmount" value="285.00" placeholder="0.00">
+                  <span class="appointment-amount-badge">USD</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentDoctor">Doctor</label>
+                <div class="custom-select-wrapper" id="aptModalDoctorWrapper" data-cs-init="true">
+                  <div class="custom-select-trigger" id="aptModalDoctorTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select attending physician">
+                    <div class="custom-select-selected-content">
+                      <span class="custom-select-primary-text" id="aptModalDoctorDisplay">Sultana Afrooz, D.O. (Integrative &amp; Functional Medicine)</span>
+                    </div>
+                    <i class="bi bi-chevron-down custom-select-chevron"></i>
+                  </div>
+                  <div class="custom-select-panel" id="aptModalDoctorPanel" role="listbox">
+                    <div class="custom-select-option selected" data-value="Sultana Afrooz, D.O." data-label="Sultana Afrooz, D.O. (Integrative &amp; Functional Medicine)" role="option">
+                      <span class="option-label">Sultana Afrooz, D.O. (Integrative &amp; Functional Medicine)</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Jessica Needle, N.D." data-label="Jessica Needle, N.D. (Naturopathic Medicine)" role="option">
+                      <span class="option-label">Jessica Needle, N.D. (Naturopathic Medicine)</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                  </div>
+                  <select class="d-none" id="appointmentDoctor" name="appointment_doctor">
+                    <option value="Sultana Afrooz, D.O." selected>Sultana Afrooz, D.O. (Integrative &amp; Functional Medicine)</option>
+                    <option value="Jessica Needle, N.D.">Jessica Needle, N.D. (Naturopathic Medicine)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentConsultation">Consultation</label>
+                <div class="custom-select-wrapper" id="aptModalConsultationWrapper" data-cs-init="true">
+                  <div class="custom-select-trigger" id="aptModalConsultationTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select consultation type">
+                    <div class="custom-select-selected-content">
+                      <span class="custom-select-primary-text" id="aptModalConsultationDisplay">Telehealth Consultation</span>
+                    </div>
+                    <i class="bi bi-chevron-down custom-select-chevron"></i>
+                  </div>
+                  <div class="custom-select-panel" id="aptModalConsultationPanel" role="listbox">
+                    <div class="custom-select-option selected" data-value="Telehealth Consultation" role="option">
+                      <span class="option-label">Telehealth Consultation</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="In-office Consultation" role="option">
+                      <span class="option-label">In-office Consultation</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                  </div>
+                  <select class="d-none" id="appointmentConsultation" name="appointment_consultation">
+                    <option value="Telehealth Consultation" selected>Telehealth Consultation</option>
+                    <option value="In-office Consultation">In-office Consultation</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                <!-- Custom Calendar Popover -->
-                <div class="calendar-popover" id="approveCalendarPopover" style="display: none;" role="dialog" aria-modal="false" aria-label="Choose appointment confirmation date">
-                  <div class="calendar-header">
-                    <button type="button" class="calendar-nav-btn" id="calPrevMonthApprove" title="Previous month" aria-label="Previous month">
-                      <i class="bi bi-chevron-left"></i>
+          <!-- SECTION 3 — SCHEDULE -->
+          <div class="appointment-section-wrap">
+            <div class="appointment-section-title">
+              <i class="bi bi-calendar-week-fill text-teal me-2"></i>Schedule
+            </div>
+
+            <!-- Select Date & Time Overview Banner -->
+            <div class="schedule-selection-banner d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-clock-history text-teal"></i>
+                <span class="small text-muted fw-semibold">Select Date &amp; Time:</span>
+                <strong class="text-navy" id="selectedScheduleSummary">Sep 24, 2026 · 10:00 AM – 11:00 AM</strong>
+              </div>
+              <span class="badge-admin badge-confirmed">Selected Slot</span>
+            </div>
+
+            <div class="row g-3 align-items-stretch">
+              <!-- Calendar Column -->
+              <div class="col-lg-6">
+                <label class="form-label-admin mb-2">Calendar</label>
+                <div class="appointment-calendar-card">
+                  <div class="apt-cal-header">
+                    <button type="button" class="apt-cal-nav" id="btnAptCalPrevMonth" title="Previous Month"><i class="bi bi-chevron-left"></i></button>
+                    <span class="apt-cal-title" id="aptCalMonthTitle">September 2026</span>
+                    <button type="button" class="apt-cal-nav" id="btnAptCalNextMonth" title="Next Month"><i class="bi bi-chevron-right"></i></button>
+                  </div>
+                  <div class="apt-cal-weekdays">
+                    <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                  </div>
+                  <div class="apt-cal-days" id="aptCalDaysGrid">
+                    <div class="apt-cal-day disabled">30</div>
+                    <div class="apt-cal-day disabled">31</div>
+                    <div class="apt-cal-day" data-day="1" onclick="onModalCalDayClick(1)">1</div>
+                    <div class="apt-cal-day" data-day="2" onclick="onModalCalDayClick(2)">2</div>
+                    <div class="apt-cal-day" data-day="3" onclick="onModalCalDayClick(3)">3</div>
+                    <div class="apt-cal-day" data-day="4" onclick="onModalCalDayClick(4)">4</div>
+                    <div class="apt-cal-day" data-day="5" onclick="onModalCalDayClick(5)">5</div>
+                    <div class="apt-cal-day" data-day="6" onclick="onModalCalDayClick(6)">6</div>
+                    <div class="apt-cal-day" data-day="7" onclick="onModalCalDayClick(7)">7</div>
+                    <div class="apt-cal-day" data-day="8" onclick="onModalCalDayClick(8)">8</div>
+                    <div class="apt-cal-day" data-day="9" onclick="onModalCalDayClick(9)">9</div>
+                    <div class="apt-cal-day" data-day="10" onclick="onModalCalDayClick(10)">10</div>
+                    <div class="apt-cal-day" data-day="11" onclick="onModalCalDayClick(11)">11</div>
+                    <div class="apt-cal-day" data-day="12" onclick="onModalCalDayClick(12)">12</div>
+                    <div class="apt-cal-day" data-day="13" onclick="onModalCalDayClick(13)">13</div>
+                    <div class="apt-cal-day" data-day="14" onclick="onModalCalDayClick(14)">14</div>
+                    <div class="apt-cal-day" data-day="15" onclick="onModalCalDayClick(15)">15</div>
+                    <div class="apt-cal-day" data-day="16" onclick="onModalCalDayClick(16)">16</div>
+                    <div class="apt-cal-day" data-day="17" onclick="onModalCalDayClick(17)">17</div>
+                    <div class="apt-cal-day" data-day="18" onclick="onModalCalDayClick(18)">18</div>
+                    <div class="apt-cal-day" data-day="19" onclick="onModalCalDayClick(19)">19</div>
+                    <div class="apt-cal-day" data-day="20" onclick="onModalCalDayClick(20)">20</div>
+                    <div class="apt-cal-day" data-day="21" onclick="onModalCalDayClick(21)">21</div>
+                    <div class="apt-cal-day" data-day="22" onclick="onModalCalDayClick(22)">22</div>
+                    <div class="apt-cal-day" data-day="23" onclick="onModalCalDayClick(23)">23</div>
+                    <div class="apt-cal-day active today" data-day="24" onclick="onModalCalDayClick(24)">24</div>
+                    <div class="apt-cal-day" data-day="25" onclick="onModalCalDayClick(25)">25</div>
+                    <div class="apt-cal-day" data-day="26" onclick="onModalCalDayClick(26)">26</div>
+                    <div class="apt-cal-day" data-day="27" onclick="onModalCalDayClick(27)">27</div>
+                    <div class="apt-cal-day" data-day="28" onclick="onModalCalDayClick(28)">28</div>
+                    <div class="apt-cal-day" data-day="29" onclick="onModalCalDayClick(29)">29</div>
+                    <div class="apt-cal-day" data-day="30" onclick="onModalCalDayClick(30)">30</div>
+                    <div class="apt-cal-day disabled">1</div>
+                    <div class="apt-cal-day disabled">2</div>
+                    <div class="apt-cal-day disabled">3</div>
+                  </div>
+                </div>
+                <input type="hidden" id="appointmentSelectedDate" value="2026-09-24">
+                <input type="hidden" id="appointmentSelectedDateReadable" value="Sep 24, 2026">
+              </div>
+
+              <!-- Available Time Slots Column -->
+              <div class="col-lg-6">
+                <label class="form-label-admin mb-2">Available Time Slot</label>
+                <div class="appointment-slots-card">
+                  <div class="appointment-slots-grid" id="aptSlotsGrid">
+                    <button type="button" class="apt-slot-btn" data-time="09:00 AM – 10:00 AM">
+                      <i class="bi bi-clock"></i> 09:00 AM – 10:00 AM
                     </button>
-                    <span class="calendar-month-year" id="calMonthYearApprove">September 2026</span>
-                    <button type="button" class="calendar-nav-btn" id="calNextMonthApprove" title="Next month" aria-label="Next month">
-                      <i class="bi bi-chevron-right"></i>
+                    <button type="button" class="apt-slot-btn active" data-time="10:00 AM – 11:00 AM">
+                      <i class="bi bi-check-circle-fill"></i> 10:00 AM – 11:00 AM
+                    </button>
+                    <button type="button" class="apt-slot-btn" data-time="11:30 AM – 12:30 PM">
+                      <i class="bi bi-clock"></i> 11:30 AM – 12:30 PM
+                    </button>
+                    <button type="button" class="apt-slot-btn" data-time="02:00 PM – 03:00 PM">
+                      <i class="bi bi-clock"></i> 02:00 PM – 03:00 PM
+                    </button>
+                    <button type="button" class="apt-slot-btn" data-time="03:30 PM – 04:30 PM">
+                      <i class="bi bi-clock"></i> 03:30 PM – 04:30 PM
+                    </button>
+                    <button type="button" class="apt-slot-btn" data-time="05:00 PM – 06:00 PM">
+                      <i class="bi bi-clock"></i> 05:00 PM – 06:00 PM
                     </button>
                   </div>
-                  <div class="calendar-weekdays" aria-hidden="true">
-                    <div class="calendar-weekday">Sun</div>
-                    <div class="calendar-weekday">Mon</div>
-                    <div class="calendar-weekday">Tue</div>
-                    <div class="calendar-weekday">Wed</div>
-                    <div class="calendar-weekday">Thu</div>
-                    <div class="calendar-weekday">Fri</div>
-                    <div class="calendar-weekday">Sat</div>
-                  </div>
-                  <div class="calendar-days-grid" id="calDaysGridApprove" role="grid" aria-label="Calendar days"></div>
-                  <div class="calendar-footer">
-                    <button type="button" class="btn btn-link text-muted" id="calBtnClearApprove"><i class="bi bi-x me-1"></i>Clear</button>
-                    <span class="small text-muted" id="calHelperTextApprove">Sep 24 selected</span>
-                    <button type="button" class="btn btn-link text-teal fw-semibold" id="calBtnTodayApprove"><i class="bi bi-calendar-check me-1"></i>Today</button>
+                  <div class="form-text small text-muted mt-2 d-flex align-items-center gap-1">
+                    <i class="bi bi-info-circle text-teal"></i> Clinician availability automatically synced with active schedule.
                   </div>
                 </div>
+                <input type="hidden" id="appointmentSelectedTime" value="10:00 AM – 11:00 AM">
               </div>
             </div>
+          </div>
 
-            <!-- Custom Select: Confirmed Time Slot -->
-            <div class="col-md-6">
-              <label class="form-label-admin" for="approveTimeTrigger">Confirmed Time Slot</label>
-              <div class="custom-select-wrapper" id="approveTimeWrapper">
-                <div class="custom-select-trigger" id="approveTimeTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select confirmed appointment slot">
-                  <div class="custom-select-selected-content">
-                    <i class="bi bi-clock select-leading-icon"></i>
-                    <div class="custom-select-text-group">
-                      <span class="custom-select-primary-text" id="approveTimePrimaryText">10:00 AM – 11:00 AM</span>
-                      <span class="custom-select-secondary-text" id="approveTimeSecondaryText">Requested patient slot · Confirmed</span>
-                    </div>
-                  </div>
-                  <i class="bi bi-chevron-down custom-select-chevron"></i>
-                </div>
-                <input type="hidden" id="approveInputTime" value="10:00 AM – 11:00 AM">
-
-                <div class="custom-select-panel" id="approveTimePanel" role="listbox" style="display: none;">
-                  <div class="custom-select-option" data-value="09:00 AM – 10:00 AM" data-primary="09:00 AM – 10:00 AM" data-secondary="Early morning opening" role="option">
-                    <div class="option-content">
-                      <div class="option-time-header">
-                        <span class="option-primary">09:00 AM – 10:00 AM</span>
-                        <span class="badge-availability available-today">Morning</span>
-                      </div>
-                      <span class="option-secondary">Early morning opening · First clinic slot</span>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                  <div class="custom-select-option selected" data-value="10:00 AM – 11:00 AM" data-primary="10:00 AM – 11:00 AM" data-secondary="Requested patient slot · Confirmed" role="option" aria-selected="true">
-                    <div class="option-content">
-                      <div class="option-time-header">
-                        <span class="option-primary">10:00 AM – 11:00 AM</span>
-                        <span class="badge-availability recommended">Requested Slot</span>
-                      </div>
-                      <span class="option-secondary">Requested patient slot · Available on provider schedule</span>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                  <div class="custom-select-option" data-value="11:30 AM – 12:30 PM" data-primary="11:30 AM – 12:30 PM" data-secondary="Next available midday slot" role="option">
-                    <div class="option-content">
-                      <div class="option-time-header">
-                        <span class="option-primary">11:30 AM – 12:30 PM</span>
-                        <span class="badge-availability available-today">Available</span>
-                      </div>
-                      <span class="option-secondary">Next available midday slot</span>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                  <div class="custom-select-option" data-value="02:00 PM – 03:00 PM" data-primary="02:00 PM – 03:00 PM" data-secondary="Afternoon consultation block" role="option">
-                    <div class="option-content">
-                      <div class="option-time-header">
-                        <span class="option-primary">02:00 PM – 03:00 PM</span>
-                        <span class="badge-availability future-slot">Afternoon</span>
-                      </div>
-                      <span class="option-secondary">Afternoon consultation block</span>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                  <div class="custom-select-option" data-value="03:30 PM – 04:30 PM" data-primary="03:30 PM – 04:30 PM" data-secondary="Late afternoon slot" role="option">
-                    <div class="option-content">
-                      <div class="option-time-header">
-                        <span class="option-primary">03:30 PM – 04:30 PM</span>
-                        <span class="badge-availability future-slot">Afternoon</span>
-                      </div>
-                      <span class="option-secondary">Late afternoon slot · Final daily block</span>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                </div>
-              </div>
+          <!-- SECTION 4 — STATUS -->
+          <div class="appointment-section-wrap">
+            <div class="appointment-section-title">
+              <i class="bi bi-flag-fill text-teal me-2"></i>Status
             </div>
-
-            <!-- Custom Select: Assigned Provider -->
-            <div class="col-md-6">
-              <label class="form-label-admin" for="approveProviderTrigger">Assigned Provider</label>
-              <div class="custom-select-wrapper" id="approveProviderWrapper">
-                <div class="custom-select-trigger" id="approveProviderTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select assigned clinician">
-                  <div class="custom-select-selected-content">
-                    <span class="provider-avatar-chip" id="approveProviderChip">SA</span>
-                    <div class="custom-select-text-group">
-                      <span class="custom-select-primary-text" id="approveProviderPrimaryText">Sultana Afrooz, D.O.</span>
-                      <span class="custom-select-secondary-text" id="approveProviderSecondaryText">Integrative &amp; Functional Medicine Physician</span>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-admin" for="appointmentStatus">Status</label>
+                <div class="custom-select-wrapper" id="aptModalStatusWrapper" data-cs-init="true">
+                  <div class="custom-select-trigger" id="aptModalStatusTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select status">
+                    <div class="custom-select-selected-content">
+                      <span class="custom-select-primary-text" id="aptModalStatusDisplay">Pending</span>
+                    </div>
+                    <i class="bi bi-chevron-down custom-select-chevron"></i>
+                  </div>
+                  <div class="custom-select-panel" id="aptModalStatusPanel" role="listbox">
+                    <div class="custom-select-option selected" data-value="Pending" role="option">
+                      <span class="option-label">Pending</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Confirmed" role="option">
+                      <span class="option-label">Confirmed</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="In Progress" role="option">
+                      <span class="option-label">In Progress</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Completed" role="option">
+                      <span class="option-label">Completed</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Rescheduled" role="option">
+                      <span class="option-label">Rescheduled</span>
+                      <i class="bi bi-check2 option-check"></i>
+                    </div>
+                    <div class="custom-select-option" data-value="Cancelled" role="option">
+                      <span class="option-label">Cancelled</span>
+                      <i class="bi bi-check2 option-check"></i>
                     </div>
                   </div>
-                  <i class="bi bi-chevron-down custom-select-chevron"></i>
+                  <select class="d-none" id="appointmentStatus" name="appointment_status">
+                    <option value="Pending" selected>Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Rescheduled">Rescheduled</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
                 </div>
-                <input type="hidden" id="approveInputProvider" value="Sultana Afrooz, D.O.">
-
-                <div class="custom-select-panel" id="approveProviderPanel" role="listbox" style="display: none;">
-                  <div class="custom-select-option selected" data-value="Sultana Afrooz, D.O." data-primary="Sultana Afrooz, D.O." data-secondary="Integrative &amp; Functional Medicine Physician" data-chip="SA" role="option" aria-selected="true">
-                    <div class="d-flex align-items-center gap-2 option-content">
-                      <span class="provider-avatar-chip">SA</span>
-                      <div>
-                        <span class="option-primary d-block">Sultana Afrooz, D.O.</span>
-                        <span class="option-secondary">Integrative &amp; Functional Medicine Physician</span>
-                      </div>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                  <div class="custom-select-option" data-value="Jessica Needle, N.D." data-primary="Jessica Needle, N.D." data-secondary="Naturopathic Medicine Doctor" data-chip="JN" role="option">
-                    <div class="d-flex align-items-center gap-2 option-content">
-                      <span class="provider-avatar-chip chip-teal">JN</span>
-                      <div>
-                        <span class="option-primary d-block">Jessica Needle, N.D.</span>
-                        <span class="option-secondary">Naturopathic Medicine Doctor</span>
-                      </div>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Custom Select: Visit Type -->
-            <div class="col-md-6">
-              <label class="form-label-admin" for="approveVisitTrigger">Visit Type</label>
-              <div class="custom-select-wrapper" id="approveVisitWrapper">
-                <div class="custom-select-trigger" id="approveVisitTrigger" role="combobox" aria-expanded="false" aria-haspopup="listbox" tabindex="0" title="Select appointment visit type">
-                  <div class="custom-select-selected-content">
-                    <i class="bi bi-laptop select-leading-icon" id="approveVisitLeadingIcon"></i>
-                    <div class="custom-select-text-group">
-                      <span class="custom-select-primary-text" id="approveVisitPrimaryText">Telehealth Consultation</span>
-                      <span class="custom-select-secondary-text" id="approveVisitSecondaryText">Secure Video Room · Maryland Patients</span>
-                    </div>
-                  </div>
-                  <i class="bi bi-chevron-down custom-select-chevron"></i>
-                </div>
-                <input type="hidden" id="approveInputVisit" value="Telehealth">
-
-                <div class="custom-select-panel" id="approveVisitPanel" role="listbox" style="display: none;">
-                  <div class="custom-select-option selected" data-value="Telehealth" data-primary="Telehealth Consultation" data-secondary="Secure Video Room · Maryland Patients" data-icon="bi-laptop" role="option" aria-selected="true">
-                    <div class="d-flex align-items-center gap-2 option-content">
-                      <div class="option-icon-box"><i class="bi bi-laptop"></i></div>
-                      <div>
-                        <span class="option-primary d-block">Telehealth Consultation</span>
-                        <span class="option-secondary">Secure Video Room · Maryland Patients</span>
-                      </div>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                  <div class="custom-select-option" data-value="In-office" data-primary="In-office Visit" data-secondary="Columbia, MD Suite 301 · Exam &amp; Treatment" data-icon="bi-building" role="option">
-                    <div class="d-flex align-items-center gap-2 option-content">
-                      <div class="option-icon-box"><i class="bi bi-building"></i></div>
-                      <div>
-                        <span class="option-primary d-block">In-office Visit</span>
-                        <span class="option-secondary">Columbia, MD Suite 301 · Exam &amp; Treatment</span>
-                      </div>
-                    </div>
-                    <i class="bi bi-check2 option-check"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <label class="form-label-admin">Treatment Location / Telehealth URL</label>
-              <input type="text" class="form-control" id="approveInputRoom" value="https://meet.btc-health.org/apt-0941">
-              <div class="help">Automated link sent to patient with .ics calendar invitation.</div>
-            </div>
-            <div class="col-12">
-              <label class="form-label-admin">Confirmation Notes / Preparation Advice</label>
-              <textarea class="form-control" rows="2" placeholder="Optional notes for patient confirmation email...">Please have your previous 12 months of lab work ready and ensure you are in a quiet private room with stable internet connection.</textarea>
-            </div>
-            <div class="col-12">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="approveSendEmail" checked>
-                <label class="form-check-label small" for="approveSendEmail">
-                  Send automated confirmation email with intake packet and calendar invite (.ics)
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="approveSendSms" checked>
-                <label class="form-check-label small" for="approveSendSms">
-                  Send SMS confirmation text message to patient phone
-                </label>
               </div>
             </div>
           </div>
 
         </div>
-        <div class="modal-footer border-top">
+        <!-- BUTTONS / MODAL FOOTER -->
+        <div class="modal-footer d-flex justify-content-end gap-2">
           <button type="button" class="btn-btc-outline" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn-btc" data-bs-dismiss="modal" data-save="Appointment confirmed. Patient notification sent.">
-            <i class="bi bi-check2-circle me-1"></i> Confirm Appointment
+          <button type="button" class="btn-btc" id="btnSaveAppointmentModal" data-bs-dismiss="modal" data-save="Appointment saved successfully.">
+            <i class="bi bi-calendar-check me-1"></i> Save Appointment
           </button>
         </div>
       </div>
@@ -4855,24 +5493,7 @@
     ];
 
     function openCustomerBookingModal() {
-      var modalEl = document.getElementById("customerBookingModal");
-      if (!modalEl) return;
-
-      document.getElementById("cbDate").value = "2026-09-24";
-      document.getElementById("cbProvider").value = "Sultana Afrooz, D.O.";
-      document.getElementById("cbSelectedTime").value = "";
-
-      var sAlert = document.getElementById("customerBookingSuccessAlert");
-      var eAlert = document.getElementById("customerBookingErrorAlert");
-      if (sAlert) sAlert.classList.add("d-none");
-      if (eAlert) eAlert.classList.add("d-none");
-
-      renderCustomerBookingSlots();
-
-      if (typeof bootstrap !== "undefined" && bootstrap.Modal) {
-        var modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-        modal.show();
-      }
+      window.open("../../../Frontend/book-appointment.html", "_blank");
     }
 
     function renderCustomerBookingSlots() {
@@ -5148,34 +5769,436 @@
     /**
      * Pre-populate and open Approve Modal
      */
-    function openApproveModal(aptId) {
-      var item = APPOINTMENT_STORE[aptId] || APPOINTMENT_STORE[currentActiveAptId] || APPOINTMENT_STORE["apt-1"];
-      currentActiveAptId = item.id;
-      document.getElementById("approveModalPatient").textContent = item.name;
-      document.getElementById("approveModalPTypeBadge").textContent = item.ptypeShort + " Patient";
-      document.getElementById("approveModalRequested").textContent = item.date + " · " + item.time;
-      document.getElementById("approveModalProvider").textContent = item.provider;
-      document.getElementById("approveModalService").textContent = item.service;
-      
-      var vBadge = document.getElementById("approveModalVisitBadge");
-      vBadge.textContent = item.visit;
-      vBadge.className = "badge-admin " + item.visitBadgeClass;
+    /**
+     * Pre-populate and open Appointment Modal
+     */
+    var APT_CAL_STATE = {
+      year: 2026,
+      month: 8, // September (0-indexed)
+      selectedYear: 2026,
+      selectedMonth: 8,
+      selectedDay: 24,
+      selectedTime: "10:00 AM – 11:00 AM"
+    };
 
-      if (item.dateRaw) {
-        document.getElementById("approveInputDate").value = item.dateRaw;
-        var parts = item.dateRaw.split("-");
-        if (parts.length === 3) {
-          var y = parseInt(parts[0], 10);
-          var m = parseInt(parts[1], 10) - 1;
-          var d = parseInt(parts[2], 10);
-          var disp = document.getElementById("approveDateDisplay");
-          if (disp) disp.value = formatCalReadable(y, m, d);
+    function updateModalScheduleSummary() {
+      var summaryEl = document.getElementById("selectedScheduleSummary");
+      var dateReadableInput = document.getElementById("appointmentSelectedDateReadable");
+      var timeInput = document.getElementById("appointmentSelectedTime");
+      var dateStr = (dateReadableInput && dateReadableInput.value) ? dateReadableInput.value : "Sep 24, 2026";
+      var timeStr = (timeInput && timeInput.value) ? timeInput.value : APT_CAL_STATE.selectedTime;
+      if (summaryEl) {
+        summaryEl.textContent = dateStr + " · " + timeStr;
+      }
+    }
+
+    function renderModalCalendar() {
+      var grid = document.getElementById("aptCalDaysGrid");
+      var title = document.getElementById("aptCalMonthTitle");
+      if (!grid || !title) return;
+
+      var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      title.textContent = monthNames[APT_CAL_STATE.month] + " " + APT_CAL_STATE.year;
+
+      var firstDayIndex = new Date(APT_CAL_STATE.year, APT_CAL_STATE.month, 1).getDay();
+      var daysInMonth = new Date(APT_CAL_STATE.year, APT_CAL_STATE.month + 1, 0).getDate();
+      var prevMonthDays = new Date(APT_CAL_STATE.year, APT_CAL_STATE.month, 0).getDate();
+
+      var html = "";
+      for (var p = firstDayIndex - 1; p >= 0; p--) {
+        html += '<div class="apt-cal-day disabled">' + (prevMonthDays - p) + '</div>';
+      }
+
+      for (var d = 1; d <= daysInMonth; d++) {
+        var isSelected = (APT_CAL_STATE.selectedYear === APT_CAL_STATE.year && APT_CAL_STATE.selectedMonth === APT_CAL_STATE.month && APT_CAL_STATE.selectedDay === d);
+        var isToday = (APT_CAL_STATE.year === 2026 && APT_CAL_STATE.month === 8 && d === 24);
+        var cls = "apt-cal-day" + (isSelected ? " active" : "") + (isToday && !isSelected ? " today" : "");
+        html += '<div class="' + cls + '" data-day="' + d + '" onclick="onModalCalDayClick(' + d + ')">' + d + '</div>';
+      }
+
+      var totalCells = firstDayIndex + daysInMonth;
+      var remainingCells = (totalCells % 7 === 0) ? 0 : (7 - (totalCells % 7));
+      for (var n = 1; n <= remainingCells; n++) {
+        html += '<div class="apt-cal-day disabled">' + n + '</div>';
+      }
+
+      grid.innerHTML = html;
+    }
+
+    function initModalCalendarNav() {
+      var btnPrev = document.getElementById("btnAptCalPrevMonth");
+      var btnNext = document.getElementById("btnAptCalNextMonth");
+      if (btnPrev && !btnPrev._wired) {
+        btnPrev._wired = true;
+        btnPrev.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          APT_CAL_STATE.month--;
+          if (APT_CAL_STATE.month < 0) {
+            APT_CAL_STATE.month = 11;
+            APT_CAL_STATE.year--;
+          }
+          renderModalCalendar();
+        });
+      }
+      if (btnNext && !btnNext._wired) {
+        btnNext._wired = true;
+        btnNext.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          APT_CAL_STATE.month++;
+          if (APT_CAL_STATE.month > 11) {
+            APT_CAL_STATE.month = 0;
+            APT_CAL_STATE.year++;
+          }
+          renderModalCalendar();
+        });
+      }
+
+      var slotBtns = document.querySelectorAll("#aptSlotsGrid .apt-slot-btn");
+      slotBtns.forEach(function(btn) {
+        if (!btn._wired) {
+          btn._wired = true;
+          btn.addEventListener("click", function() {
+            var timeVal = btn.getAttribute("data-time");
+            setModalTimeSlot(timeVal);
+          });
+        }
+      });
+    }
+
+    function onModalCalDayClick(day) {
+      APT_CAL_STATE.selectedYear = APT_CAL_STATE.year;
+      APT_CAL_STATE.selectedMonth = APT_CAL_STATE.month;
+      APT_CAL_STATE.selectedDay = day;
+
+      var mm = (APT_CAL_STATE.selectedMonth + 1 < 10 ? "0" : "") + (APT_CAL_STATE.selectedMonth + 1);
+      var dd = (day < 10 ? "0" : "") + day;
+      var iso = APT_CAL_STATE.selectedYear + "-" + mm + "-" + dd;
+      var shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var readable = shortMonths[APT_CAL_STATE.selectedMonth] + " " + (day < 10 ? "0" + day : day) + ", " + APT_CAL_STATE.selectedYear;
+
+      var dateInput = document.getElementById("appointmentSelectedDate");
+      if (dateInput) dateInput.value = iso;
+      var readableInput = document.getElementById("appointmentSelectedDateReadable");
+      if (readableInput) readableInput.value = readable;
+
+      renderModalCalendar();
+      updateModalScheduleSummary();
+    }
+
+    function setModalCalendarDate(isoDate, readableDate) {
+      if (!isoDate) return;
+      var parts = isoDate.split("-");
+      if (parts.length === 3) {
+        var y = parseInt(parts[0], 10);
+        var m = parseInt(parts[1], 10) - 1;
+        var d = parseInt(parts[2], 10);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+          APT_CAL_STATE.year = y;
+          APT_CAL_STATE.month = m;
+          APT_CAL_STATE.selectedYear = y;
+          APT_CAL_STATE.selectedMonth = m;
+          APT_CAL_STATE.selectedDay = d;
+          var dateInput = document.getElementById("appointmentSelectedDate");
+          if (dateInput) dateInput.value = isoDate;
+          var readableInput = document.getElementById("appointmentSelectedDateReadable");
+          if (readableInput) readableInput.value = readableDate || isoDate;
+          renderModalCalendar();
+          updateModalScheduleSummary();
         }
       }
-      setApproveSelectProvider(item.provider);
-      setApproveSelectVisit(item.visit);
-      var approvePop = document.getElementById("approveCalendarPopover");
-      if (approvePop) approvePop.style.display = "none";
+    }
+
+    function setModalTimeSlot(timeStr) {
+      if (!timeStr) return;
+      var timeInput = document.getElementById("appointmentSelectedTime");
+      if (timeInput) timeInput.value = timeStr;
+      APT_CAL_STATE.selectedTime = timeStr;
+
+      var slotBtns = document.querySelectorAll("#aptSlotsGrid .apt-slot-btn");
+      var matched = false;
+      slotBtns.forEach(function(btn) {
+        var btnTime = btn.getAttribute("data-time");
+        var isMatch = btnTime && (btnTime.toLowerCase() === timeStr.toLowerCase() || timeStr.toLowerCase().indexOf(btnTime.toLowerCase()) !== -1 || btnTime.toLowerCase().indexOf(timeStr.toLowerCase()) !== -1);
+        if (isMatch && !matched) {
+          btn.classList.add("active");
+          btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> ' + btnTime;
+          matched = true;
+          if (timeInput) timeInput.value = btnTime;
+          APT_CAL_STATE.selectedTime = btnTime;
+        } else {
+          btn.classList.remove("active");
+          btn.innerHTML = '<i class="bi bi-clock"></i> ' + btnTime;
+        }
+      });
+      updateModalScheduleSummary();
+    }
+
+    function initApproveModalCustomSelects() {
+      var modal = document.getElementById("approveModal");
+      if (!modal) return;
+      if (modal.getAttribute("data-modal-selects-bound") === "true") return;
+      modal.setAttribute("data-modal-selects-bound", "true");
+
+      var configs = [
+        {
+          wrapperId: "aptModalServiceWrapper",
+          triggerId: "aptModalServiceTrigger",
+          panelId: "aptModalServicePanel",
+          selectId: "appointmentService",
+          displayId: "aptModalServiceDisplay"
+        },
+        {
+          wrapperId: "aptModalConditionWrapper",
+          triggerId: "aptModalConditionTrigger",
+          panelId: "aptModalConditionPanel",
+          selectId: "appointmentCondition",
+          displayId: "aptModalConditionDisplay"
+        },
+        {
+          wrapperId: "aptModalDoctorWrapper",
+          triggerId: "aptModalDoctorTrigger",
+          panelId: "aptModalDoctorPanel",
+          selectId: "appointmentDoctor",
+          displayId: "aptModalDoctorDisplay"
+        },
+        {
+          wrapperId: "aptModalConsultationWrapper",
+          triggerId: "aptModalConsultationTrigger",
+          panelId: "aptModalConsultationPanel",
+          selectId: "appointmentConsultation",
+          displayId: "aptModalConsultationDisplay"
+        },
+        {
+          wrapperId: "aptModalStatusWrapper",
+          triggerId: "aptModalStatusTrigger",
+          panelId: "aptModalStatusPanel",
+          selectId: "appointmentStatus",
+          displayId: "aptModalStatusDisplay"
+        }
+      ];
+
+      function closeAllApproveModalSelects() {
+        configs.forEach(function(cfg) {
+          var p = document.getElementById(cfg.panelId);
+          var t = document.getElementById(cfg.triggerId);
+          var w = document.getElementById(cfg.wrapperId);
+          if (p) p.style.display = "none";
+          if (t) {
+            t.classList.remove("active");
+            t.setAttribute("aria-expanded", "false");
+          }
+          if (w) {
+            w.classList.remove("open");
+            w.classList.remove("open-upward");
+          }
+        });
+      }
+
+      configs.forEach(function(cfg) {
+        var wrapper = document.getElementById(cfg.wrapperId);
+        var trigger = document.getElementById(cfg.triggerId);
+        var panel = document.getElementById(cfg.panelId);
+        var selectEl = document.getElementById(cfg.selectId);
+        var displayEl = document.getElementById(cfg.displayId);
+        if (!wrapper || !trigger || !panel) return;
+
+        wrapper.setAttribute("data-cs-init", "true");
+
+        trigger.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var isOpen = wrapper.classList.contains("open") || panel.style.display === "block";
+          closeAllApproveModalSelects();
+          if (!isOpen) {
+            var modalBody = modal.querySelector(".modal-body") || modal;
+            if (modalBody && typeof modalBody.getBoundingClientRect === "function" && typeof trigger.getBoundingClientRect === "function") {
+              var bodyRect = modalBody.getBoundingClientRect();
+              var triggerRect = trigger.getBoundingClientRect();
+              var spaceBelow = bodyRect.bottom - triggerRect.bottom;
+              var spaceAbove = triggerRect.top - bodyRect.top;
+
+              if (spaceBelow < 220 && spaceAbove > spaceBelow) {
+                wrapper.classList.add("open-upward");
+              } else {
+                wrapper.classList.remove("open-upward");
+              }
+            }
+
+            panel.style.display = "block";
+            wrapper.classList.add("open");
+            trigger.classList.add("active");
+            trigger.setAttribute("aria-expanded", "true");
+          }
+        });
+
+        // Option click handling
+        var options = panel.querySelectorAll(".custom-select-option");
+        options.forEach(function(opt) {
+          opt.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var val = opt.getAttribute("data-value");
+            var label = opt.getAttribute("data-label") || (opt.querySelector(".option-label") ? opt.querySelector(".option-label").textContent.trim() : val);
+
+            if (selectEl) {
+              selectEl.value = val;
+              var changeEvt = new Event("change", { bubbles: true });
+              selectEl.dispatchEvent(changeEvt);
+            }
+            if (displayEl) {
+              displayEl.textContent = label;
+            }
+
+            options.forEach(function(o) { o.classList.remove("selected"); });
+            opt.classList.add("selected");
+
+            closeAllApproveModalSelects();
+          });
+        });
+      });
+
+      document.addEventListener("click", function(e) {
+        if (!e.target.closest("#approveModal .custom-select-wrapper")) {
+          closeAllApproveModalSelects();
+        }
+      });
+    }
+
+    function syncApproveModalSelectUI(selectId) {
+      var selectEl = document.getElementById(selectId);
+      if (!selectEl) return;
+      var val = selectEl.value;
+
+      var map = {
+        "appointmentService": { wrapperId: "aptModalServiceWrapper", displayId: "aptModalServiceDisplay" },
+        "appointmentCondition": { wrapperId: "aptModalConditionWrapper", displayId: "aptModalConditionDisplay" },
+        "appointmentDoctor": { wrapperId: "aptModalDoctorWrapper", displayId: "aptModalDoctorDisplay" },
+        "appointmentConsultation": { wrapperId: "aptModalConsultationWrapper", displayId: "aptModalConsultationDisplay" },
+        "appointmentStatus": { wrapperId: "aptModalStatusWrapper", displayId: "aptModalStatusDisplay" }
+      };
+
+      var cfg = map[selectId];
+      if (!cfg) return;
+      var wrapper = document.getElementById(cfg.wrapperId);
+      var displayEl = document.getElementById(cfg.displayId);
+      if (!wrapper) return;
+
+      var selectedOpt = wrapper.querySelector('.custom-select-option[data-value="' + val + '"]') || wrapper.querySelector('.custom-select-option');
+      if (selectedOpt) {
+        wrapper.querySelectorAll(".custom-select-option").forEach(function(o) { o.classList.remove("selected"); });
+        selectedOpt.classList.add("selected");
+        var label = selectedOpt.getAttribute("data-label") || (selectedOpt.querySelector(".option-label") ? selectedOpt.querySelector(".option-label").textContent.trim() : val);
+        if (displayEl) displayEl.textContent = label;
+      }
+    }
+
+    // Expose functions globally on window for inline HTML handlers
+    window.APT_CAL_STATE = APT_CAL_STATE;
+    window.renderModalCalendar = renderModalCalendar;
+    window.onModalCalDayClick = onModalCalDayClick;
+    window.setModalCalendarDate = setModalCalendarDate;
+    window.setModalTimeSlot = setModalTimeSlot;
+    window.initModalCalendarNav = initModalCalendarNav;
+    window.updateModalScheduleSummary = updateModalScheduleSummary;
+    window.initApproveModalCustomSelects = initApproveModalCustomSelects;
+    window.syncApproveModalSelectUI = syncApproveModalSelectUI;
+
+    // Run initial render & bind modal lifecycle events
+    renderModalCalendar();
+    initModalCalendarNav();
+    initApproveModalCustomSelects();
+
+    var approveModalEl = document.getElementById("approveModal");
+    if (approveModalEl) {
+      approveModalEl.addEventListener("show.bs.modal", function() {
+        renderModalCalendar();
+        initModalCalendarNav();
+        initApproveModalCustomSelects();
+        updateModalScheduleSummary();
+        syncApproveModalSelectUI("appointmentService");
+        syncApproveModalSelectUI("appointmentCondition");
+        syncApproveModalSelectUI("appointmentDoctor");
+        syncApproveModalSelectUI("appointmentConsultation");
+        syncApproveModalSelectUI("appointmentStatus");
+      });
+      approveModalEl.addEventListener("shown.bs.modal", function() {
+        renderModalCalendar();
+        initModalCalendarNav();
+        initApproveModalCustomSelects();
+      });
+    }
+
+    function openApproveModal(aptId) {
+      var item = APPOINTMENT_STORE[aptId] || APPOINTMENT_STORE[currentActiveAptId] || APPOINTMENT_STORE["apt-1"];
+      if (item) {
+        currentActiveAptId = item.id;
+        var pName = document.getElementById("appointmentPatientName");
+        if (pName) pName.value = item.name || "Elle Adams";
+        var pEmail = document.getElementById("appointmentPatientEmail");
+        if (pEmail) pEmail.value = item.email || (item.name ? item.name.toLowerCase().replace(/[^a-z]/g, "") + "@gmail.com" : "elle.adams@gmail.com");
+        var pPhone = document.getElementById("appointmentPatientPhone");
+        if (pPhone) pPhone.value = item.phone || "(410) 555-0142";
+
+        var sService = document.getElementById("appointmentService");
+        if (sService && item.service) {
+          for (var i = 0; i < sService.options.length; i++) {
+            if (sService.options[i].value.toLowerCase().indexOf(item.service.toLowerCase()) !== -1 || item.service.toLowerCase().indexOf(sService.options[i].value.toLowerCase()) !== -1) {
+              sService.selectedIndex = i;
+              break;
+            }
+          }
+        }
+
+        var sDoctor = document.getElementById("appointmentDoctor");
+        if (sDoctor && item.provider) {
+          for (var j = 0; j < sDoctor.options.length; j++) {
+            if (sDoctor.options[j].value.indexOf(item.provider) !== -1 || (item.provider.indexOf("Jessica") !== -1 && sDoctor.options[j].value.indexOf("Jessica") !== -1)) {
+              sDoctor.selectedIndex = j;
+              break;
+            }
+          }
+        }
+
+        var sConsult = document.getElementById("appointmentConsultation");
+        if (sConsult && item.visit) {
+          for (var k = 0; k < sConsult.options.length; k++) {
+            if (sConsult.options[k].value.toLowerCase().indexOf(item.visit.toLowerCase()) !== -1) {
+              sConsult.selectedIndex = k;
+              break;
+            }
+          }
+        }
+
+        var sStatus = document.getElementById("appointmentStatus");
+        if (sStatus && item.status) {
+          for (var l = 0; l < sStatus.options.length; l++) {
+            if (sStatus.options[l].value.toLowerCase() === item.status.toLowerCase()) {
+              sStatus.selectedIndex = l;
+              break;
+            }
+          }
+        }
+
+        syncApproveModalSelectUI("appointmentService");
+        syncApproveModalSelectUI("appointmentCondition");
+        syncApproveModalSelectUI("appointmentDoctor");
+        syncApproveModalSelectUI("appointmentConsultation");
+        syncApproveModalSelectUI("appointmentStatus");
+
+        if (item.dateRaw) {
+          setModalCalendarDate(item.dateRaw, item.date || item.dateRaw);
+        }
+        if (item.time) {
+          setModalTimeSlot(item.time);
+        }
+      }
+
+      initModalCalendarNav();
+      initApproveModalCustomSelects();
+      renderModalCalendar();
+      updateModalScheduleSummary();
 
       var modalEl = document.getElementById("approveModal");
       var bsModal = bootstrap.Modal.getInstance(modalEl);
@@ -5673,7 +6696,7 @@
         sec.textContent = "Secure Video Room · Maryland Patients";
         if (icon) icon.className = "bi bi-laptop select-leading-icon";
       } else {
-        prim.textContent = "In-office Visit";
+        prim.textContent = "In-office Consultation";
         sec.textContent = "Columbia, MD Suite 301 · Exam & Treatment";
         if (icon) icon.className = "bi bi-building select-leading-icon";
       }
@@ -6284,6 +7307,7 @@
       renderScheduledBusyTimesTable();
       updateTodayScheduleBusyRows();
       initBusyModalCustomSelects();
+      initModalCalendarNav();
     }
 
     // Expose Busy Time functions to window

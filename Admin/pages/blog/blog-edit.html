@@ -67,7 +67,6 @@
         <!-- Main Form & Real-time Split Preview -->
         <form id="blog-editor-form" onsubmit="return false;">
           <input type="hidden" id="blog-post-id" value="">
-          <input type="hidden" id="blog-image" value="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg">
 
           <div class="row g-4">
 
@@ -330,29 +329,41 @@
                   <i class="bi bi-image text-teal fs-5"></i>
                 </div>
                 <div class="card-body-admin">
-                  <div class="mb-3 text-center">
-                    <img id="blog-image-preview" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" alt="Preview" class="img-fluid rounded border shadow-sm w-100" style="max-height:180px; object-fit:cover;">
+                  <div class="cms-image-field mb-3">
+                    <label class="form-label-admin">Banner Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img id="blog-image-preview" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" class="cms-image-preview-img" alt="Blog Featured Image">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload custom photo or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove" id="btn-edit-remove-media"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn" id="btn-edit-choose-media"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input" id="blog-image-file">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="blog-image" class="form-control js-cms-img-input" value="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
                   </div>
 
-                  <div class="d-flex flex-wrap gap-2 mb-3">
-                    <button type="button" class="btn btn-teal btn-sm" id="btn-edit-choose-media">
-                      <i class="bi bi-images me-1"></i> Choose from Media Library
-                    </button>
-                    <button type="button" class="btn btn-outline-danger btn-sm" id="btn-edit-remove-media">
-                      <i class="bi bi-trash me-1"></i> Remove
-                    </button>
-                  </div>
-
-                  <label class="form-label-admin small mb-1">Preset Clinic Uploads:</label>
-                  <div class="d-flex flex-wrap gap-1 mb-3">
+                  <label class="form-label-admin small text-muted mb-1">Preset Clinic Uploads:</label>
+                  <div class="d-flex flex-wrap gap-1">
                     <button type="button" class="btn btn-outline-secondary btn-sm image-preset-choice" data-src="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg">Microcurrent</button>
                     <button type="button" class="btn btn-outline-secondary btn-sm image-preset-choice" data-src="assets/uploads/2024/08/HYPERBARIC-OXYGEN-THERAPY-1024x683-1.jpg">Hyperbaric</button>
                     <button type="button" class="btn btn-outline-secondary btn-sm image-preset-choice" data-src="assets/uploads/2024/08/Redlight-Therapy-1024x683-1.jpg">Red Light Sauna</button>
                     <button type="button" class="btn btn-outline-secondary btn-sm image-preset-choice" data-src="assets/uploads/2024/08/foot-detox-1024x683-1.jpg">Foot Detox</button>
                   </div>
-
-                  <label class="form-label-admin" for="blog-image-file">Upload Custom Banner</label>
-                  <input type="file" class="form-control form-control-sm" id="blog-image-file" accept="image/*">
                 </div>
               </div>
 

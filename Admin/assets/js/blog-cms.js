@@ -1547,7 +1547,10 @@
 
     function setVal(id, v) {
       var el = document.getElementById(id);
-      if (el) el.value = v == null ? "" : v;
+      if (el) {
+        el.value = v == null ? "" : v;
+        el.dispatchEvent(new Event('input'));
+      }
     }
 
     function loadAllFields() {

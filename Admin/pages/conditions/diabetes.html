@@ -216,16 +216,33 @@
             </div>
             <div class="editor-body">
               <div class="row g-3">
-                <div class="col-md-8">
-                  <label class="form-label-admin" for="lead-image">Featured Article Image Path *</label>
-                  <input class="form-control" id="lead-image" value="../assets/uploads/2021/04/types-of-diabetes.jpg" required>
-                  <p class="help">Points to the condition banner image inside Frontend/assets/uploads/</p>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label-admin">Image Preview</label>
-                  <div class="d-flex align-items-center gap-2">
-                    <img src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" alt="Types of diabetes" class="condition-preview-thumb" id="lead-image-preview">
-                    <small class="text-muted">Responsive article hero</small>
+                <div class="col-md-6">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Featured Article Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" class="cms-image-preview-img" alt="Types of diabetes" id="lead-image-preview">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1" for="lead-image">Image Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-white text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" class="form-control js-cms-img-input" id="lead-image" value="../assets/uploads/2021/04/types-of-diabetes.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12">
@@ -337,8 +354,33 @@
                   <input class="form-control" id="symptoms-heading" value="Symptoms of Diabetes">
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label-admin" for="symptoms-image">Accompanying Image Path</label>
-                  <input class="form-control" id="symptoms-image" value="../assets/uploads/2021/04/d.jpg">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Accompanying Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2021/04/d.jpg" class="cms-image-preview-img" alt="Symptoms of Diabetes">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1" for="symptoms-image">Image Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-white text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" class="form-control js-cms-img-input" id="symptoms-image" value="../assets/uploads/2021/04/d.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -376,8 +418,33 @@
                   <input class="form-control" id="risks-heading" value="Factors that Increase the Risk of Diabetes">
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label-admin" for="risks-image">Accompanying Factor Image Path</label>
-                  <input class="form-control" id="risks-image" value="../assets/uploads/2021/04/diabetes-factor.jpg">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Accompanying Factor Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2021/04/diabetes-factor.jpg" class="cms-image-preview-img" alt="Factors that Increase the Risk of Diabetes">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1" for="risks-image">Image Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-white text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" class="form-control js-cms-img-input" id="risks-image" value="../assets/uploads/2021/04/diabetes-factor.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -539,8 +606,28 @@
                       <input class="form-control" id="book1-author" value="Mark Hyman, M.D.">
                     </div>
                     <div>
-                      <label class="form-label-admin" for="book1-image">Book Cover Image Path</label>
-                      <input class="form-control" id="book1-image" value="../assets/uploads/2021/04/Blood-Sugar-Solution.jpg">
+                      <div class="cms-image-field">
+                        <label class="form-label-admin small text-muted mb-1">Book Cover Image</label>
+                        <div class="cms-image-preview-box has-image" style="height:120px;">
+                          <img src="../../../Frontend/assets/uploads/2021/04/Blood-Sugar-Solution.jpg" class="cms-image-preview-img" alt="The Blood Sugar Solution">
+                          <div class="cms-image-empty-state">
+                            <i class="bi bi-image cms-image-empty-icon"></i>
+                            <div class="cms-image-empty-title">No image</div>
+                          </div>
+                          <div class="cms-image-preview-actions">
+                            <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i></button>
+                            <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i></button>
+                          </div>
+                        </div>
+                        <div class="cms-image-btn-row">
+                          <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                          <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                          <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                        </div>
+                        <div class="cms-image-path-group">
+                          <input type="text" class="form-control form-control-sm js-cms-img-input" id="book1-image" value="../assets/uploads/2021/04/Blood-Sugar-Solution.jpg" placeholder="assets/uploads/...">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -558,8 +645,28 @@
                       <input class="form-control" id="book2-author" value="Mark Hyman, M.D.">
                     </div>
                     <div>
-                      <label class="form-label-admin" for="book2-image">Book Cover Image Path</label>
-                      <input class="form-control" id="book2-image" value="../assets/uploads/2021/04/Ultra-Metabolism.jpg">
+                      <div class="cms-image-field">
+                        <label class="form-label-admin small text-muted mb-1">Book Cover Image</label>
+                        <div class="cms-image-preview-box has-image" style="height:120px;">
+                          <img src="../../../Frontend/assets/uploads/2021/04/Ultra-Metabolism.jpg" class="cms-image-preview-img" alt="UltraMetabolism">
+                          <div class="cms-image-empty-state">
+                            <i class="bi bi-image cms-image-empty-icon"></i>
+                            <div class="cms-image-empty-title">No image</div>
+                          </div>
+                          <div class="cms-image-preview-actions">
+                            <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i></button>
+                            <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i></button>
+                          </div>
+                        </div>
+                        <div class="cms-image-btn-row">
+                          <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                          <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                          <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                        </div>
+                        <div class="cms-image-path-group">
+                          <input type="text" class="form-control form-control-sm js-cms-img-input" id="book2-image" value="../assets/uploads/2021/04/Ultra-Metabolism.jpg" placeholder="assets/uploads/...">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1090,5 +1197,7 @@
       });
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/script.js"></script>
 </body>
 </html>

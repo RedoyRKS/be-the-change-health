@@ -232,13 +232,34 @@
             </div>
             <div class="editor-body">
               <div class="row g-3 mb-3">
-                <div class="col-md-8">
-                  <label class="form-label fw-semibold" for="intro-image">Featured Banner Image Path</label>
-                  <input type="text" class="form-control" id="intro-image" value="../assets/uploads/2025/02/WeightLoss-Updated-banner-September-2022-11024_1.jpg">
-                  <div class="form-text">Frontend relative image path: Frontend/assets/uploads/2025/02/WeightLoss-Updated-banner-September-2022-11024_1.jpg</div>
-                </div>
-                <div class="col-md-4 d-flex align-items-center">
-                  <img src="../../../Frontend/assets/uploads/2025/02/WeightLoss-Updated-banner-September-2022-11024_1.jpg" alt="Preview" class="service-preview-thumb ms-auto" onerror="this.style.display='none'">
+                <div class="col-12">
+                  <div class="cms-image-field">
+                    <label class="form-label fw-semibold">Featured Banner Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2025/02/WeightLoss-Updated-banner-September-2022-11024_1.jpg" class="cms-image-preview-img" alt="Wellness Classes Banner">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" class="form-control js-cms-img-input" id="intro-image" value="../assets/uploads/2025/02/WeightLoss-Updated-banner-September-2022-11024_1.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-12">
                   <label class="form-label fw-semibold" for="intro-p1">Classes Philosophy Lead Paragraph</label>

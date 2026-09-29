@@ -213,15 +213,33 @@
             </div>
             <div class="editor-body">
               <div class="row g-3">
-                <div class="col-md-8">
-                  <label class="form-label-admin" for="lead-image">Featured Article Image Path *</label>
-                  <input class="form-control" id="lead-image" value="../assets/uploads/2024/08/ss.jpg" required>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label-admin">Image Preview</label>
-                  <div class="d-flex align-items-center gap-2">
-                    <img src="../../../Frontend/assets/uploads/2024/08/ss.jpg" alt="Chronic Fatigue" class="condition-preview-thumb" id="lead-image-preview">
-                    <small class="text-muted">Featured visual</small>
+                <div class="col-md-6">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Featured Article Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2024/08/ss.jpg" class="cms-image-preview-img" alt="Chronic Fatigue" id="lead-image-preview">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1" for="lead-image">Image Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-white text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" class="form-control js-cms-img-input" id="lead-image" value="../assets/uploads/2024/08/ss.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12">
@@ -333,14 +351,31 @@
                 <textarea class="form-control" id="fibro-p3" rows="2">If you have fibromyalgia, you might get pain that is concentrated in small regions called trigger points. Common areas for trigger points are the back of the head, shoulders, upper chest, and joints.</textarea>
               </div>
 
-              <div class="row g-3">
-                <div class="col-md-8">
-                  <label class="form-label-admin" for="fibro-figure">Inline Pain Distribution Illustration Path</label>
-                  <input class="form-control" id="fibro-figure" value="../assets/uploads/2024/08/Pain-all-over-1024x1024-1.jpg">
+              <div class="cms-image-field mt-3">
+                <label class="form-label-admin">Inline Pain Distribution Illustration</label>
+                <div class="cms-image-preview-box has-image">
+                  <img src="../../../Frontend/assets/uploads/2024/08/Pain-all-over-1024x1024-1.jpg" class="cms-image-preview-img" alt="Pain all over Illustration">
+                  <div class="cms-image-empty-state">
+                    <i class="bi bi-image cms-image-empty-icon"></i>
+                    <div class="cms-image-empty-title">No illustration selected</div>
+                    <div class="cms-image-empty-subtitle">Upload image or choose from gallery</div>
+                  </div>
+                  <div class="cms-image-preview-actions">
+                    <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                    <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <label class="form-label-admin">Illustration Preview</label>
-                  <img src="../../../Frontend/assets/uploads/2024/08/Pain-all-over-1024x1024-1.jpg" alt="Pain all over" class="condition-preview-thumb" onerror="this.style.display='none'">
+                <div class="cms-image-btn-row">
+                  <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                  <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                  <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                </div>
+                <div class="cms-image-path-group">
+                  <label class="form-label-admin small text-muted mb-1">Illustration Path / URL</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                    <input class="form-control js-cms-img-input" id="fibro-figure" value="../assets/uploads/2024/08/Pain-all-over-1024x1024-1.jpg" placeholder="assets/uploads/...">
+                  </div>
                 </div>
               </div>
 
@@ -840,5 +875,7 @@
       });
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/script.js"></script>
 </body>
 </html>

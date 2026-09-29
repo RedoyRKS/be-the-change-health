@@ -1309,6 +1309,459 @@
     });
   }
 
+  // ============================================================
+  // CMS IMAGE SELECTOR & MEDIA GALLERY ENGINE
+  // ============================================================
+
+  var BTC_MEDIA_CATALOG = [
+    // Logos & Branding
+    { name: "LOGO.jpg", path: "assets/uploads/2024/08/LOGO.jpg", category: "Logos & Branding", tag: "Header Logo" },
+    { name: "logo.png", path: "assets/uploads/2024/08/logo.png", category: "Logos & Branding", tag: "Footer Logo" },
+    { name: "mobileLOGO.jpg", path: "assets/uploads/2025/02/mobileLOGO.jpg", category: "Logos & Branding", tag: "Mobile Nav" },
+    { name: "fav.jpg", path: "assets/uploads/2025/02/fav.jpg", category: "Logos & Branding", tag: "Favicon" },
+    { name: "wline.png", path: "assets/uploads/2024/08/wline.png", category: "Logos & Branding", tag: "Wave Divider" },
+
+    // Hero & Banners
+    { name: "home.jpg", path: "assets/uploads/2025/06/home.jpg", category: "Hero & Banners", tag: "Homepage Hero" },
+    { name: "approach.jpg", path: "assets/uploads/2024/08/approach.jpg", category: "Hero & Banners", tag: "About Practice" },
+    { name: "WeightLoss-Updated-banner-September-2022-11024_1.jpg", path: "assets/uploads/2025/02/WeightLoss-Updated-banner-September-2022-11024_1.jpg", category: "Hero & Banners", tag: "Wellness Classes" },
+    { name: "bg1.jpg", path: "assets/uploads/2025/02/bg1.jpg", category: "Hero & Banners", tag: "Background Pattern" },
+
+    // Doctors & Team
+    { name: "sa.jpg", path: "assets/uploads/2024/08/sa.jpg", category: "Doctors & Team", tag: "Dr. Sultana Afrooz" },
+    { name: "Sultana-Afrooz-pd6ddd2kete2du2tyy24v5o7z1bhnurc6jbos2s6lk.png", path: "assets/uploads/2024/10/Sultana-Afrooz-pd6ddd2kete2du2tyy24v5o7z1bhnurc6jbos2s6lk.png", category: "Doctors & Team", tag: "Dr. Sultana Bio" },
+    { name: "jn-5.jpg", path: "assets/uploads/2025/02/jn-5.jpg", category: "Doctors & Team", tag: "Dr. Jessica Needle" },
+    { name: "jessica.jpg", path: "assets/uploads/2025/02/jessica.jpg", category: "Doctors & Team", tag: "Dr. Jessica Profile" },
+    { name: "IMG_4692-1.jpg", path: "assets/uploads/2025/02/IMG_4692-1.jpg", category: "Doctors & Team", tag: "Clinic Team" },
+
+    // Services & Therapies
+    { name: "IV.jpg", path: "assets/uploads/2024/08/IV.jpg", category: "Services & Therapies", tag: "IV Nutritional Infusions" },
+    { name: "OX.jpg", path: "assets/uploads/2024/08/OX.jpg", category: "Services & Therapies", tag: "Hyperbaric Oxygen" },
+    { name: "SAUNA.jpg", path: "assets/uploads/2024/08/SAUNA.jpg", category: "Services & Therapies", tag: "Infrared Sauna" },
+    { name: "DETOX.jpg", path: "assets/uploads/2024/08/DETOX.jpg", category: "Services & Therapies", tag: "Ion Foot Detox" },
+    { name: "Reflexology.webp", path: "assets/uploads/2025/02/Reflexology.webp", category: "Services & Therapies", tag: "Reflexology Therapy" },
+    { name: "Ion-Foot-Detox1-2.jpeg", path: "assets/uploads/2025/02/Ion-Foot-Detox1-2.jpeg", category: "Services & Therapies", tag: "Detox Basin" },
+    { name: "Ozone-Sauna-Health-Benefits.jpg", path: "assets/uploads/2025/02/Ozone-Sauna-Health-Benefits.jpg", category: "Services & Therapies", tag: "Ozone Sauna" },
+    { name: "ozone-iv-therapy-phoenix-arizona-naturopathic-doctor.jpeg", path: "assets/uploads/2025/02/ozone-iv-therapy-phoenix-arizona-naturopathic-doctor.jpeg", category: "Services & Therapies", tag: "Ozone Therapy" },
+    { name: "What-is-Microcurrent-1024x683-1.jpg", path: "assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg", category: "Services & Therapies", tag: "Microcurrent Banner" },
+    { name: "Frequency-Specific-Microcurrent-treatment-cut.jpg", path: "assets/uploads/2024/08/Frequency-Specific-Microcurrent-treatment-cut.jpg", category: "Services & Therapies", tag: "FSM Treatment" },
+    { name: "HYPERBARIC-OXYGEN-THERAPY-1024x683-1.jpg", path: "assets/uploads/2024/08/HYPERBARIC-OXYGEN-THERAPY-1024x683-1.jpg", category: "Services & Therapies", tag: "HBOT Chamber" },
+    { name: "Redlight-Therapy-1024x683-1.jpg", path: "assets/uploads/2024/08/Redlight-Therapy-1024x683-1.jpg", category: "Services & Therapies", tag: "Red Light Panel" },
+    { name: "Sauna-966x1024-1.webp", path: "assets/uploads/2024/08/Sauna-966x1024-1.webp", category: "Services & Therapies", tag: "Full Spectrum Sauna" },
+    { name: "Sauna_RedLight2_01-1187x1536-1.jpg", path: "assets/uploads/2025/02/Sauna_RedLight2_01-1187x1536-1.jpg", category: "Services & Therapies", tag: "Sauna Interior" },
+    { name: "Sauna_RedLight2_02-1187x1536-1.jpg", path: "assets/uploads/2025/02/Sauna_RedLight2_02-1187x1536-1.jpg", category: "Services & Therapies", tag: "Sauna Detail" },
+    { name: "ct.jpg", path: "assets/uploads/2024/10/ct.jpg", category: "Services & Therapies", tag: "Hydrotherapy" },
+    { name: "freq.jpg", path: "assets/uploads/2024/10/freq.jpg", category: "Services & Therapies", tag: "FSM Unit" },
+    { name: "hh.jpg", path: "assets/uploads/2024/10/hh.jpg", category: "Services & Therapies", tag: "Integrative Health" },
+    { name: "o2.jpg", path: "assets/uploads/2024/10/o2.jpg", category: "Services & Therapies", tag: "Oxygen Therapy" },
+    { name: "bhrt.jpg", path: "assets/uploads/2024/08/bhrt.jpg", category: "Services & Therapies", tag: "BHRT Therapy" },
+    { name: "The-Liquilift.png", path: "assets/uploads/2024/10/The-Liquilift.png", category: "Services & Therapies", tag: "Liquivida Liquilift" },
+    { name: "The-Original-Myers-Cocktail.png", path: "assets/uploads/2024/10/The-Original-Myers-Cocktail.png", category: "Services & Therapies", tag: "Myers Cocktail" },
+    { name: "Myers-IV.png", path: "assets/uploads/2024/10/Myers-IV.png", category: "Services & Therapies", tag: "Myers Infusion" },
+    { name: "The-Executive.png", path: "assets/uploads/2024/10/The-Executive.png", category: "Services & Therapies", tag: "Executive IV" },
+    { name: "Performance-Hydration.png", path: "assets/uploads/2024/10/Performance-Hydration.png", category: "Services & Therapies", tag: "Performance IV" },
+    { name: "NAD.png", path: "assets/uploads/2024/10/NAD.png", category: "Services & Therapies", tag: "NAD+ Therapy" },
+    { name: "Gluathione.png", path: "assets/uploads/2024/10/Gluathione.png", category: "Services & Therapies", tag: "Glutathione" },
+    { name: "Hydration.png", path: "assets/uploads/2024/10/Hydration.png", category: "Services & Therapies", tag: "Hydration IV" },
+    { name: "Immune-Boost.png", path: "assets/uploads/2024/10/Immune-Boost.png", category: "Services & Therapies", tag: "Immunity IV" },
+    { name: "Liver-Cleanse.png", path: "assets/uploads/2024/10/Liver-Cleanse.png", category: "Services & Therapies", tag: "Liver Cleanse" },
+    { name: "Natural-Defense.png", path: "assets/uploads/2024/10/Natural-Defense.png", category: "Services & Therapies", tag: "Natural Defense" },
+    { name: "Phosphatidylcholine.png", path: "assets/uploads/2024/10/Phosphatidylcholine.png", category: "Services & Therapies", tag: "Plaquex / PC" },
+    { name: "Re-Hydration.png", path: "assets/uploads/2024/10/Re-Hydration.png", category: "Services & Therapies", tag: "Re-Hydration" },
+    { name: "Re-energize-or-Performance.png", path: "assets/uploads/2024/10/Re-energize-or-Performance.png", category: "Services & Therapies", tag: "Re-energize IV" },
+    { name: "Chelation-Therapy.png", path: "assets/uploads/2024/10/Chelation-Therapy.png", category: "Services & Therapies", tag: "Chelation IV" },
+    { name: "Anti-Aging-or-Skin-Brightening.png", path: "assets/uploads/2024/10/Anti-Aging-or-Skin-Brightening.png", category: "Services & Therapies", tag: "Anti-Aging IV" },
+    { name: "Brain-Clarity.png", path: "assets/uploads/2024/10/Brain-Clarity.png", category: "Services & Therapies", tag: "Brain Clarity IV" },
+    { name: "Joint-Sipport-or-Paint-Relief.png", path: "assets/uploads/2024/10/Joint-Sipport-or-Paint-Relief.png", category: "Services & Therapies", tag: "Joint Support IV" },
+    { name: "FOUNTAIN-OF-YOUTH.png", path: "assets/uploads/2024/10/FOUNTAIN-OF-YOUTH.png", category: "Services & Therapies", tag: "Fountain of Youth" },
+    { name: "Blood-Tests.png", path: "assets/uploads/2025/05/Blood-Tests.png", category: "Services & Therapies", tag: "Blood Testing" },
+    { name: "craniosacral-therapy.png", path: "assets/uploads/2025/05/craniosacral-therapy.png", category: "Services & Therapies", tag: "Craniosacral" },
+    { name: "hyperberic-oxygen-chamber.png", path: "assets/uploads/2025/05/hyperberic-oxygen-chamber.png", category: "Services & Therapies", tag: "HBOT Chamber" },
+    { name: "iv-therapy.png", path: "assets/uploads/2025/05/iv-therapy.png", category: "Services & Therapies", tag: "IV Therapy Icon" },
+    { name: "Ion-foot-detox.png", path: "assets/uploads/2025/05/Ion-foot-detox.png", category: "Services & Therapies", tag: "Foot Detox Icon" },
+    { name: "P1.png", path: "assets/uploads/2025/02/P1.png", category: "Services & Therapies", tag: "Personalized Plan 1" },
+    { name: "p2.png", path: "assets/uploads/2025/02/p2.png", category: "Services & Therapies", tag: "Personalized Plan 2" },
+    { name: "P3.png", path: "assets/uploads/2025/02/P3.png", category: "Services & Therapies", tag: "Personalized Plan 3" },
+
+    // Conditions
+    { name: "Diabetes.jpg", path: "assets/uploads/2024/08/Diabetes.jpg", category: "Conditions", tag: "Diabetes Care" },
+    { name: "Heart-Disease.jpg", path: "assets/uploads/2024/08/Heart-Disease.jpg", category: "Conditions", tag: "Cardiovascular" },
+    { name: "Concussion.jpg", path: "assets/uploads/2024/08/Concussion.jpg", category: "Conditions", tag: "Concussion & TBI" },
+    { name: "Chronic-fatigue-1.jpg", path: "assets/uploads/2024/08/Chronic-fatigue-1.jpg", category: "Conditions", tag: "Chronic Fatigue" },
+    { name: "Hormone.jpg", path: "assets/uploads/2024/08/Hormone.jpg", category: "Conditions", tag: "Hormone Imbalance" },
+    { name: "Pain-all-over-1024x1024-1.jpg", path: "assets/uploads/2024/08/Pain-all-over-1024x1024-1.jpg", category: "Conditions", tag: "Chronic Pain" },
+    { name: "Pain-relief-Services.jpg", path: "assets/uploads/2024/08/Pain-relief-Services.jpg", category: "Conditions", tag: "Pain Relief" },
+    { name: "Detoxification.jpg", path: "assets/uploads/2024/08/Detoxification.jpg", category: "Conditions", tag: "Toxins & Detox" },
+    { name: "Medical-Weight-Loss.jpg", path: "assets/uploads/2024/08/Medical-Weight-Loss.jpg", category: "Conditions", tag: "Obesity & Weight" },
+    { name: "toxic2.jpg", path: "assets/uploads/2024/08/toxic2.jpg", category: "Conditions", tag: "Environmental Toxins" },
+    { name: "8_Main_Types_of_Heart_Disease.jpg", path: "assets/uploads/2024/08/8_Main_Types_of_Heart_Disease.jpg", category: "Conditions", tag: "Heart Disease Chart" },
+    { name: "types-of-diabetes.jpg", path: "assets/uploads/2024/08/types-of-diabetes.jpg", category: "Conditions", tag: "Diabetes Infographic" },
+    { name: "diabetes-factor.jpg", path: "assets/uploads/2024/08/diabetes-factor.jpg", category: "Conditions", tag: "Risk Factors" },
+    { name: "Factors-Contributing-to-Hormonal.png", path: "assets/uploads/2024/08/Factors-Contributing-to-Hormonal.png", category: "Conditions", tag: "Hormone Diagram" },
+    { name: "Dont-Lose-Weight-Lose-FAT.jpg", path: "assets/uploads/2024/08/Dont-Lose-Weight-Lose-FAT.jpg", category: "Conditions", tag: "Fat Loss Focus" },
+    { name: "lowt2.jpg", path: "assets/uploads/2024/08/lowt2.jpg", category: "Conditions", tag: "Low Testosterone" },
+    { name: "hormones.jpg", path: "assets/uploads/2024/08/hormones.jpg", category: "Conditions", tag: "Endocrine Health" },
+    { name: "Stop-smoking-Six-foods-to-avoid-if-you-want-to-quit-the-habit-in-the-New-Year-1060863.jpg", path: "assets/uploads/2024/08/Stop-smoking-Six-foods-to-avoid-if-you-want-to-quit-the-habit-in-the-New-Year-1060863.jpg", category: "Conditions", tag: "Smoking Cessation" },
+
+    // Pillars & Values
+    { name: "Vision.jpg", path: "assets/uploads/2024/10/Vision.jpg", category: "Pillars & Values", tag: "Our Vision" },
+    { name: "mission2.jpg", path: "assets/uploads/2024/10/mission2.jpg", category: "Pillars & Values", tag: "Our Goal" },
+    { name: "core.jpg", path: "assets/uploads/2024/10/core.jpg", category: "Pillars & Values", tag: "Our Core Values" },
+    { name: "therapeutic-order.png", path: "assets/uploads/2024/10/therapeutic-order.png", category: "Pillars & Values", tag: "Therapeutic Order" },
+    { name: "Our-Integrative-Approach-to.png", path: "assets/uploads/2024/08/Our-Integrative-Approach-to.png", category: "Pillars & Values", tag: "Integrative Approach" },
+    { name: "Naturopathic-Integrative-Medicine-Services.png", path: "assets/uploads/2024/08/Naturopathic-Integrative-Medicine-Services.png", category: "Pillars & Values", tag: "Medicine Services" },
+
+    // Memberships & Ads
+    { name: "Standard-Wellness-Membership-Ad-1.jpg", path: "assets/uploads/2024/10/Standard-Wellness-Membership-Ad-1.jpg", category: "Memberships & Ads", tag: "Standard Plan Ad" },
+    { name: "Specialized-Wellness-Membership-Ad-1.jpg", path: "assets/uploads/2024/10/Specialized-Wellness-Membership-Ad-1.jpg", category: "Memberships & Ads", tag: "Specialized Plan Ad" },
+    { name: "family-Wellness-Membership-Ad.png", path: "assets/uploads/2024/10/family-Wellness-Membership-Ad.png", category: "Memberships & Ads", tag: "Family Plan Ad" },
+    { name: "medical-weight-management-options.png", path: "assets/uploads/2024/08/medical-weight-management-options.png", category: "Memberships & Ads", tag: "Weight Management" },
+
+    // Diet & Wellness
+    { name: "Blood-Sugar.jpg", path: "assets/uploads/2025/02/Blood-Sugar.jpg", category: "Diet & Wellness", tag: "Blood Sugar" },
+    { name: "Blood-Sugar-Solution.jpg", path: "assets/uploads/2025/02/Blood-Sugar-Solution.jpg", category: "Diet & Wellness", tag: "Blood Sugar Solution" },
+    { name: "The-Hormone-Cure.png", path: "assets/uploads/2025/02/The-Hormone-Cure.png", category: "Diet & Wellness", tag: "The Hormone Cure" },
+    { name: "Estrogen-Matters-by-Avra-Bluming-book.png", path: "assets/uploads/2025/02/Estrogen-Matters-by-Avra-Bluming-book.png", category: "Diet & Wellness", tag: "Estrogen Matters" },
+    { name: "Ultra-Metabolism.jpg", path: "assets/uploads/2025/02/Ultra-Metabolism.jpg", category: "Diet & Wellness", tag: "Ultra Metabolism" },
+    { name: "meal-prrp-1080x675-1.jpg", path: "assets/uploads/2024/08/meal-prrp-1080x675-1.jpg", category: "Diet & Wellness", tag: "Meal Prep Guide" },
+    { name: "food-n-me-12-weeks-program.jpg", path: "assets/uploads/2025/02/food-n-me-12-weeks-program.jpg", category: "Diet & Wellness", tag: "12 Weeks Program" },
+    { name: "KETO.jpeg", path: "assets/uploads/2025/02/KETO.jpeg", category: "Diet & Wellness", tag: "Keto Protocol" },
+    { name: "1Blue.jpg", path: "assets/uploads/2025/02/1Blue.jpg", category: "Diet & Wellness", tag: "Chromotherapy Blue" },
+    { name: "1Green.jpg", path: "assets/uploads/2025/02/1Green.jpg", category: "Diet & Wellness", tag: "Chromotherapy Green" },
+    { name: "1Orange.jpg", path: "assets/uploads/2025/02/1Orange.jpg", category: "Diet & Wellness", tag: "Chromotherapy Orange" },
+    { name: "1Red.jpg", path: "assets/uploads/2025/02/1Red.jpg", category: "Diet & Wellness", tag: "Chromotherapy Red" },
+    { name: "1Violet.jpg", path: "assets/uploads/2025/02/1Violet.jpg", category: "Diet & Wellness", tag: "Chromotherapy Violet" },
+    { name: "1Yellow.jpg", path: "assets/uploads/2025/02/1Yellow.jpg", category: "Diet & Wellness", tag: "Chromotherapy Yellow" }
+  ];
+
+  function resolveAdminImagePath(rawPath) {
+    if (!rawPath || typeof rawPath !== "string") return "";
+    var trimmed = rawPath.trim();
+    if (!trimmed) return "";
+    if (trimmed.startsWith("data:") || trimmed.startsWith("blob:") || trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+      return trimmed;
+    }
+    var clean = trimmed.replace(/^(\.\.\/)+/, "").replace(/^\/+/, "");
+    if (clean.startsWith("Frontend/")) {
+      clean = clean.replace(/^Frontend\//, "");
+    }
+    return FE + clean;
+  }
+
+  var _activeMediaSelectCallback = null;
+
+  function ensureMediaGalleryModal() {
+    var modalEl = document.getElementById("cmsMediaGalleryModal");
+    if (modalEl) return modalEl;
+
+    var categories = ["All", "Logos & Branding", "Hero & Banners", "Doctors & Team", "Services & Therapies", "Conditions", "Pillars & Values", "Memberships & Ads", "Diet & Wellness"];
+
+    var pillsHtml = categories.map(function (cat, idx) {
+      return '<button type="button" class="cms-gallery-pill' + (idx === 0 ? ' active' : '') + '" data-category="' + cat + '">' + cat + '</button>';
+    }).join("");
+
+    var modalHtml = [
+      '<div class="modal fade" id="cmsMediaGalleryModal" tabindex="-1" aria-labelledby="cmsMediaGalleryModalLabel" aria-hidden="true">',
+      '  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">',
+      '    <div class="modal-content">',
+      '      <div class="modal-header d-flex align-items-center justify-content-between">',
+      '        <div>',
+      '          <span class="badge bg-teal-subtle text-teal border px-2 py-1 small mb-1 d-inline-block">Project Media Library</span>',
+      '          <h5 class="modal-title fw-bold text-navy mb-0" id="cmsMediaGalleryModalLabel">',
+      '            <i class="bi bi-images text-teal me-2"></i>Choose Image from Gallery',
+      '          </h5>',
+      '        </div>',
+      '        <div class="d-flex align-items-center gap-2">',
+      '          <label class="btn btn-sm btn-btc mb-0" style="cursor: pointer;">',
+      '            <i class="bi bi-upload me-1"></i> Upload New Image',
+      '            <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" hidden id="cmsGalleryModalUploadInput">',
+      '          </label>',
+      '          <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>',
+      '        </div>',
+      '      </div>',
+      '      <div class="modal-body">',
+      '        <div class="cms-gallery-search-wrap">',
+      '          <i class="bi bi-search search-icon"></i>',
+      '          <input type="text" class="form-control" id="cmsGallerySearchInput" placeholder="Search images by filename, tag, or folder...">',
+      '        </div>',
+      '        <div class="cms-gallery-filter-pills" id="cmsGalleryPillsWrap">',
+      '          ' + pillsHtml,
+      '        </div>',
+      '        <div class="d-flex justify-content-between align-items-center mb-2 px-1">',
+      '          <span class="small text-muted" id="cmsGalleryItemCount">Showing all assets</span>',
+      '          <span class="small text-muted"><i class="bi bi-cursor me-1"></i>Click any thumbnail to insert</span>',
+      '        </div>',
+      '        <div class="cms-gallery-grid" id="cmsGalleryGridContainer"></div>',
+      '      </div>',
+      '      <div class="modal-footer d-flex justify-content-between bg-white border-top py-2">',
+      '        <span class="small text-muted" id="cmsGallerySelectedNote">No image selected yet</span>',
+      '        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>',
+      '      </div>',
+      '    </div>',
+      '  </div>',
+      '</div>'
+    ].join("\n");
+
+    document.body.insertAdjacentHTML("beforeend", modalHtml);
+    modalEl = document.getElementById("cmsMediaGalleryModal");
+
+    // Bind Gallery events
+    var searchInput = document.getElementById("cmsGallerySearchInput");
+    var pillsWrap = document.getElementById("cmsGalleryPillsWrap");
+    var uploadInput = document.getElementById("cmsGalleryModalUploadInput");
+
+    if (searchInput) {
+      searchInput.addEventListener("input", function () {
+        renderMediaGalleryGrid();
+      });
+    }
+
+    if (pillsWrap) {
+      pillsWrap.addEventListener("click", function (e) {
+        var pill = e.target.closest(".cms-gallery-pill");
+        if (!pill) return;
+        pillsWrap.querySelectorAll(".cms-gallery-pill").forEach(function (p) { p.classList.remove("active"); });
+        pill.classList.add("active");
+        renderMediaGalleryGrid();
+      });
+    }
+
+    if (uploadInput) {
+      uploadInput.addEventListener("change", function () {
+        var file = uploadInput.files && uploadInput.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+          var dataUrl = evt.target.result;
+          var newPath = "assets/uploads/2025/02/" + file.name;
+          var newItem = {
+            name: file.name,
+            path: newPath,
+            category: "Uploaded",
+            tag: "Uploaded file",
+            dataUrl: dataUrl
+          };
+          BTC_MEDIA_CATALOG.unshift(newItem);
+          renderMediaGalleryGrid();
+          if (_activeMediaSelectCallback) {
+            _activeMediaSelectCallback(newItem);
+            var bsModal = bootstrap.Modal.getInstance(modalEl);
+            if (bsModal) bsModal.hide();
+          }
+          toast("Image uploaded: " + file.name);
+        };
+        reader.readAsDataURL(file);
+        uploadInput.value = "";
+      });
+    }
+
+    return modalEl;
+  }
+
+  function renderMediaGalleryGrid() {
+    var grid = document.getElementById("cmsGalleryGridContainer");
+    var countEl = document.getElementById("cmsGalleryItemCount");
+    var searchInput = document.getElementById("cmsGallerySearchInput");
+    var activePill = document.querySelector("#cmsGalleryPillsWrap .cms-gallery-pill.active");
+
+    if (!grid) return;
+
+    var q = searchInput ? searchInput.value.toLowerCase().trim() : "";
+    var cat = activePill ? activePill.getAttribute("data-category") : "All";
+
+    var filtered = BTC_MEDIA_CATALOG.filter(function (item) {
+      var matchCat = (cat === "All" || item.category === cat);
+      var matchQ = !q || item.name.toLowerCase().indexOf(q) !== -1 || (item.tag && item.tag.toLowerCase().indexOf(q) !== -1) || item.path.toLowerCase().indexOf(q) !== -1;
+      return matchCat && matchQ;
+    });
+
+    if (countEl) {
+      countEl.textContent = "Showing " + filtered.length + " image" + (filtered.length === 1 ? "" : "s");
+    }
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="text-center py-5 text-muted col-span-full w-100" style="grid-column: 1/-1;"><i class="bi bi-images fs-1 d-block mb-2 text-slate-300"></i>No images match your search.</div>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(function (item) {
+      var imgSrc = item.dataUrl || resolveAdminImagePath(item.path);
+      return [
+        '<div class="cms-gallery-card" data-path="' + item.path + '" data-name="' + item.name + '" title="' + item.name + '">',
+        '  <div class="cms-gallery-thumb-wrap">',
+        '    <img src="' + imgSrc + '" alt="' + item.name + '" loading="lazy" onerror="this.src=\'' + imgSrc + '\'">',
+        '  </div>',
+        '  <div class="cms-gallery-meta">',
+        '    <div class="cms-gallery-name">' + item.name + '</div>',
+        '    <div class="cms-gallery-cat-badge">',
+        '      <span>' + (item.tag || item.category) + '</span>',
+        '    </div>',
+        '    <button type="button" class="btn btn-sm btn-btc-outline cms-gallery-select-btn mt-1">',
+        '      <i class="bi bi-check2 me-1"></i> Select',
+        '    </button>',
+        '  </div>',
+        '</div>'
+      ].join("");
+    }).join("");
+
+    grid.querySelectorAll(".cms-gallery-card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        var p = card.getAttribute("data-path");
+        var n = card.getAttribute("data-name");
+        var item = BTC_MEDIA_CATALOG.find(function (it) { return it.path === p; }) || { name: n, path: p };
+        if (_activeMediaSelectCallback) {
+          _activeMediaSelectCallback(item);
+        }
+        var modalEl = document.getElementById("cmsMediaGalleryModal");
+        if (modalEl) {
+          var bsModal = bootstrap.Modal.getInstance(modalEl);
+          if (bsModal) bsModal.hide();
+        }
+      });
+    });
+  }
+
+  function openMediaGalleryModal(onSelect) {
+    _activeMediaSelectCallback = onSelect;
+    var modalEl = ensureMediaGalleryModal();
+    renderMediaGalleryGrid();
+    if (typeof bootstrap !== "undefined" && bootstrap.Modal) {
+      var modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+  }
+
+  function bindCmsImageFieldElement(fieldEl) {
+    if (!fieldEl || fieldEl.getAttribute("data-cms-img-bound") === "true") return;
+    fieldEl.setAttribute("data-cms-img-bound", "true");
+
+    var input = fieldEl.querySelector(".js-cms-img-input") || fieldEl.querySelector("input[type=text]");
+    var fileInput = fieldEl.querySelector(".js-cms-img-file-input") || fieldEl.querySelector("input[type=file]");
+    var previewBox = fieldEl.querySelector(".cms-image-preview-box");
+    var previewImg = fieldEl.querySelector(".cms-image-preview-img");
+    var uploadBtn = fieldEl.querySelector(".js-cms-img-upload-btn");
+    var galleryBtn = fieldEl.querySelector(".js-cms-img-gallery-btn");
+    var changeBtn = fieldEl.querySelector(".js-cms-img-change");
+    var removeBtn = fieldEl.querySelector(".js-cms-img-remove");
+
+    function updatePreview(val, isDirectSrc) {
+      if (!previewBox || !previewImg) return;
+      var cleanVal = (val || "").trim();
+      if (!cleanVal) {
+        previewBox.classList.remove("has-image");
+        previewImg.src = "";
+        return;
+      }
+      var targetSrc = isDirectSrc ? cleanVal : resolveAdminImagePath(cleanVal);
+      previewImg.src = targetSrc;
+      previewBox.classList.add("has-image");
+    }
+
+    if (previewImg) {
+      previewImg.addEventListener("error", function () {
+        // If image fails to load, keep subtle or fallback
+      });
+    }
+
+    if (input) {
+      updatePreview(input.value);
+      input.addEventListener("input", function () {
+        updatePreview(input.value);
+      });
+      input.addEventListener("change", function () {
+        updatePreview(input.value);
+      });
+    }
+
+    if (uploadBtn && fileInput) {
+      uploadBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        fileInput.click();
+      });
+    }
+
+    if (fileInput) {
+      fileInput.addEventListener("change", function () {
+        var file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+          var dataUrl = evt.target.result;
+          var assignedPath = "assets/uploads/2025/02/" + file.name;
+          if (input) {
+            input.value = assignedPath;
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          updatePreview(dataUrl, true);
+          toast("Image selected: " + file.name);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    if (galleryBtn) {
+      galleryBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openMediaGalleryModal(function (selectedItem) {
+          if (input) {
+            input.value = selectedItem.path;
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          if (selectedItem.dataUrl) {
+            updatePreview(selectedItem.dataUrl, true);
+          } else {
+            updatePreview(selectedItem.path);
+          }
+          toast("Selected: " + selectedItem.name);
+        });
+      });
+    }
+
+    if (changeBtn) {
+      changeBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openMediaGalleryModal(function (selectedItem) {
+          if (input) {
+            input.value = selectedItem.path;
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          if (selectedItem.dataUrl) {
+            updatePreview(selectedItem.dataUrl, true);
+          } else {
+            updatePreview(selectedItem.path);
+          }
+          toast("Updated: " + selectedItem.name);
+        });
+      });
+    }
+
+    if (removeBtn) {
+      removeBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (input) {
+          input.value = "";
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        if (fileInput) fileInput.value = "";
+        updatePreview("");
+        toast("Image removed");
+      });
+    }
+  }
+
+  function initAdminImageSelectors() {
+    ensureMediaGalleryModal();
+    document.querySelectorAll(".cms-image-field").forEach(function (field) {
+      bindCmsImageFieldElement(field);
+    });
+  }
+
   // Global dismiss handlers
   document.addEventListener("click", function (e) {
     if (!e.target.closest(".custom-select-wrapper")) {
@@ -1349,6 +1802,7 @@
     bindNewArticle();
     initGlobalCustomSelects();
     initGlobalDatePickers();
+    initAdminImageSelectors();
   });
 
   window.BTCAdmin = {
@@ -1356,7 +1810,12 @@
     initGlobalCustomSelects: initGlobalCustomSelects,
     initGlobalDatePickers: initGlobalDatePickers,
     closeAllCustomSelects: closeAllCustomSelects,
-    closeAllGlobalCalendars: closeAllGlobalCalendars
+    closeAllGlobalCalendars: closeAllGlobalCalendars,
+    openMediaGallery: openMediaGalleryModal,
+    initAdminImageSelectors: initAdminImageSelectors,
+    resolveAdminImagePath: resolveAdminImagePath,
+    catalog: BTC_MEDIA_CATALOG
   };
 })();
+
 

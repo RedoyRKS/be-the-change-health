@@ -67,7 +67,6 @@
         <!-- Main Form & Real-time Split Preview -->
         <form id="membership-plan-form">
           <input type="hidden" id="plan-id" value="new">
-          <input type="hidden" id="plan-image" value="">
 
           <div class="row g-4">
             <!-- Form Input Column -->
@@ -273,33 +272,54 @@
                     <p>Card banner photo, button label, and destination link.</p>
                   </div>
                 </div>
-                <div class="card-body-admin">
-                  <label class="form-label-admin mb-2">Select from Clinic Photography or Upload Custom:</label>
-                  
+                  <div class="cms-image-field mb-3">
+                    <label class="form-label-admin">Card Banner Photo</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2024/10/Standard-Wellness-Membership-Ad-1.jpg" class="cms-image-preview-img" alt="Card Banner" id="plan-preview-img">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No banner selected</div>
+                        <div class="cms-image-empty-subtitle">Upload custom photo or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input" id="plan-image-upload">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="plan-image" class="form-control js-cms-img-input" value="assets/uploads/2024/10/Standard-Wellness-Membership-Ad-1.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="form-label-admin small text-muted mb-1">Quick Select Ad Preset:</label>
                   <div class="row g-2 mb-3">
                     <div class="col-4">
                       <div class="border rounded p-1 text-center image-preset-choice cursor-pointer" data-img-path="assets/uploads/2024/10/Standard-Wellness-Membership-Ad-1.jpg" style="cursor:pointer;">
-                        <img src="../../../Frontend/assets/uploads/2024/10/Standard-Wellness-Membership-Ad-1.jpg" alt="" class="img-fluid rounded mb-1" style="height:60px; object-fit:cover; width:100%;">
+                        <img src="../../../Frontend/assets/uploads/2024/10/Standard-Wellness-Membership-Ad-1.jpg" alt="" class="img-fluid rounded mb-1" style="height:55px; object-fit:cover; width:100%;">
                         <span class="d-block small text-muted" style="font-size:0.7rem;">Standard Ad</span>
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="border rounded p-1 text-center image-preset-choice cursor-pointer" data-img-path="assets/uploads/2024/10/Specialized-Wellness-Membership-Ad-1.jpg" style="cursor:pointer;">
-                        <img src="../../../Frontend/assets/uploads/2024/10/Specialized-Wellness-Membership-Ad-1.jpg" alt="" class="img-fluid rounded mb-1" style="height:60px; object-fit:cover; width:100%;">
+                        <img src="../../../Frontend/assets/uploads/2024/10/Specialized-Wellness-Membership-Ad-1.jpg" alt="" class="img-fluid rounded mb-1" style="height:55px; object-fit:cover; width:100%;">
                         <span class="d-block small text-muted" style="font-size:0.7rem;">Specialized Ad</span>
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="border rounded p-1 text-center image-preset-choice cursor-pointer" data-img-path="assets/uploads/2024/10/family-Wellness-Membership-Ad.png" style="cursor:pointer;">
-                        <img src="../../../Frontend/assets/uploads/2024/10/family-Wellness-Membership-Ad.png" alt="" class="img-fluid rounded mb-1" style="height:60px; object-fit:cover; width:100%;">
+                        <img src="../../../Frontend/assets/uploads/2024/10/family-Wellness-Membership-Ad.png" alt="" class="img-fluid rounded mb-1" style="height:55px; object-fit:cover; width:100%;">
                         <span class="d-block small text-muted" style="font-size:0.7rem;">Family Ad</span>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="upload-box compact mb-3">
-                    <input type="file" accept="image/*" id="plan-image-upload">
-                    <p class="mb-0 text-muted small"><i class="bi bi-cloud-arrow-up me-1"></i> Or upload custom banner photo (JPG/PNG under 2MB)</p>
                   </div>
 
                   <div class="row g-3">

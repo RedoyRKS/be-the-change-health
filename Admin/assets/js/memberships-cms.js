@@ -513,7 +513,10 @@
 
   function setVal(id, value) {
     var el = document.getElementById(id);
-    if (el) el.value = value == null ? "" : value;
+    if (el) {
+      el.value = value == null ? "" : value;
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }
   }
 
   function extractDiscountNum(val) {

@@ -230,11 +230,35 @@
                     </div>
                   </div>
                   <div class="row g-2">
-                    <div class="col-md-4">
-                      <label class="form-label-admin small">Photo Path</label>
-                      <input type="text" id="doc1Photo" class="form-control form-control-sm mb-1" value="../assets/uploads/2024/08/sa.jpg">
+                    <div class="col-md-5">
+                      <div class="cms-image-field compact">
+                        <label class="form-label-admin small">Photo</label>
+                        <div class="cms-image-preview-box has-image">
+                          <img src="../../../Frontend/assets/uploads/2024/08/sa.jpg" class="cms-image-preview-img" alt="Dr. Sultana">
+                          <div class="cms-image-empty-state">
+                            <i class="bi bi-image cms-image-empty-icon"></i>
+                            <div class="cms-image-empty-title">No photo</div>
+                            <div class="cms-image-empty-subtitle">Upload or gallery</div>
+                          </div>
+                          <div class="cms-image-preview-actions">
+                            <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                            <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                          </div>
+                        </div>
+                        <div class="cms-image-btn-row">
+                          <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                          <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                          <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                        </div>
+                        <div class="cms-image-path-group">
+                          <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" id="doc1Photo" class="form-control js-cms-img-input" value="../assets/uploads/2024/08/sa.jpg" placeholder="assets/uploads/...">
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                       <label class="form-label-admin small">Title Line</label>
                       <input type="text" id="doc1Specialty" class="form-control form-control-sm mb-1" value="Integrative Family Medicine Physician &amp; Osteopathic Physician">
                     </div>
@@ -255,11 +279,35 @@
                     </div>
                   </div>
                   <div class="row g-2">
-                    <div class="col-md-4">
-                      <label class="form-label-admin small">Photo Path</label>
-                      <input type="text" id="doc2Photo" class="form-control form-control-sm mb-1" value="../assets/uploads/2025/02/jn-5.jpg">
+                    <div class="col-md-5">
+                      <div class="cms-image-field compact">
+                        <label class="form-label-admin small">Photo</label>
+                        <div class="cms-image-preview-box has-image">
+                          <img src="../../../Frontend/assets/uploads/2025/02/jn-5.jpg" class="cms-image-preview-img" alt="Dr. Jessica">
+                          <div class="cms-image-empty-state">
+                            <i class="bi bi-image cms-image-empty-icon"></i>
+                            <div class="cms-image-empty-title">No photo</div>
+                            <div class="cms-image-empty-subtitle">Upload or gallery</div>
+                          </div>
+                          <div class="cms-image-preview-actions">
+                            <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                            <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                          </div>
+                        </div>
+                        <div class="cms-image-btn-row">
+                          <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                          <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                          <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                        </div>
+                        <div class="cms-image-path-group">
+                          <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" id="doc2Photo" class="form-control js-cms-img-input" value="../assets/uploads/2025/02/jn-5.jpg" placeholder="assets/uploads/...">
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                       <label class="form-label-admin small">Title Line</label>
                       <input type="text" id="doc2Specialty" class="form-control form-control-sm mb-1" value="Naturopathic Doctor">
                     </div>
@@ -347,13 +395,34 @@
             <section id="sec-media" class="card-admin mb-4">
               <div class="card-head"><div><h2>Featured Media</h2><p>Approach media &amp; floating badge</p></div></div>
               <div class="card-body-admin">
-                <label class="form-label-admin">Approach Photo Path</label>
-                <input type="text" id="approachImgSrc" class="form-control mb-2" value="../assets/uploads/2024/08/approach.jpg">
-                <div class="upload-box text-center p-2 border rounded bg-white mb-3">
-                  <img src="../../../Frontend/assets/uploads/2024/08/approach.jpg" class="img-fluid rounded mb-1" style="max-height: 120px;" alt="Approach">
-                  <p class="small text-muted mb-0">Frontend/assets/uploads/2024/08/approach.jpg</p>
+                <div class="cms-image-field">
+                  <label class="form-label-admin">Approach Photo</label>
+                  <div class="cms-image-preview-box has-image">
+                    <img src="../../../Frontend/assets/uploads/2024/08/approach.jpg" class="cms-image-preview-img" alt="Approach">
+                    <div class="cms-image-empty-state">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image selected</div>
+                      <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                    </div>
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" id="approachImgSrc" class="form-control js-cms-img-input" value="../assets/uploads/2024/08/approach.jpg" placeholder="assets/uploads/...">
+                    </div>
+                  </div>
                 </div>
-                <label class="form-label-admin">Badge Label</label>
+                <label class="form-label-admin mt-2">Badge Label</label>
                 <input type="text" id="approachBadgeLabel" class="form-control mb-2" value="Personalized Medicine">
                 <label class="form-label-admin">Badge Text</label>
                 <textarea id="approachBadgeText" class="form-control" rows="2">Discovering what makes your body unique &amp; planning a healthier journey together</textarea>
@@ -368,18 +437,64 @@
                 <div class="subcard-box mb-3">
                   <strong class="text-dark d-block mb-1">Our Vision</strong>
                   <textarea id="visionDesc" class="form-control form-control-sm mb-2" rows="2">To create a community of informed and empowered patients who are the leaders in promoting and implementing health and wellness.</textarea>
-                  <label class="form-label-admin small">Image</label>
-                  <input type="text" id="visionImgSrc" class="form-control form-control-sm mb-1" value="../assets/uploads/2024/10/Vision.jpg">
-                  <img src="../../../Frontend/assets/uploads/2024/10/Vision.jpg" class="img-thumbnail" style="max-height: 50px;" alt="Vision">
+                  <div class="cms-image-field compact mb-0">
+                    <label class="form-label-admin small">Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2024/10/Vision.jpg" class="cms-image-preview-img" alt="Vision">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image</div>
+                        <div class="cms-image-empty-subtitle">Upload or gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="visionImgSrc" class="form-control js-cms-img-input" value="../assets/uploads/2024/10/Vision.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Goal -->
                 <div class="subcard-box mb-3">
                   <strong class="text-dark d-block mb-1">Our Goal</strong>
                   <textarea id="goalDesc" class="form-control form-control-sm mb-2" rows="3">To bring health and wellness to families as a whole. We believe healthy changes are lasting when families and communities work together to make lifestyle changes with the guidance of their healthcare practitioners. Our goal is to find the root cause(s) of illness and to implement health-promoting lifestyles to prevent chronic illness and to recover from chronic illness.</textarea>
-                  <label class="form-label-admin small">Image</label>
-                  <input type="text" id="goalImgSrc" class="form-control form-control-sm mb-1" value="../assets/uploads/2024/10/mission2.jpg">
-                  <img src="../../../Frontend/assets/uploads/2024/10/mission2.jpg" class="img-thumbnail" style="max-height: 50px;" alt="Goal">
+                  <div class="cms-image-field compact mb-0">
+                    <label class="form-label-admin small">Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2024/10/mission2.jpg" class="cms-image-preview-img" alt="Goal">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image</div>
+                        <div class="cms-image-empty-subtitle">Upload or gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="goalImgSrc" class="form-control js-cms-img-input" value="../assets/uploads/2024/10/mission2.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Values -->
@@ -387,13 +502,37 @@
                   <strong class="text-dark d-block mb-1">Our Core Values</strong>
                   <label class="form-label-admin small">Values List (One per line)</label>
                   <textarea id="valuesList" class="form-control form-control-sm mb-2" rows="4">Strive for Knowledge
+Strive for Knowledge
 Be the Change
 Patient Empowerment
 Accountability
 Healing Communities</textarea>
-                  <label class="form-label-admin small">Image</label>
-                  <input type="text" id="valuesImgSrc" class="form-control form-control-sm mb-1" value="../assets/uploads/2024/10/core.jpg">
-                  <img src="../../../Frontend/assets/uploads/2024/10/core.jpg" class="img-thumbnail" style="max-height: 50px;" alt="Values">
+                  <div class="cms-image-field compact mb-0">
+                    <label class="form-label-admin small">Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2024/10/core.jpg" class="cms-image-preview-img" alt="Values">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image</div>
+                        <div class="cms-image-empty-subtitle">Upload or gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="valuesImgSrc" class="form-control js-cms-img-input" value="../assets/uploads/2024/10/core.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>

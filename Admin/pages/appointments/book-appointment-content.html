@@ -329,14 +329,33 @@
                     <label class="form-label" for="doc1-link">Profile Link</label>
                     <input type="text" class="form-control" id="doc1-link" value="about/sultana-afrooz.html">
                   </div>
-                  <div class="col-md-8">
-                    <label class="form-label" for="doc1-photo">Photo Path</label>
-                    <input type="text" class="form-control" id="doc1-photo" value="assets/uploads/2024/08/sa.jpg">
-                  </div>
-                  <div class="col-md-4 d-flex align-items-end">
-                    <div class="d-flex align-items-center gap-2">
-                      <img src="../../../Frontend/assets/uploads/2024/08/sa.jpg" alt="Preview" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid #ccc;">
-                      <small class="text-muted">Preview Thumbnail</small>
+                  <div class="col-12">
+                    <div class="cms-image-field">
+                      <label class="form-label-admin">Doctor Photo</label>
+                      <div class="cms-image-preview-box has-image" style="max-width: 240px;">
+                        <img src="../../../Frontend/assets/uploads/2024/08/sa.jpg" class="cms-image-preview-img" alt="Dr. Sultana Photo">
+                        <div class="cms-image-empty-state">
+                          <i class="bi bi-image cms-image-empty-icon"></i>
+                          <div class="cms-image-empty-title">No photo selected</div>
+                          <div class="cms-image-empty-subtitle">Upload or choose from gallery</div>
+                        </div>
+                        <div class="cms-image-preview-actions">
+                          <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                          <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                        </div>
+                      </div>
+                      <div class="cms-image-btn-row">
+                        <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                        <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                        <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                      </div>
+                      <div class="cms-image-path-group">
+                        <label class="form-label-admin small text-muted mb-1">Photo Path / URL</label>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                          <input type="text" class="form-control js-cms-img-input" id="doc1-photo" value="assets/uploads/2024/08/sa.jpg" placeholder="assets/uploads/...">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -361,14 +380,33 @@
                     <label class="form-label" for="doc2-link">Profile Link</label>
                     <input type="text" class="form-control" id="doc2-link" value="about/jessica-needle.html">
                   </div>
-                  <div class="col-md-8">
-                    <label class="form-label" for="doc2-photo">Photo Path</label>
-                    <input type="text" class="form-control" id="doc2-photo" value="assets/uploads/2025/02/jn-5.jpg">
-                  </div>
-                  <div class="col-md-4 d-flex align-items-end">
-                    <div class="d-flex align-items-center gap-2">
-                      <img src="../../../Frontend/assets/uploads/2025/02/jn-5.jpg" alt="Preview" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid #ccc;">
-                      <small class="text-muted">Preview Thumbnail</small>
+                  <div class="col-12">
+                    <div class="cms-image-field">
+                      <label class="form-label-admin">Doctor Photo</label>
+                      <div class="cms-image-preview-box has-image" style="max-width: 240px;">
+                        <img src="../../../Frontend/assets/uploads/2025/02/jn-5.jpg" class="cms-image-preview-img" alt="Dr. Jessica Photo">
+                        <div class="cms-image-empty-state">
+                          <i class="bi bi-image cms-image-empty-icon"></i>
+                          <div class="cms-image-empty-title">No photo selected</div>
+                          <div class="cms-image-empty-subtitle">Upload or choose from gallery</div>
+                        </div>
+                        <div class="cms-image-preview-actions">
+                          <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                          <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                        </div>
+                      </div>
+                      <div class="cms-image-btn-row">
+                        <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                        <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                        <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                      </div>
+                      <div class="cms-image-path-group">
+                        <label class="form-label-admin small text-muted mb-1">Photo Path / URL</label>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                          <input type="text" class="form-control js-cms-img-input" id="doc2-photo" value="assets/uploads/2025/02/jn-5.jpg" placeholder="assets/uploads/...">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -669,9 +707,34 @@
                       <label class="form-label" for="seo-canonical">Canonical URL</label>
                       <input type="text" class="form-control" id="seo-canonical" value="https://bethechangehealth.com/book-appointment.html">
                     </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="seo-og-image">Social Share Image (OG Image)</label>
-                      <input type="text" class="form-control" id="seo-og-image" value="assets/uploads/2024/08/LOGO.jpg">
+                    <div class="col-12 mt-3">
+                      <div class="cms-image-field">
+                        <label class="form-label-admin">Social Share Image (OG Image)</label>
+                        <div class="cms-image-preview-box has-image">
+                          <img src="../../../Frontend/assets/uploads/2024/08/LOGO.jpg" class="cms-image-preview-img" alt="OG Image Preview">
+                          <div class="cms-image-empty-state">
+                            <i class="bi bi-image cms-image-empty-icon"></i>
+                            <div class="cms-image-empty-title">No image selected</div>
+                            <div class="cms-image-empty-subtitle">Upload image or choose from gallery</div>
+                          </div>
+                          <div class="cms-image-preview-actions">
+                            <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                            <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                          </div>
+                        </div>
+                        <div class="cms-image-btn-row">
+                          <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                          <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                          <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                        </div>
+                        <div class="cms-image-path-group">
+                          <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                          <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" class="form-control js-cms-img-input" id="seo-og-image" value="assets/uploads/2024/08/LOGO.jpg" placeholder="assets/uploads/...">
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -953,6 +1016,7 @@
           var el = document.getElementById(id);
           if (el && state[map[id]] !== undefined) {
             el.value = state[map[id]];
+            el.dispatchEvent(new Event('input'));
           }
         });
 

@@ -331,12 +331,36 @@
                 <label class="form-label-admin">Step Subtitle Tag</label>
                 <input type="text" id="step5Tag" class="form-control" value="Individualized for Your Needs">
               </div>
-              <div class="col-md-4">
-                <label class="form-label-admin">Featured Image Path</label>
-                <input type="text" id="step5Image" class="form-control mb-2" value="../assets/uploads/2025/05/treatment.png">
-                <img src="../../../Frontend/assets/uploads/2025/05/treatment.png" class="img-thumbnail" style="max-height: 100px;" alt="Supplements, Nutrients and Medication">
+              <div class="col-md-5">
+                <div class="cms-image-field compact mb-0">
+                  <label class="form-label-admin">Featured Image</label>
+                  <div class="cms-image-preview-box has-image">
+                    <img src="../../../Frontend/assets/uploads/2025/05/treatment.png" class="cms-image-preview-img" alt="Supplements, Nutrients and Medication">
+                    <div class="cms-image-empty-state">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image selected</div>
+                      <div class="cms-image-empty-subtitle">Upload or choose from gallery</div>
+                    </div>
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" id="step5Image" class="form-control js-cms-img-input" value="../assets/uploads/2025/05/treatment.png" placeholder="assets/uploads/...">
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <label class="form-label-admin">Card Title (H4)</label>
                 <input type="text" id="step5CardTitle" class="form-control mb-2" value="Supplements, Nutrients and Medication">
                 <label class="form-label-admin">Card Description</label>
@@ -646,6 +670,7 @@
         list.forEach((item, index) => {
           const div = document.createElement('div');
           div.className = 'subcard-box';
+          const resolvedSrc = (window.BTCAdmin && window.BTCAdmin.resolveAdminImagePath) ? window.BTCAdmin.resolveAdminImagePath(item.img) : ('../../../Frontend/' + (item.img || '').replace(/^(\.\.\/)+/, ''));
           div.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="badge bg-secondary">Card #${index + 1}</span>
@@ -659,21 +684,47 @@
             </div>
             <div class="row g-2">
               <div class="col-md-5">
-                <label class="form-label-admin small">Card Title</label>
-                <input type="text" class="form-control form-control-sm card-title-inp" data-index="${index}" value="${escapeHtml(item.title)}">
+                <div class="cms-image-field compact">
+                  <label class="form-label-admin small">Card Image</label>
+                  <div class="cms-image-preview-box has-image">
+                    <img src="${resolvedSrc}" class="cms-image-preview-img" alt="${escapeHtml(item.title)}">
+                    <div class="cms-image-empty-state">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image</div>
+                      <div class="cms-image-empty-subtitle">Upload or gallery</div>
+                    </div>
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" class="form-control js-cms-img-input card-img-inp" data-index="${index}" value="${escapeHtml(item.img)}" placeholder="assets/uploads/...">
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="col-md-7">
-                <label class="form-label-admin small">Image Path</label>
-                <input type="text" class="form-control form-control-sm card-img-inp" data-index="${index}" value="${escapeHtml(item.img)}">
-              </div>
-              <div class="col-12">
+                <label class="form-label-admin small">Card Title</label>
+                <input type="text" class="form-control form-control-sm card-title-inp mb-2" data-index="${index}" value="${escapeHtml(item.title)}">
                 <label class="form-label-admin small">Description</label>
-                <textarea class="form-control form-control-sm card-desc-inp" data-index="${index}" rows="2">${escapeHtml(item.desc)}</textarea>
+                <textarea class="form-control form-control-sm card-desc-inp" data-index="${index}" rows="3">${escapeHtml(item.desc)}</textarea>
               </div>
             </div>
           `;
           container.appendChild(div);
         });
+
+        if (window.BTCAdmin && window.BTCAdmin.initAdminImageSelectors) {
+          window.BTCAdmin.initAdminImageSelectors();
+        }
 
         // Event bindings
         container.querySelectorAll('.card-title-inp').forEach(inp => {
@@ -685,6 +736,10 @@
 
         container.querySelectorAll('.card-img-inp').forEach(inp => {
           inp.addEventListener('input', e => {
+            const idx = parseInt(e.currentTarget.dataset.index, 10);
+            list[idx].img = e.currentTarget.value;
+          });
+          inp.addEventListener('change', e => {
             const idx = parseInt(e.currentTarget.dataset.index, 10);
             list[idx].img = e.currentTarget.value;
           });

@@ -122,22 +122,60 @@
               <div class="card-head"><div><h2>Profile Card</h2><p>Sticky sidebar card on frontend</p></div></div>
               <div class="card-body-admin">
                 <!-- Large Profile Photo -->
-                <div class="mb-3">
+                <div class="cms-image-field">
                   <label class="form-label-admin">Profile Portrait Photo</label>
-                  <input type="text" id="profileImgSrc" class="form-control mb-2" value="../assets/uploads/2024/10/Sultana-Afrooz-pd6ddd2kete2du2tyy24v5o7z1bhnurc6jbos2s6lk.png">
-                  <div class="upload-box text-center p-2 border rounded bg-white">
-                    <img id="profileImgPreview" src="../../../Frontend/assets/uploads/2024/10/Sultana-Afrooz-pd6ddd2kete2du2tyy24v5o7z1bhnurc6jbos2s6lk.png" class="img-fluid rounded mb-1" style="max-height: 180px;" alt="Sultana Afrooz">
-                    <p class="small text-muted mb-0">Frontend/assets/uploads/2024/10/Sultana-Afrooz-pd6ddd2kete2du2tyy24v5o7z1bhnurc6jbos2s6lk.png</p>
+                  <div class="cms-image-preview-box has-image">
+                    <img id="profileImgPreview" src="../../../Frontend/assets/uploads/2024/10/Sultana-Afrooz-pd6ddd2kete2du2tyy24v5o7z1bhnurc6jbos2s6lk.png" class="cms-image-preview-img" alt="Sultana Afrooz">
+                    <div class="cms-image-empty-state">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image selected</div>
+                      <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                    </div>
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" id="profileImgSrc" class="form-control js-cms-img-input" value="../assets/uploads/2024/10/Sultana-Afrooz-pd6ddd2kete2du2tyy24v5o7z1bhnurc6jbos2s6lk.png" placeholder="assets/uploads/...">
+                    </div>
                   </div>
                 </div>
 
                 <!-- Homepage / List Thumbnail -->
-                <div class="mb-3">
+                <div class="cms-image-field">
                   <label class="form-label-admin">Thumbnail Image (Homepage/Lists)</label>
-                  <input type="text" id="thumbImgSrc" class="form-control mb-2" value="../assets/uploads/2024/08/sa.jpg">
-                  <div class="upload-box text-center p-2 border rounded bg-white">
-                    <img id="thumbImgPreview" src="../../../Frontend/assets/uploads/2024/08/sa.jpg" class="img-thumbnail" style="max-height: 80px;" alt="Thumbnail">
-                    <p class="small text-muted mb-0">Frontend/assets/uploads/2024/08/sa.jpg</p>
+                  <div class="cms-image-preview-box has-image">
+                    <img id="thumbImgPreview" src="../../../Frontend/assets/uploads/2024/08/sa.jpg" class="cms-image-preview-img" alt="Thumbnail">
+                    <div class="cms-image-empty-state">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image selected</div>
+                      <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                    </div>
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" id="thumbImgSrc" class="form-control js-cms-img-input" value="../assets/uploads/2024/08/sa.jpg" placeholder="assets/uploads/...">
+                    </div>
                   </div>
                 </div>
 

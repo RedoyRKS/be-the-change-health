@@ -748,20 +748,35 @@
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label-admin" for="ogImage">
-                        OG Image / Social Share Asset Path
-                      </label>
-                      <div class="input-group mb-2">
-                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-image"></i></span>
-                        <input type="text" id="ogImage" class="form-control form-control-seo border-start-0" placeholder="assets/uploads/2024/08/approach.jpg">
-                      </div>
-                      
-                      <!-- Professional Drag & Drop / Asset Upload Indicator -->
-                      <div class="og-upload-dropzone">
-                        <i class="bi bi-cloud-arrow-up text-teal fs-3 d-block mb-1"></i>
-                        <div class="fw-semibold small" style="color: var(--seo-navy);">Upload or Link Social Share Image</div>
-                        <div class="text-muted small">Drag &amp; drop or specify asset path above</div>
-                        <div class="text-muted small mt-1">Recommended dimensions: <strong>1200 × 630 px</strong> (Aspect ratio: 1.91:1)</div>
+                      <div class="cms-image-field">
+                        <label class="form-label-admin" for="ogImage">
+                          OG Image / Social Share Asset Path
+                        </label>
+                        <div class="cms-image-preview-box has-image">
+                          <img src="../../Frontend/assets/uploads/2025/06/home.jpg" class="cms-image-preview-img" alt="Social Share Preview">
+                          <div class="cms-image-empty-state">
+                            <i class="bi bi-image cms-image-empty-icon"></i>
+                            <div class="cms-image-empty-title">No social share image selected</div>
+                            <div class="cms-image-empty-subtitle">Upload image or choose from gallery (1200×630 recommended)</div>
+                          </div>
+                          <div class="cms-image-preview-actions">
+                            <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                            <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                          </div>
+                        </div>
+                        <div class="cms-image-btn-row">
+                          <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                          <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                          <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                        </div>
+                        <div class="cms-image-path-group">
+                          <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                          <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" id="ogImage" class="form-control form-control-seo js-cms-img-input" placeholder="assets/uploads/2024/08/approach.jpg">
+                          </div>
+                          <div class="form-helper-text mt-1">Recommended dimensions: <strong>1200 × 630 px</strong> (Aspect ratio: 1.91:1)</div>
+                        </div>
                       </div>
                     </div>
 
@@ -1118,6 +1133,7 @@
         document.getElementById('ogTitle').value = data.ogTitle || data.title || pageMeta.title;
         document.getElementById('ogDesc').value = data.ogDesc || data.desc || pageMeta.desc;
         document.getElementById('ogImage').value = data.ogImage || pageMeta.ogImg;
+        document.getElementById('ogImage').dispatchEvent(new Event('input'));
 
         document.getElementById('robotsIndex').value = data.robotsIndex || 'index';
         document.getElementById('robotsFollow').value = data.robotsFollow || 'follow';

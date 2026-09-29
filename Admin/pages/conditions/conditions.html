@@ -819,22 +819,33 @@
             <textarea class="form-control condition-textarea" rows="3" placeholder="Enter card description">Holistic therapies to support metabolism and healthy blood sugar balance.</textarea>
           </div>
 
-          <div class="mb-2">
-            <label class="form-label-admin">Card Image</label>
-            <div class="upload-box condition-upload-box">
-              <div class="condition-upload-grid">
-                <div class="condition-preview-pane">
-                  <span class="condition-preview-tag">Current Image</span>
-                  <img class="upload-preview" src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" alt="Condition preview">
+          <div class="mb-3">
+            <div class="cms-image-field">
+              <label class="form-label-admin">Card Image</label>
+              <div class="cms-image-preview-box has-image">
+                <img src="../../../Frontend/assets/uploads/2024/08/Diabetes.jpg" class="cms-image-preview-img" alt="Condition preview">
+                <div class="cms-image-empty-state">
+                  <i class="bi bi-image cms-image-empty-icon"></i>
+                  <div class="cms-image-empty-title">No image selected</div>
+                  <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
                 </div>
-                <div class="condition-upload-info-pane">
-                  <div class="upload-icon-circle"><i class="bi bi-cloud-arrow-up text-teal"></i></div>
-                  <strong class="d-block text-navy small mb-1">Replace card image</strong>
-                  <span class="d-block text-muted small mb-2">JPG / PNG / WebP • Recommended: 800×600</span>
-                  <div class="btn-fake-choose"><i class="bi bi-folder2-open me-1"></i> Choose Image</div>
+                <div class="cms-image-preview-actions">
+                  <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                  <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
                 </div>
               </div>
-              <input type="file" accept="image/*" class="condition-file-input" title="Choose image file">
+              <div class="cms-image-btn-row">
+                <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+              </div>
+              <div class="cms-image-path-group">
+                <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                  <input type="text" class="form-control js-cms-img-input" value="assets/uploads/2024/08/Diabetes.jpg" placeholder="assets/uploads/...">
+                </div>
+              </div>
             </div>
           </div>
         </div>

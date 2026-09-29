@@ -213,15 +213,33 @@
             </div>
             <div class="editor-body">
               <div class="row g-3">
-                <div class="col-md-8">
-                  <label class="form-label-admin" for="lead-image">Featured Article Image Path *</label>
-                  <input class="form-control" id="lead-image" value="../assets/uploads/2024/08/BB.jpg" required>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label-admin">Image Preview</label>
-                  <div class="d-flex align-items-center gap-2">
-                    <img src="../../../Frontend/assets/uploads/2024/08/BB.jpg" alt="Concussion" class="condition-preview-thumb" id="lead-image-preview">
-                    <small class="text-muted">Featured visual</small>
+                <div class="col-md-6">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Featured Article Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../../Frontend/assets/uploads/2024/08/BB.jpg" class="cms-image-preview-img" alt="Concussion" id="lead-image-preview">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1" for="lead-image">Image Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-white text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" class="form-control js-cms-img-input" id="lead-image" value="../assets/uploads/2024/08/BB.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12">
@@ -319,14 +337,31 @@
                 <textarea class="form-control" id="symptoms-outro" rows="2">If the symptoms don’t arise immediately, they might appear in the days, weeks, or even months after the injury happened. As soon as you or a loved one notices symptoms that might indicate a concussion, you should seek medical care right away.</textarea>
               </div>
 
-              <div class="row g-3">
-                <div class="col-md-8">
-                  <label class="form-label-admin" for="symptoms-figure">Inline Brain Injury Graphic Path</label>
-                  <input class="form-control" id="symptoms-figure" value="../assets/uploads/2024/08/XS-1024x1024.jpg">
+              <div class="cms-image-field mt-3">
+                <label class="form-label-admin">Inline Brain Injury Graphic</label>
+                <div class="cms-image-preview-box has-image">
+                  <img src="../../../Frontend/assets/uploads/2024/08/XS-1024x1024.jpg" class="cms-image-preview-img" alt="Concussion recovery Graphic">
+                  <div class="cms-image-empty-state">
+                    <i class="bi bi-image cms-image-empty-icon"></i>
+                    <div class="cms-image-empty-title">No graphic selected</div>
+                    <div class="cms-image-empty-subtitle">Upload image or choose from gallery</div>
+                  </div>
+                  <div class="cms-image-preview-actions">
+                    <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                    <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <label class="form-label-admin">Graphic Preview</label>
-                  <img src="../../../Frontend/assets/uploads/2024/08/XS-1024x1024.jpg" alt="Concussion recovery" class="condition-preview-thumb" onerror="this.style.display='none'">
+                <div class="cms-image-btn-row">
+                  <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                  <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                  <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                </div>
+                <div class="cms-image-path-group">
+                  <label class="form-label-admin small text-muted mb-1">Graphic Path / URL</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                    <input class="form-control js-cms-img-input" id="symptoms-figure" value="../assets/uploads/2024/08/XS-1024x1024.jpg" placeholder="assets/uploads/...">
+                  </div>
                 </div>
               </div>
 
@@ -847,5 +882,7 @@
       });
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/script.js"></script>
 </body>
 </html>

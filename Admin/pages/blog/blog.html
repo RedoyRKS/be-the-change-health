@@ -399,34 +399,30 @@
 
               <!-- TAB 3: Featured Image Management -->
               <div class="tab-pane fade" id="tab-modal-media" role="tabpanel">
-                <div class="image-manage-box">
-                  <div class="row g-3 align-items-center">
-                    <div class="col-md-5">
-                      <div class="image-preview-thumb-wrap">
-                        <img id="modal-image-preview-el" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" alt="Featured Image Preview" onerror="this.onerror=null;if(window.BTCBlogStore)this.src=window.BTCBlogStore.FALLBACK_IMAGE;">
-                        <div class="placeholder-text d-none" id="modal-image-placeholder">No image selected</div>
-                      </div>
+                <div class="cms-image-field">
+                  <label class="form-label-admin">Featured Article Banner Image</label>
+                  <div class="cms-image-preview-box has-image">
+                    <img id="modal-image-preview-el" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" class="cms-image-preview-img" alt="Featured Image Preview" onerror="this.onerror=null;if(window.BTCBlogStore)this.src=window.BTCBlogStore.FALLBACK_IMAGE;">
+                    <div class="cms-image-empty-state" id="modal-image-placeholder">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image selected</div>
+                      <div class="cms-image-empty-subtitle">Upload custom photo or choose from gallery</div>
                     </div>
-                    <div class="col-md-7">
-                      <h5 class="fw-bold text-dark mb-1">Featured Article Banner Image</h5>
-                      <p class="text-muted small mb-3">Displayed in the blog directory card, hero header, and social media share previews.</p>
-
-                      <div class="d-flex flex-wrap gap-2 mb-3">
-                        <button type="button" class="btn btn-teal btn-sm" id="modal-btn-choose-media">
-                          <i class="bi bi-images me-1"></i> Choose from Media Library
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" id="modal-btn-upload-trigger">
-                          <i class="bi bi-upload me-1"></i> Upload Image File
-                        </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" id="modal-btn-remove-image">
-                          <i class="bi bi-trash me-1"></i> Remove
-                        </button>
-                      </div>
-
-                      <input type="file" id="modal-file-upload-input" accept="image/*" class="d-none">
-
-                      <label class="form-label-admin small" for="modal-image-url-input">Direct Image Path / URL:</label>
-                      <input class="form-control form-control-sm font-monospace" id="modal-image-url-input" placeholder="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg">
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove" id="modal-btn-remove-image"><i class="bi bi-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn" id="modal-btn-upload-trigger"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn" id="modal-btn-choose-media"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                    <input type="file" id="modal-file-upload-input" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <label class="form-label-admin small text-muted mb-1">Direct Image Path / URL</label>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" class="form-control js-cms-img-input" id="modal-image-url-input" value="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" placeholder="assets/uploads/...">
                     </div>
                   </div>
                 </div>

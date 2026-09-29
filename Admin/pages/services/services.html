@@ -187,26 +187,31 @@
 
               <!-- Service Image -->
               <div class="col-12">
-                <label class="form-label-admin mb-2">Service Image</label>
-                <div class="service-image-row">
-                  <div class="service-image-preview" id="svcImagePreviewBox">
-                    <img id="svcImagePreviewImg" src="" alt="Service preview" style="display: none;">
-                    <div class="image-empty-placeholder text-muted" id="svcImagePlaceholder">
-                      <i class="bi bi-image"></i>
-                      <span style="font-size: 0.75rem;">No Image</span>
+                <div class="cms-image-field">
+                  <label class="form-label-admin">Service Image</label>
+                  <div class="cms-image-preview-box has-image">
+                    <img id="svcImagePreviewImg" src="../../../Frontend/assets/uploads/2024/08/OX.jpg" class="cms-image-preview-img" alt="Service preview">
+                    <div class="cms-image-empty-state" id="svcImagePlaceholder">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image selected</div>
+                      <div class="cms-image-empty-subtitle">Upload an image or choose from gallery</div>
+                    </div>
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove" id="btnRemoveSvcImage"><i class="bi bi-trash"></i> Remove</button>
                     </div>
                   </div>
-                  <div class="service-image-controls">
-                    <div class="d-flex align-items-center gap-2 mb-1">
-                      <button type="button" class="btn-btc-outline btn-sm-admin" id="btnChangeSvcImage">
-                        <i class="bi bi-camera me-1"></i> Change Image
-                      </button>
-                      <button type="button" class="btn-btc-ghost btn-sm-admin text-danger" id="btnRemoveSvcImage">
-                        <i class="bi bi-trash3 me-1"></i> Remove Image
-                      </button>
-                      <input type="file" id="svcImageFileInput" accept="image/*" style="display: none;">
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                    <input type="file" id="svcImageFileInput" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" class="form-control js-cms-img-input" id="svcImagePathInput" value="assets/uploads/2024/08/OX.jpg" placeholder="assets/uploads/...">
                     </div>
-                    <span class="text-muted small" style="font-size: 0.78rem;">Recommended size: 1200 &times; 800px (JPG, PNG, WebP)</span>
                   </div>
                 </div>
               </div>

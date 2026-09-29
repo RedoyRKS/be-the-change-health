@@ -663,30 +663,63 @@
               </div>
 
               <!-- Logo & Favicon row -->
-              <div class="row g-3 mb-4">
+              <div class="row g-4 mb-4">
                 <div class="col-md-6">
-                  <label class="form-label-admin">Practice Primary Logo</label>
-                  <div class="logo-preview-card">
-                    <img class="logo-preview-img" src="../../Frontend/assets/uploads/2024/08/LOGO.jpg" alt="Logo preview" onerror="this.src='https://be-the-change-health.vercel.app/assets/uploads/2024/08/LOGO.jpg'">
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="small text-muted">Dimensions: 528×140 px</span>
-                    <span class="badge bg-success-subtle text-success border border-success-subtle">Active</span>
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Practice Primary Logo</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img class="cms-image-preview-img" src="../../Frontend/assets/uploads/2024/08/LOGO.jpg" alt="Logo preview" onerror="this.src='https://be-the-change-health.vercel.app/assets/uploads/2024/08/LOGO.jpg'">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No logo selected</div>
+                        <div class="cms-image-empty-subtitle">Upload logo or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Logo Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="practiceLogoSrc" class="form-control js-cms-img-input" value="assets/uploads/2024/08/LOGO.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label-admin">Website Favicon</label>
-                  <div class="upload-box compact">
-                    <img class="upload-preview" src="../../Frontend/assets/uploads/2025/02/fav.jpg" alt="Favicon">
-                    <div class="d-flex flex-column gap-1">
-                      <span class="small fw-semibold text-navy">Replace Favicon Icon</span>
-                      <span class="btn-fake-upload"><i class="bi bi-folder2-open me-1"></i> Choose Image</span>
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Website Favicon</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img class="cms-image-preview-img" src="../../Frontend/assets/uploads/2025/02/fav.jpg" alt="Favicon">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No favicon selected</div>
+                        <div class="cms-image-empty-subtitle">Upload favicon or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
                     </div>
-                    <input type="file" accept="image/*" title="Choose favicon image">
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center mt-2">
-                    <span class="small text-muted">Format: PNG, ICO, JPG (32×32)</span>
-                    <span class="badge bg-success-subtle text-success border border-success-subtle">Active</span>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*,.ico" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Favicon Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="websiteFaviconSrc" class="form-control js-cms-img-input" value="assets/uploads/2025/02/fav.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -749,9 +782,34 @@
                   <label class="form-label-admin">Default Meta Keywords</label>
                   <input class="form-control" value="integrative medicine, functional medicine, columbia md, osteopathic physician">
                 </div>
-                <div class="col-md-6">
-                  <label class="form-label-admin">Default Social Share Image</label>
-                  <input class="form-control" value="assets/uploads/2024/08/approach.jpg">
+                <div class="col-12 mt-3">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Default Social Share Image (OG Image)</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img src="../../Frontend/assets/uploads/2024/08/approach.jpg" class="cms-image-preview-img" alt="Social Share Preview">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                      </div>
+                    </div>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" class="form-control js-cms-img-input" value="assets/uploads/2024/08/approach.jpg" placeholder="assets/uploads/...">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>

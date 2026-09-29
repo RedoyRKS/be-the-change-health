@@ -262,27 +262,32 @@
 
                 <!-- Featured Image & Media Library Picker -->
                 <div class="col-12">
-                  <label class="form-label-admin">Featured Showcase Banner Image</label>
-                  <div class="row g-3 align-items-center">
-                    <div class="col-sm-4 col-md-3">
-                      <div class="upload-box compact">
-                        <img class="upload-preview" id="featured-image-preview" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" alt="Featured Image Preview">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Featured Showcase Banner Image</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img class="cms-image-preview-img" id="featured-image-preview" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" alt="Featured Image Preview">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
                       </div>
                     </div>
-                    <div class="col-sm-8 col-md-9">
-                      <div class="input-group mb-2">
-                        <input class="form-control form-control-sm" id="featured-image" value="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg">
-                        <button class="btn btn-outline-secondary btn-sm" type="button" id="btn-pick-featured-img">
-                          <i class="bi bi-images me-1"></i> Media Library
-                        </button>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input class="form-control js-cms-img-input" id="featured-image" value="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" placeholder="assets/uploads/...">
                       </div>
-                      <div class="d-flex align-items-center gap-2">
-                        <label class="btn btn-outline-secondary btn-sm mb-0" for="file-featured-img">
-                          <i class="bi bi-upload me-1"></i> Upload Image
-                        </label>
-                        <input type="file" id="file-featured-img" class="d-none" accept="image/*">
-                        <span class="text-muted small">Standard resolution: 1024 × 683px (JPG/PNG)</span>
-                      </div>
+                      <span class="text-muted small">Standard resolution: 1024 × 683px (JPG/PNG)</span>
                     </div>
                   </div>
                 </div>
@@ -438,27 +443,32 @@
                   <input class="form-control" id="og-desc" value="Education and insights on integrative therapies, wellness, and whole-person care in Columbia, MD.">
                 </div>
                 <div class="col-12">
-                  <label class="form-label-admin">Social Share Card Image (og:image)</label>
-                  <div class="row g-3 align-items-center">
-                    <div class="col-sm-3 col-md-2">
-                      <div class="upload-box compact">
-                        <img class="upload-preview" id="og-image-preview" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" alt="OG Image Preview">
+                  <div class="cms-image-field">
+                    <label class="form-label-admin">Social Share Card Image (og:image)</label>
+                    <div class="cms-image-preview-box has-image">
+                      <img class="cms-image-preview-img" id="og-image-preview" src="../../assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" alt="OG Image Preview">
+                      <div class="cms-image-empty-state">
+                        <i class="bi bi-image cms-image-empty-icon"></i>
+                        <div class="cms-image-empty-title">No image selected</div>
+                        <div class="cms-image-empty-subtitle">Upload image or choose from gallery</div>
+                      </div>
+                      <div class="cms-image-preview-actions">
+                        <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                        <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
                       </div>
                     </div>
-                    <div class="col-sm-9 col-md-10">
-                      <div class="input-group mb-2">
-                        <input class="form-control form-control-sm" id="og-image" value="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg">
-                        <button class="btn btn-outline-secondary btn-sm" type="button" id="btn-pick-og-img">
-                          <i class="bi bi-images me-1"></i> Media Library
-                        </button>
+                    <div class="cms-image-btn-row">
+                      <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload Image</button>
+                      <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Choose from Gallery</button>
+                      <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                    </div>
+                    <div class="cms-image-path-group">
+                      <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-light text-muted"><i class="bi bi-link-45deg"></i></span>
+                        <input class="form-control js-cms-img-input" id="og-image" value="assets/uploads/2024/08/What-is-Microcurrent-1024x683-1.jpg" placeholder="assets/uploads/...">
                       </div>
-                      <div class="d-flex align-items-center gap-2">
-                        <label class="btn btn-outline-secondary btn-sm mb-0" for="file-og-img">
-                          <i class="bi bi-upload me-1"></i> Upload Image
-                        </label>
-                        <input type="file" id="file-og-img" class="d-none" accept="image/*">
-                        <span class="text-muted small">Standard OG image dimension: 1200 × 630px</span>
-                      </div>
+                      <span class="text-muted small">Standard OG image dimension: 1200 × 630px</span>
                     </div>
                   </div>
                 </div>
