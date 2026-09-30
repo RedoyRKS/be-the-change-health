@@ -2017,15 +2017,18 @@
           </div>
         </div>
 
-        <!-- Status Legend Bar -->
+        <!-- Status & Category Legend Bar -->
         <div class="cal-legend-bar mb-3">
+          <span class="cal-legend-item"><span class="cal-legend-dot detox"></span> Detox - Services</span>
+          <span class="cal-legend-item"><span class="cal-legend-dot microcurrent"></span> Frequency Specific Microcurrent</span>
+          <span class="cal-legend-item"><span class="cal-legend-dot hyperbaric"></span> Hyperbaric Oxygen Therapy</span>
+          <span class="cal-legend-item"><span class="cal-legend-dot ozone"></span> Ozone Therapy</span>
           <span class="cal-legend-item"><span class="cal-legend-dot confirmed"></span> Confirmed</span>
           <span class="cal-legend-item"><span class="cal-legend-dot pending"></span> Pending</span>
-          <span class="cal-legend-item"><span class="cal-legend-dot rescheduled"></span> Reschedule Requested</span>
+          <span class="cal-legend-item"><span class="cal-legend-dot rescheduled"></span> Reschedule</span>
           <span class="cal-legend-item"><span class="cal-legend-dot completed"></span> Completed</span>
           <span class="cal-legend-item"><span class="cal-legend-dot cancelled"></span> Cancelled</span>
-          <span class="cal-legend-item"><span class="cal-legend-dot declined"></span> Declined</span>
-          <span class="cal-legend-item"><span class="cal-legend-dot busy-blocked"></span> Busy / Blocked</span>
+          <span class="cal-legend-item"><span class="cal-legend-dot busy-blocked"></span> Blocked</span>
         </div>
 
         <!-- Month View Grid -->
@@ -5082,12 +5085,12 @@
       if (window.toast) window.toast("Busy time adjusted to 01:30 PM – 04:30 PM to clear existing visits.");
     }
 
-    function openCreateBusyModal() {
+    function openCreateBusyModal(initialDate, initialStartTime, initialEndTime) {
       document.getElementById("busyEditId").value = "";
       document.getElementById("busyModalHeaderTitle").textContent = "Set Busy Time & Block Availability";
       document.getElementById("btnSaveBusyText").textContent = "Set Busy Time";
 
-      var defaultDate = "2026-09-24";
+      var defaultDate = initialDate || (typeof CAL_VIEW_STATE !== "undefined" && CAL_VIEW_STATE.selectedDate ? CAL_VIEW_STATE.selectedDate : "2026-09-24");
       document.getElementById("busyStartDate").value = defaultDate;
       document.getElementById("busyEndDate").value = defaultDate;
       document.getElementById("busySingleDayCheck").checked = true;
@@ -5097,8 +5100,23 @@
       document.getElementById("busyAllDayCheck").checked = false;
       document.getElementById("busyStartTime").disabled = false;
       document.getElementById("busyEndTime").disabled = false;
-      document.getElementById("busyStartTime").value = "10:00";
-      document.getElementById("busyEndTime").value = "13:00";
+
+      var startTime = initialStartTime || "10:00";
+      var endTime = initialEndTime;
+      if (!endTime) {
+        if (initialStartTime) {
+          var parts = initialStartTime.split(":");
+          var hr = parseInt(parts[0], 10);
+          var min = parts[1] || "00";
+          var nextHr = Math.min(hr + 1, 23);
+          endTime = (nextHr < 10 ? "0" + nextHr : "" + nextHr) + ":" + min;
+        } else {
+          endTime = "11:00";
+        }
+      }
+
+      document.getElementById("busyStartTime").value = startTime;
+      document.getElementById("busyEndTime").value = endTime;
       var timeRow = document.getElementById("busyTimeInputsRow");
       if (timeRow) {
         timeRow.style.opacity = "1";
@@ -5126,6 +5144,10 @@
         var modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
         modal.show();
       }
+    }
+
+    function openBusyTimeFromSlot(date, time, endTime) {
+      openCreateBusyModal(date, time, endTime);
     }
 
     function editBusyTime(busyId) {
@@ -5741,6 +5763,7 @@
 
     function renderCalendarBusyCard(busy, isWeekView) {
       var timeDisplay = busy.allDay ? "Full Day" : (formatTimeAMPM(busy.startTime) + " – " + formatTimeAMPM(busy.endTime));
+      var shortTimeDisplay = busy.allDay ? "All Day" : (formatTimeAMPM(busy.startTime).replace(":00", "").toLowerCase());
       var title = escapeHtml(busy.title || busy.reason || "Busy / Blocked");
       var duration = busy.duration || "Blocked";
 
@@ -5748,12 +5771,16 @@
 
       // 1. Top line: Lock + Manage Link
       html += '<div class="cal-event-top-line">' +
+                '<span class="cal-event-mobile-badge"><i class="bi bi-lock-fill"></i></span>' +
                 '<span class="cal-event-time text-secondary"><i class="bi bi-lock-fill me-1"></i>BLOCKED</span>' +
                 '<span class="cal-busy-manage-link">Manage &rarr;</span>' +
               '</div>';
 
       // 2. Time
-      html += '<div class="cal-event-patient text-dark">' + timeDisplay + '</div>';
+      html += '<div class="cal-event-patient text-dark">' +
+                '<span class="patient-full">' + timeDisplay + '</span>' +
+                '<span class="patient-short">' + shortTimeDisplay + '</span>' +
+              '</div>';
 
       // 3. Title / Reason
       html += '<div class="cal-event-service fw-semibold" title="' + title + '">' + title + '</div>';
@@ -7212,6 +7239,8 @@
       var item = aptObj.item;
       var parsed = aptObj.parsedTime;
       var statusKey = (item.status || "").toLowerCase();
+      var serviceKey = (item.service || "").toLowerCase();
+
       var statusClass = "status-confirmed";
       if (statusKey.indexOf("pending") !== -1) statusClass = "status-pending";
       else if (statusKey.indexOf("reschedule") !== -1) statusClass = "status-rescheduled";
@@ -7219,23 +7248,38 @@
       else if (statusKey.indexOf("cancel") !== -1) statusClass = "status-cancelled";
       else if (statusKey.indexOf("decline") !== -1) statusClass = "status-declined";
 
+      // Service category classes for rich reference styling
+      var serviceClass = "";
+      if (serviceKey.indexOf("detox") !== -1) serviceClass = "svc-detox";
+      else if (serviceKey.indexOf("frequency") !== -1 || serviceKey.indexOf("microcurrent") !== -1) serviceClass = "svc-microcurrent";
+      else if (serviceKey.indexOf("hyperbaric") !== -1 || serviceKey.indexOf("oxygen") !== -1) serviceClass = "svc-hyperbaric";
+      else if (serviceKey.indexOf("ozone") !== -1) serviceClass = "svc-ozone";
+
       var isTelehealth = item.visit && item.visit.toLowerCase().indexOf("tele") !== -1;
       var visitIcon = isTelehealth ? '<i class="bi bi-laptop text-teal" title="Telehealth"></i>' : '<i class="bi bi-building text-secondary" title="In-office"></i>';
 
       var isConflict = (item.id === "apt-2" || item.isConflict);
-      var conflictBadge = isConflict ? '<span class="cal-event-conflict-pill" title="Time Conflict with Marcus Vance"><i class="bi bi-exclamation-triangle-fill"></i> Conflict</span>' : '';
+      var conflictBadge = isConflict ? '<span class="cal-event-conflict-pill" title="Time Conflict"><i class="bi bi-exclamation-triangle-fill"></i> Conflict</span>' : '';
       if (isConflict) statusClass += " status-has-conflict";
 
-      var html = '<div class="cal-event-card ' + statusClass + '" onclick="openAppointmentDetail(\'' + item.id + '\')" title="' + escapeHtml(item.name) + ' — ' + escapeHtml(item.service) + ' (' + parsed.display + ')">';
+      var shortInitial = (item.name || "").charAt(0).toUpperCase();
+      var firstName = (item.name || "").split(" ")[0]; // "Elle", "David", etc.
+      var shortDisplay = firstName.length <= 4 ? firstName : (firstName.slice(0, 2) + "..."); // e.g. "Elle", "Da...", "Ta...", "Ra..."
+
+      var html = '<div class="cal-event-card ' + statusClass + ' ' + serviceClass + '" onclick="openAppointmentDetail(\'' + item.id + '\')" title="' + escapeHtml(item.name) + ' — ' + escapeHtml(item.service) + ' (' + parsed.display + ')">';
       
-      // Top row: Time + Conflict Badge / Visit Type
+      // Top row: Initial badge / Time
       html += '<div class="cal-event-top-line">' +
+                '<span class="cal-event-mobile-badge">' + shortInitial + '</span>' +
                 '<span class="cal-event-time"><i class="bi bi-clock me-0.5"></i>' + parsed.display + '</span>' +
                 (conflictBadge || ('<span class="cal-event-visit-type">' + visitIcon + '</span>')) +
               '</div>';
       
-      // Patient Name
-      html += '<div class="cal-event-patient">' + escapeHtml(item.name) + '</div>';
+      // Patient Name (Full on desktop, short on mobile)
+      html += '<div class="cal-event-patient" title="' + escapeHtml(item.name) + '">' +
+                '<span class="patient-full">' + escapeHtml(item.name) + '</span>' +
+                '<span class="patient-short">' + escapeHtml(shortDisplay) + '</span>' +
+              '</div>';
 
       // Service Name
       html += '<div class="cal-event-service" title="' + escapeHtml(item.service) + '">' + escapeHtml(item.service) + '</div>';
@@ -7547,6 +7591,37 @@
     };
 
     /**
+     * Handle click/select on a Weekly Calendar Date Header
+     */
+    function handleWeekDateClick(isoDate) {
+      if (!isoDate) return;
+      CAL_VIEW_STATE.selectedDate = isoDate;
+
+      var container = document.getElementById("calWeekGrid");
+      if (!container) return;
+
+      // Update header selection styles
+      container.querySelectorAll(".cal-week-day-header-cell[data-week-date]").forEach(function(hdr) {
+        var d = hdr.getAttribute("data-week-date");
+        var isSel = (d === isoDate);
+        hdr.classList.toggle("is-selected", isSel);
+        if (isSel) {
+          hdr.setAttribute("aria-selected", "true");
+        } else {
+          hdr.removeAttribute("aria-selected");
+        }
+      });
+
+      // Update slot column highlight
+      container.querySelectorAll(".cal-week-slot-cell[data-week-date]").forEach(function(slot) {
+        var d = slot.getAttribute("data-week-date");
+        slot.classList.toggle("is-selected-col", d === isoDate);
+      });
+    }
+    window.handleWeekDateClick = handleWeekDateClick;
+    window.selectWeekDate = handleWeekDateClick;
+
+    /**
      * Render Week View
      */
     function renderWeekView() {
@@ -7582,29 +7657,30 @@
       if (!container) return;
       container.innerHTML = "";
 
-      var isMobile = (window.innerWidth < 768);
-      if (isMobile) {
-        renderMobileWeekView(container, dayDates, periodText);
-        return;
-      }
+      var dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-      var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-      // 1. Build Header Row
+      // 1. Build Header Row (52px - 58px)
       var headerRow = document.createElement("div");
       headerRow.className = "cal-week-header-row";
 
       var timeHeader = document.createElement("div");
       timeHeader.className = "cal-week-time-header-cell";
-      timeHeader.textContent = "TIME";
+      timeHeader.innerHTML = '<span class="d-none d-md-inline">TIME</span>';
       headerRow.appendChild(timeHeader);
 
       for (var j = 0; j < 7; j++) {
         var curDate = dayDates[j];
+        var isoD = formatCalISO(curDate.getFullYear(), curDate.getMonth(), curDate.getDate());
         var isToday = (curDate.getFullYear() === CAL_VIEW_STATE.todayYear && curDate.getMonth() === CAL_VIEW_STATE.todayMonth && curDate.getDate() === CAL_VIEW_STATE.todayDay);
+        var isSelected = (CAL_VIEW_STATE.selectedDate === isoD);
 
         var dayHeader = document.createElement("div");
-        dayHeader.className = "cal-week-day-header-cell" + (isToday ? " today-col" : "");
+        dayHeader.className = "cal-week-day-header-cell" + (isToday ? " today-col" : "") + (isSelected ? " is-selected" : "");
+        dayHeader.setAttribute("data-week-date", isoD);
+        dayHeader.setAttribute("role", "button");
+        dayHeader.setAttribute("tabindex", "0");
+        dayHeader.setAttribute("aria-label", dayNames[j] + " " + curDate.getDate() + ", " + CAL_MONTH_NAMES[curDate.getMonth()] + " " + curDate.getFullYear());
+        if (isSelected) dayHeader.setAttribute("aria-selected", "true");
 
         var nameEl = document.createElement("div");
         nameEl.className = "cal-week-day-name";
@@ -7618,7 +7694,7 @@
         dayHeader.appendChild(dateEl);
         if (isToday) {
           var todayBadge = document.createElement("span");
-          todayBadge.className = "cal-today-badge mt-1 d-inline-block";
+          todayBadge.className = "cal-today-badge";
           todayBadge.textContent = "TODAY";
           dayHeader.appendChild(todayBadge);
         }
@@ -7627,12 +7703,54 @@
       }
       container.appendChild(headerRow);
 
-      // 2. Build Body Rows (Hours: 8 AM to 6 PM)
+      var curProvider = (document.getElementById("filter-provider-select") ? document.getElementById("filter-provider-select").value : "").trim();
+      if (!curProvider && CAL_VIEW_STATE.providerFilter) curProvider = CAL_VIEW_STATE.providerFilter.trim();
+
+      // 2. All-Day / Subheader Spacer Row (as seen in Google Cal / Reference Image)
+      var allDayRow = document.createElement("div");
+      allDayRow.className = "cal-week-allday-row";
+
+      var allDayTimeCell = document.createElement("div");
+      allDayTimeCell.className = "cal-week-time-label-cell cal-allday-time-cell";
+      allDayTimeCell.innerHTML = '<span class="time-full">All Day</span>';
+      allDayRow.appendChild(allDayTimeCell);
+
+      for (var k0 = 0; k0 < 7; k0++) {
+        var curD0 = dayDates[k0];
+        var isoD0 = formatCalISO(curD0.getFullYear(), curD0.getMonth(), curD0.getDate());
+        var isTd0 = (curD0.getFullYear() === CAL_VIEW_STATE.todayYear && curD0.getMonth() === CAL_VIEW_STATE.todayMonth && curD0.getDate() === CAL_VIEW_STATE.todayDay);
+        var isSel0 = (CAL_VIEW_STATE.selectedDate === isoD0);
+
+        var allDayBusy = getBusyTimesForDate(isoD0, curProvider).filter(function(b) {
+          return b.status === "Active" && b.allDay;
+        });
+
+        var allDayCell = document.createElement("div");
+        allDayCell.className = "cal-week-slot-cell cal-allday-slot-cell week-time-slot" + (isTd0 ? " today-col" : "") + (isSel0 ? " is-selected-col" : "");
+        allDayCell.setAttribute("data-week-date", isoD0);
+        allDayCell.setAttribute("data-date", isoD0);
+        allDayCell.setAttribute("data-allday", "true");
+        allDayCell.setAttribute("role", "button");
+        allDayCell.setAttribute("tabindex", "0");
+        allDayCell.setAttribute("title", "Click to set busy time for " + isoD0);
+
+        allDayBusy.forEach(function(busy) {
+          allDayCell.innerHTML += renderCalendarBusyCard(busy, true);
+        });
+        allDayRow.appendChild(allDayCell);
+      }
+      container.appendChild(allDayRow);
+
+      // 3. Build Body Rows (Hours: 8 AM to 6 PM e.g. 8am, 9am, 10am, 11am, 12pm, 1pm, 2pm, 3pm, 4pm, 5pm, 6pm)
       var bodyWrap = document.createElement("div");
       bodyWrap.className = "cal-week-body";
 
       var hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-      var hourLabels = [
+      var hourShortLabels = [
+        "8am", "9am", "10am", "11am", "12pm",
+        "1pm", "2pm", "3pm", "4pm", "5pm", "6pm"
+      ];
+      var hourFullLabels = [
         "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
         "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM"
       ];
@@ -7644,25 +7762,36 @@
         // Time label
         var timeCell = document.createElement("div");
         timeCell.className = "cal-week-time-label-cell";
-        timeCell.textContent = hourLabels[idx];
+        timeCell.innerHTML = '<span class="time-short">' + hourShortLabels[idx] + '</span><span class="time-full">' + hourFullLabels[idx] + '</span>';
         row.appendChild(timeCell);
+
+        var timeVal = (hr < 10 ? "0" + hr : "" + hr) + ":00";
+        var nextHr = Math.min(hr + 1, 23);
+        var nextTimeVal = (nextHr < 10 ? "0" + nextHr : "" + nextHr) + ":00";
 
         // 7 day slot cells
         for (var k = 0; k < 7; k++) {
           var curD = dayDates[k];
-          var isTd = (curD.getFullYear() === CAL_VIEW_STATE.todayYear && curD.getMonth() === CAL_VIEW_STATE.todayMonth && curD.getDate() === CAL_VIEW_STATE.todayDay);
-
           var isoD = formatCalISO(curD.getFullYear(), curD.getMonth(), curD.getDate());
-          var curProvider = (document.getElementById("filter-provider-select") ? document.getElementById("filter-provider-select").value : "").trim();
-          if (!curProvider && CAL_VIEW_STATE.providerFilter) curProvider = CAL_VIEW_STATE.providerFilter.trim();
+          var isTd = (curD.getFullYear() === CAL_VIEW_STATE.todayYear && curD.getMonth() === CAL_VIEW_STATE.todayMonth && curD.getDate() === CAL_VIEW_STATE.todayDay);
+          var isSel = (CAL_VIEW_STATE.selectedDate === isoD);
 
           var matchingBusy = getBusyTimesForDate(isoD, curProvider).filter(function(b) {
-            return b.status === "Active" && isHourInBusyTime(hr, b);
+            return b.status === "Active" && !b.allDay && isHourInBusyTime(hr, b);
           });
           var isSlotBlockedHour = matchingBusy.length > 0;
 
           var slotCell = document.createElement("div");
-          slotCell.className = "cal-week-slot-cell" + (isTd ? " today-col" : "") + (isSlotBlockedHour ? " slot-blocked-cell" : "");
+          slotCell.className = "cal-week-slot-cell week-time-slot" + (isTd ? " today-col" : "") + (isSel ? " is-selected-col" : "") + (isSlotBlockedHour ? " slot-blocked-cell" : "");
+          slotCell.setAttribute("data-week-date", isoD);
+          slotCell.setAttribute("data-date", isoD);
+          slotCell.setAttribute("data-hour", hr);
+          slotCell.setAttribute("data-time", timeVal);
+          slotCell.setAttribute("data-end-time", nextTimeVal);
+          slotCell.setAttribute("data-time-display", hourFullLabels[idx]);
+          slotCell.setAttribute("role", "button");
+          slotCell.setAttribute("tabindex", "0");
+          slotCell.setAttribute("title", "Click to set busy time at " + hourFullLabels[idx] + " on " + isoD);
 
           var dayAppts = getAppointmentsForDate(isoD);
 
@@ -7671,10 +7800,10 @@
             return a.parsedTime.hour === hr;
           });
 
-          if (isSlotBlockedHour && matchingAppts.length > 0) {
-            slotCell.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i><strong>Conflict: Visit during Blocked Time</strong></div>';
-          } else if (matchingAppts.length > 1) {
-            slotCell.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i><strong>' + matchingAppts.length + ' Concurrent Visits</strong></div>';
+          var totalSlotEvents = matchingBusy.length + matchingAppts.length;
+          if (totalSlotEvents > 1) {
+            slotCell.classList.add("has-multiple-events");
+            slotCell.setAttribute("data-event-count", totalSlotEvents);
           }
 
           matchingBusy.forEach(function(busy) {
@@ -7692,6 +7821,81 @@
       });
 
       container.appendChild(bodyWrap);
+
+      // 4. Delegated Click & Keyboard Listeners for Date Headers and Empty Slots
+      container.onclick = function(event) {
+        // A. If clicking on an existing appointment card, busy card, or child actions, let its own handler execute
+        if (event.target.closest(".cal-event-card") || 
+            event.target.closest(".appointment-card") || 
+            event.target.closest(".busy-block") || 
+            event.target.closest(".cal-agenda-busy-card") || 
+            event.target.closest(".cal-agenda-card") || 
+            event.target.closest("button") || 
+            event.target.closest("a")) {
+          return;
+        }
+
+        // B. Check if date header cell was clicked
+        var header = event.target.closest(".cal-week-day-header-cell[data-week-date]");
+        if (header) {
+          var date = header.getAttribute("data-week-date");
+          if (date) handleWeekDateClick(date);
+          return;
+        }
+
+        // C. Check if empty time slot was clicked
+        var slot = event.target.closest(".cal-week-slot-cell, .week-time-slot");
+        if (slot) {
+          // Verify we didn't click inside an event card
+          if (event.target.closest(".cal-event-card")) return;
+
+          var slotDate = slot.getAttribute("data-date") || slot.getAttribute("data-week-date");
+          var slotTime = slot.getAttribute("data-time");
+          var slotEndTime = slot.getAttribute("data-end-time");
+          var isAllDay = slot.getAttribute("data-allday") === "true";
+
+          if (slotDate) {
+            if (isAllDay) {
+              openCreateBusyModal(slotDate, "08:00", "18:00");
+            } else {
+              openCreateBusyModal(slotDate, slotTime, slotEndTime);
+            }
+          }
+        }
+      };
+
+      container.onkeydown = function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+          if (event.target.closest(".cal-event-card") || event.target.closest("button") || event.target.closest("a")) {
+            return;
+          }
+
+          var header = event.target.closest(".cal-week-day-header-cell[data-week-date]");
+          if (header) {
+            event.preventDefault();
+            var date = header.getAttribute("data-week-date");
+            if (date) handleWeekDateClick(date);
+            return;
+          }
+
+          var slot = event.target.closest(".cal-week-slot-cell, .week-time-slot");
+          if (slot) {
+            event.preventDefault();
+            var slotDate = slot.getAttribute("data-date") || slot.getAttribute("data-week-date");
+            var slotTime = slot.getAttribute("data-time");
+            var slotEndTime = slot.getAttribute("data-end-time");
+            var isAllDay = slot.getAttribute("data-allday") === "true";
+
+            if (slotDate) {
+              if (isAllDay) {
+                openCreateBusyModal(slotDate, "08:00", "18:00");
+              } else {
+                openCreateBusyModal(slotDate, slotTime, slotEndTime);
+              }
+            }
+          }
+        }
+      };
     }
 
     /**
@@ -8125,6 +8329,7 @@
 
     // Expose Busy Time functions to window
     window.openCreateBusyModal = openCreateBusyModal;
+    window.openBusyTimeFromSlot = openBusyTimeFromSlot;
     window.editBusyTime = editBusyTime;
     window.saveBusyTime = saveBusyTime;
     window.openBusyTimeDetail = openBusyTimeDetail;
