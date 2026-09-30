@@ -5741,23 +5741,27 @@
 
     function renderCalendarBusyCard(busy, isWeekView) {
       var timeDisplay = busy.allDay ? "Full Day" : (formatTimeAMPM(busy.startTime) + " – " + formatTimeAMPM(busy.endTime));
-      var html = '<div class="cal-event-card status-busy" onclick="openBusyTimeDetail(\'' + busy.id + '\')" title="Blocked Availability: ' + escapeHtml(busy.reason) + ' (' + timeDisplay + ')">';
+      var title = escapeHtml(busy.title || busy.reason || "Busy / Blocked");
+      var duration = busy.duration || "Blocked";
 
+      var html = '<div class="cal-event-card status-busy" onclick="openBusyTimeDetail(\'' + busy.id + '\')" title="Blocked Availability: ' + title + ' (' + timeDisplay + ')">';
+
+      // 1. Top line: Lock + Manage Link
       html += '<div class="cal-event-top-line">' +
-                '<span class="cal-event-time text-secondary"><i class="bi bi-lock-fill me-1 text-secondary"></i> <strong>Busy / Blocked</strong></span>' +
-                '<span class="badge-admin badge-blocked" style="font-size:0.62rem; padding:1px 5px;">Blocked</span>' +
+                '<span class="cal-event-time text-secondary"><i class="bi bi-lock-fill me-1"></i>BLOCKED</span>' +
+                '<span class="cal-busy-manage-link">Manage &rarr;</span>' +
               '</div>';
 
-      html += '<div class="cal-event-patient text-dark fw-bold">' + timeDisplay + '</div>';
-      html += '<div class="cal-event-service text-navy fw-semibold"><i class="bi bi-slash-circle me-1 text-teal"></i>' + escapeHtml(busy.reason) + '</div>';
+      // 2. Time
+      html += '<div class="cal-event-patient text-dark">' + timeDisplay + '</div>';
 
-      if (!isWeekView) {
-        html += '<div class="cal-event-service text-muted small mt-1">' + escapeHtml(busy.provider) + ' · ' + (busy.location.indexOf("All") !== -1 ? "All Rooms" : escapeHtml(busy.location)) + '</div>';
-      }
+      // 3. Title / Reason
+      html += '<div class="cal-event-service fw-semibold" title="' + title + '">' + title + '</div>';
 
+      // 4. Bottom line: Duration
       html += '<div class="cal-event-bottom-line">' +
-                '<span class="cal-event-provider text-muted small"><i class="bi bi-clock-history me-1"></i>' + (busy.duration || "Custom") + '</span>' +
-                '<span class="text-teal small fw-semibold">Manage <i class="bi bi-chevron-right"></i></span>' +
+                '<span class="cal-event-provider text-muted"><i class="bi bi-clock-history me-1"></i>' + duration + '</span>' +
+                '<span class="badge-admin badge-blocked cal-event-badge">Active</span>' +
               '</div>';
 
       html += '</div>';
@@ -7216,31 +7220,31 @@
       else if (statusKey.indexOf("decline") !== -1) statusClass = "status-declined";
 
       var isTelehealth = item.visit && item.visit.toLowerCase().indexOf("tele") !== -1;
-      var visitIcon = isTelehealth ? '<i class="bi bi-laptop text-primary" title="Telehealth"></i>' : '<i class="bi bi-building text-secondary" title="In-office"></i>';
+      var visitIcon = isTelehealth ? '<i class="bi bi-laptop text-teal" title="Telehealth"></i>' : '<i class="bi bi-building text-secondary" title="In-office"></i>';
 
-      var conflictHtml = "";
-      if (item.id === "apt-2") {
-        conflictHtml = '<span class="badge-admin badge-conflict ms-1" style="font-size:0.6rem; padding:0 3px;" title="Time Conflict with Marcus Vance">⚠ Overlap</span>';
-      }
+      var isConflict = (item.id === "apt-2" || item.isConflict);
+      var conflictBadge = isConflict ? '<span class="cal-event-conflict-pill" title="Time Conflict with Marcus Vance"><i class="bi bi-exclamation-triangle-fill"></i> Conflict</span>' : '';
+      if (isConflict) statusClass += " status-has-conflict";
 
-      var html = '<div class="cal-event-card ' + statusClass + '" onclick="openAppointmentDetail(\'' + item.id + '\')" title="Click to view details: ' + item.name + ' (' + item.service + ')">';
+      var html = '<div class="cal-event-card ' + statusClass + '" onclick="openAppointmentDetail(\'' + item.id + '\')" title="' + escapeHtml(item.name) + ' — ' + escapeHtml(item.service) + ' (' + parsed.display + ')">';
       
-      // Top row: Time + Visit Type
+      // Top row: Time + Conflict Badge / Visit Type
       html += '<div class="cal-event-top-line">' +
-                '<span class="cal-event-time"><i class="bi bi-clock text-muted"></i> ' + parsed.display + '</span>' +
-                '<span class="cal-event-visit-type">' + visitIcon + '</span>' +
+                '<span class="cal-event-time"><i class="bi bi-clock me-0.5"></i>' + parsed.display + '</span>' +
+                (conflictBadge || ('<span class="cal-event-visit-type">' + visitIcon + '</span>')) +
               '</div>';
       
       // Patient Name
-      html += '<div class="cal-event-patient">' + item.name + conflictHtml + '</div>';
+      html += '<div class="cal-event-patient">' + escapeHtml(item.name) + '</div>';
 
       // Service Name
-      html += '<div class="cal-event-service" title="' + item.service + '">' + item.service + '</div>';
+      html += '<div class="cal-event-service" title="' + escapeHtml(item.service) + '">' + escapeHtml(item.service) + '</div>';
 
       // Bottom Row: Provider + Status Badge
+      var docName = item.provider.indexOf("Jessica") !== -1 ? "Dr. Needle" : "Dr. Afrooz";
       html += '<div class="cal-event-bottom-line">' +
-                '<span class="cal-event-provider"><i class="bi bi-person-badge me-1"></i>' + (item.provider.indexOf("Jessica") !== -1 ? "Dr. Needle" : "Dr. Afrooz") + '</span>' +
-                '<span class="badge-admin ' + item.statusBadgeClass + ' cal-event-badge">' + item.status + '</span>' +
+                '<span class="cal-event-provider"><i class="bi bi-person-badge me-0.5"></i>' + docName + '</span>' +
+                '<span class="badge-admin ' + (item.statusBadgeClass || 'badge-confirmed') + ' cal-event-badge">' + item.status + '</span>' +
               '</div>';
 
       html += '</div>';
@@ -7408,6 +7412,141 @@
     }
 
     /**
+     * Mobile Week View: Day Tabs + Vertical Schedule Feed (< 768px)
+     */
+    function renderMobileWeekView(container, dayDates, periodText) {
+      var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      var dayNamesFull = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+      var selIdx = CAL_VIEW_STATE.selectedWeekDayIndex;
+      if (selIdx === undefined || selIdx === null || selIdx < 0 || selIdx > 6) {
+        selIdx = 0;
+        for (var i = 0; i < 7; i++) {
+          var cd = dayDates[i];
+          if (cd.getFullYear() === CAL_VIEW_STATE.todayYear && cd.getMonth() === CAL_VIEW_STATE.todayMonth && cd.getDate() === CAL_VIEW_STATE.todayDay) {
+            selIdx = i;
+            break;
+          }
+        }
+        CAL_VIEW_STATE.selectedWeekDayIndex = selIdx;
+      }
+
+      var wrap = document.createElement("div");
+      wrap.className = "cal-week-mob-wrap";
+
+      // 1. Day selector tabs (7 equal tabs)
+      var tabsBar = document.createElement("div");
+      tabsBar.className = "cal-week-mob-day-tabs";
+
+      dayDates.forEach(function(d, idx) {
+        var isToday = (d.getFullYear() === CAL_VIEW_STATE.todayYear && d.getMonth() === CAL_VIEW_STATE.todayMonth && d.getDate() === CAL_VIEW_STATE.todayDay);
+        var isSelected = (idx === selIdx);
+
+        var tabBtn = document.createElement("button");
+        tabBtn.type = "button";
+        tabBtn.className = "cal-week-mob-tab" + (isSelected ? " active" : "") + (isToday ? " is-today" : "");
+        tabBtn.title = dayNamesFull[idx] + ", " + CAL_MONTH_SHORT[d.getMonth()] + " " + d.getDate();
+        tabBtn.onclick = function() { selectMobileWeekDay(idx); };
+
+        tabBtn.innerHTML = '<span class="mob-tab-day">' + dayNames[idx] + '</span>' +
+                           '<span class="mob-tab-date">' + d.getDate() + '</span>';
+        tabsBar.appendChild(tabBtn);
+      });
+      wrap.appendChild(tabsBar);
+
+      // 2. Selected Day Header
+      var selDate = dayDates[selIdx];
+      var isTodaySel = (selDate.getFullYear() === CAL_VIEW_STATE.todayYear && selDate.getMonth() === CAL_VIEW_STATE.todayMonth && selDate.getDate() === CAL_VIEW_STATE.todayDay);
+      var isoDate = formatCalISO(selDate.getFullYear(), selDate.getMonth(), selDate.getDate());
+
+      var curProvider = (document.getElementById("filter-provider-select") ? document.getElementById("filter-provider-select").value : "").trim();
+      if (!curProvider && CAL_VIEW_STATE.providerFilter) curProvider = CAL_VIEW_STATE.providerFilter.trim();
+
+      var dayAppts = getAppointmentsForDate(isoDate);
+      var activeBusy = getBusyTimesForDate(isoDate, curProvider).filter(function(b) { return b.status === "Active"; });
+      var totalEvents = dayAppts.length + activeBusy.length;
+
+      var headerEl = document.createElement("div");
+      headerEl.className = "cal-week-mob-day-header";
+      headerEl.innerHTML = '<div class="d-flex align-items-center gap-2">' +
+                             '<h5 class="mb-0 fw-bold text-navy">' + dayNamesFull[selIdx].toUpperCase() + ' • ' + CAL_MONTH_SHORT[selDate.getMonth()].toUpperCase() + ' ' + selDate.getDate() + '</h5>' +
+                             (isTodaySel ? '<span class="cal-today-badge">TODAY</span>' : '') +
+                           '</div>' +
+                           '<span class="badge bg-light text-dark border">' + totalEvents + ' ' + (totalEvents === 1 ? 'Event' : 'Events') + '</span>';
+      wrap.appendChild(headerEl);
+
+      // 3. Vertical timeline feed
+      var timelineEl = document.createElement("div");
+      timelineEl.className = "cal-week-mob-timeline";
+
+      if (totalEvents === 0) {
+        timelineEl.innerHTML = '<div class="text-center py-5 bg-light rounded-3 border">' +
+                                 '<i class="bi bi-calendar-check text-teal mb-2" style="font-size:2rem;"></i>' +
+                                 '<h6 class="fw-bold text-navy mb-1">No visits scheduled for this date</h6>' +
+                                 '<p class="text-muted small mb-3">Schedule is open for bookings.</p>' +
+                                 '<button type="button" class="btn-btc btn-sm-admin" onclick="openCreateBusyModal()"><i class="bi bi-plus-lg me-1"></i>Block Time on This Day</button>' +
+                               '</div>';
+      } else {
+        var hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+        var hourLabels = [
+          "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+          "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM"
+        ];
+
+        // All Day Busy blocks
+        var allDayBusy = activeBusy.filter(function(b) { return b.allDay; });
+        if (allDayBusy.length > 0) {
+          var allDayBlock = document.createElement("div");
+          allDayBlock.className = "cal-week-mob-hour-block";
+          allDayBlock.innerHTML = '<div class="cal-week-mob-hour-label"><i class="bi bi-clock-history text-teal"></i> All Day</div>';
+          allDayBusy.forEach(function(b) {
+            allDayBlock.innerHTML += renderCalendarBusyCard(b, false);
+          });
+          timelineEl.appendChild(allDayBlock);
+        }
+
+        hours.forEach(function(hr, idx) {
+          var matchingBusy = activeBusy.filter(function(b) {
+            return !b.allDay && isHourInBusyTime(hr, b);
+          });
+          var matchingAppts = dayAppts.filter(function(a) {
+            return a.parsedTime.hour === hr;
+          });
+
+          if (matchingBusy.length === 0 && matchingAppts.length === 0) return;
+
+          var blockEl = document.createElement("div");
+          blockEl.className = "cal-week-mob-hour-block";
+          blockEl.innerHTML = '<div class="cal-week-mob-hour-label"><i class="bi bi-clock text-teal"></i> ' + hourLabels[idx] + '</div>';
+
+          if (matchingBusy.length > 0 && matchingAppts.length > 0) {
+            blockEl.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i><strong>Conflict: Visit during Blocked Time</strong></div>';
+          } else if (matchingAppts.length > 1) {
+            blockEl.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i><strong>' + matchingAppts.length + ' Concurrent Visits</strong></div>';
+          }
+
+          matchingBusy.forEach(function(b) {
+            blockEl.innerHTML += renderCalendarBusyCard(b, false);
+          });
+
+          matchingAppts.forEach(function(a) {
+            blockEl.innerHTML += renderCalendarEventCard(a);
+          });
+
+          timelineEl.appendChild(blockEl);
+        });
+      }
+
+      wrap.appendChild(timelineEl);
+      container.appendChild(wrap);
+    }
+
+    window.selectMobileWeekDay = function(idx) {
+      CAL_VIEW_STATE.selectedWeekDayIndex = idx;
+      renderWeekView();
+    };
+
+    /**
      * Render Week View
      */
     function renderWeekView() {
@@ -7442,6 +7581,12 @@
       var container = document.getElementById("calWeekGrid");
       if (!container) return;
       container.innerHTML = "";
+
+      var isMobile = (window.innerWidth < 768);
+      if (isMobile) {
+        renderMobileWeekView(container, dayDates, periodText);
+        return;
+      }
 
       var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -7527,9 +7672,9 @@
           });
 
           if (isSlotBlockedHour && matchingAppts.length > 0) {
-            slotCell.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-danger me-1"></i><strong>Conflict: Visit during Blocked Time</strong></div>';
+            slotCell.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i><strong>Conflict: Visit during Blocked Time</strong></div>';
           } else if (matchingAppts.length > 1) {
-            slotCell.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-danger me-1"></i><strong>' + matchingAppts.length + ' Concurrent Visits</strong></div>';
+            slotCell.innerHTML += '<div class="cal-conflict-notice"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i><strong>' + matchingAppts.length + ' Concurrent Visits</strong></div>';
           }
 
           matchingBusy.forEach(function(busy) {
@@ -7868,7 +8013,12 @@
       } else if (direction === "today") {
         CAL_VIEW_STATE.currentYear = CAL_VIEW_STATE.todayYear;
         CAL_VIEW_STATE.currentMonth = CAL_VIEW_STATE.todayMonth;
-        CAL_VIEW_STATE.weekStartDate = new Date(2026, 8, 20); // Week of Sep 24, 2026
+        var todayDate = new Date(CAL_VIEW_STATE.todayYear, CAL_VIEW_STATE.todayMonth, CAL_VIEW_STATE.todayDay);
+        var dayOfWeek = todayDate.getDay();
+        var sunDate = new Date(todayDate);
+        sunDate.setDate(todayDate.getDate() - dayOfWeek);
+        CAL_VIEW_STATE.weekStartDate = sunDate;
+        CAL_VIEW_STATE.selectedWeekDayIndex = dayOfWeek;
         if (window.toast) window.toast("Returned to today's schedule.");
       }
       renderActiveCalendarView();
