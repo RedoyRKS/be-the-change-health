@@ -52,6 +52,10 @@
       border: 1px solid #e2e8f0;
       border-radius: 10px;
       padding: 1.25rem;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .serp-title {
       color: #1a0dab;
@@ -59,19 +63,276 @@
       font-weight: 500;
       cursor: pointer;
       line-height: 1.3;
-      margin-bottom: 0.2rem;
+      margin-bottom: 6px;
+      overflow-wrap: anywhere;
+      word-break: normal;
     }
     .serp-url {
       color: #006621;
       font-size: 0.85rem;
       line-height: 1.4;
-      margin-bottom: 0.35rem;
+      margin-bottom: 6px;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-sizing: border-box;
     }
     .serp-desc {
       color: #4d5156;
       font-size: 0.875rem;
       line-height: 1.5;
       margin-bottom: 0;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Featured Media & Input Group Styling */
+    .cms-image-path-group .input-group {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .cms-image-path-group .input-group-text {
+      width: 38px;
+      min-width: 38px;
+      max-width: 38px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8fafc;
+      border: none;
+      border-right: 1px solid #e2e8f0;
+      border-radius: 0;
+      color: #64748b;
+      font-size: 1.1rem;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .cms-image-path-group .form-control {
+      flex: 1 1 auto;
+      min-width: 0;
+      width: 100%;
+      height: 40px;
+      border: none;
+      border-radius: 0;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      box-shadow: none;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 576px) {
+      #sec-media {
+        border-radius: 12px !important;
+        margin-bottom: 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      #sec-media .card-head {
+        padding: 12px 14px 8px !important;
+      }
+      #sec-media .card-head h2 {
+        font-size: 16.5px !important;
+        line-height: 1.25 !important;
+        font-weight: 700 !important;
+        margin: 0 0 2px !important;
+      }
+      #sec-media .card-head p {
+        font-size: 11.5px !important;
+        line-height: 1.35 !important;
+        color: #64748b !important;
+        margin: 0 !important;
+      }
+      #sec-media .card-body-admin {
+        padding: 12px 14px !important;
+      }
+      .cms-image-preview-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 150px !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+      }
+      .cms-image-preview-img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 8px !important;
+      }
+      .cms-image-btn-row {
+        display: flex !important;
+        gap: 8px !important;
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .cms-image-btn-row .btn {
+        flex: 1 !important;
+        width: 100% !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        font-size: 11.5px !important;
+        padding: 6px 10px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .cms-image-path-group {
+        margin-top: 6px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .cms-image-path-group .form-label-admin {
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+        margin-bottom: 4px !important;
+        display: block !important;
+      }
+      .cms-image-path-group .input-group {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        background: #ffffff !important;
+        box-sizing: border-box !important;
+      }
+      .cms-image-path-group .input-group-text {
+        width: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+        height: 40px !important;
+        min-height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background-color: #f8fafc !important;
+        border: none !important;
+        border-right: 1px solid #e2e8f0 !important;
+        border-radius: 0 !important;
+        color: #64748b !important;
+        font-size: 17px !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+      }
+      .cms-image-path-group .form-control {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        height: 40px !important;
+        min-height: 40px !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 8px 10px !important;
+        font-size: 12.5px !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+      }
+      #mediaImgAlt {
+        width: 100% !important;
+        min-height: 40px !important;
+        height: 40px !important;
+        font-size: 12.5px !important;
+        padding: 8px 10px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Mobile Sticky Action Bar */
+      .sticky-actions {
+        position: static !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 12px 14px !important;
+        margin-top: 10px !important;
+        margin-bottom: 12px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 2px 8px rgba(0, 48, 72, 0.04) !important;
+      }
+      .sticky-actions-status {
+        text-align: center !important;
+        width: 100% !important;
+        margin: 2px 0 !important;
+      }
+      .sticky-actions-status #saveStatus {
+        font-size: 11px !important;
+        color: #64748b !important;
+        display: inline-block !important;
+      }
+      .sticky-actions-btns {
+        display: flex !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .sticky-actions-btns button {
+        flex: 1 !important;
+        width: 100% !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        font-size: 11.5px !important;
+        padding: 6px 10px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      #sec-media .card-body-admin {
+        padding: 10px 12px !important;
+      }
+      #sec-media .card-head h2 {
+        font-size: 15.5px !important;
+      }
+      .cms-image-preview-box {
+        height: 135px !important;
+      }
+      .cms-image-btn-row .btn {
+        height: 36px !important;
+        min-height: 36px !important;
+        font-size: 11px !important;
+        padding: 5px 8px !important;
+      }
+      .sticky-actions-btns button {
+        height: 36px !important;
+        min-height: 36px !important;
+        font-size: 11px !important;
+        padding: 5px 8px !important;
+      }
     }
   </style>
 </head>
@@ -255,8 +516,8 @@
                       <input type="text" id="seoCanonical" class="form-control" value="https://bethechangehealth.com/about/integrative-medicine.html">
                     </div>
                   </div>
-                  <div class="col-md-5">
-                    <label class="form-label-admin mb-2">Google SERP Snippet Preview</label>
+                  <div class="col-md-5 serp-preview-section">
+                    <label class="form-label-admin mb-2 serp-preview-label">Google SERP Snippet Preview</label>
                     <div class="serp-preview">
                       <div class="serp-title" id="serpTitlePreview">Integrative Medicine | Be The Change Health &amp; Wellness Center</div>
                       <div class="serp-url" id="serpUrlPreview">https://bethechangehealth.com/about/integrative-medicine.html</div>
@@ -294,14 +555,16 @@
                   </div>
                   <div class="cms-image-path-group">
                     <label class="form-label-admin small text-muted mb-1">Image Path / URL</label>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group">
                       <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
                       <input type="text" id="mediaImgSrc" class="form-control js-cms-img-input" value="../assets/uploads/2024/10/hh.jpg" placeholder="assets/uploads/...">
                     </div>
                   </div>
                 </div>
-                <label class="form-label-admin mt-2">Image Alt Text</label>
-                <input type="text" id="mediaImgAlt" class="form-control" value="Integrative medicine">
+                <div class="mt-3">
+                  <label class="form-label-admin mb-1">Image Alt Text</label>
+                  <input type="text" id="mediaImgAlt" class="form-control" value="Integrative medicine">
+                </div>
               </div>
             </section>
           </div>
@@ -309,10 +572,10 @@
 
         <!-- Sticky Actions Bar -->
         <div class="sticky-actions d-flex justify-content-between align-items-center">
-          <div>
-            <span id="saveStatus" class="text-muted small">All changes up to date</span>
+          <div class="sticky-actions-status">
+            <span id="saveStatus" class="text-muted small"><i class="bi bi-check2 me-1"></i>All changes up to date</span>
           </div>
-          <div class="d-flex gap-2">
+          <div class="sticky-actions-btns d-flex gap-2">
             <button class="btn btn-outline-secondary" type="button" id="resetBtn">Reset to Default</button>
             <button class="btn-btc" type="button" id="savePageBtn">
               <i class="bi bi-cloud-check me-1"></i> Save Changes
@@ -391,20 +654,24 @@
       // SERP preview
       const seoTitle = document.getElementById('seoTitle');
       const seoDesc = document.getElementById('seoDesc');
+      const seoCanonical = document.getElementById('seoCanonical');
       const serpTitle = document.getElementById('serpTitlePreview');
       const serpDesc = document.getElementById('serpDescPreview');
+      const serpUrl = document.getElementById('serpUrlPreview');
       const titleCount = document.getElementById('seoTitleCount');
       const descCount = document.getElementById('seoDescCount');
 
       function updateSerp() {
-        serpTitle.textContent = seoTitle.value || 'Integrative Medicine';
-        serpDesc.textContent = seoDesc.value || 'Discover whole-person integrative medicine...';
-        titleCount.textContent = (seoTitle.value || '').length + ' chars';
-        descCount.textContent = (seoDesc.value || '').length + ' chars';
+        if (serpTitle && seoTitle) serpTitle.textContent = seoTitle.value || 'Integrative Medicine | Be The Change Health & Wellness Center';
+        if (serpDesc && seoDesc) serpDesc.textContent = seoDesc.value || 'Discover whole-person integrative medicine in Columbia, MD. Comprehensive care addressing the bio-psycho-socio-spiritual aspects of your health.';
+        if (serpUrl && seoCanonical) serpUrl.textContent = seoCanonical.value || 'https://bethechangehealth.com/about/integrative-medicine.html';
+        if (titleCount && seoTitle) titleCount.textContent = (seoTitle.value || '').length + ' chars';
+        if (descCount && seoDesc) descCount.textContent = (seoDesc.value || '').length + ' chars';
       }
 
-      seoTitle.addEventListener('input', updateSerp);
-      seoDesc.addEventListener('input', updateSerp);
+      if (seoTitle) seoTitle.addEventListener('input', updateSerp);
+      if (seoDesc) seoDesc.addEventListener('input', updateSerp);
+      if (seoCanonical) seoCanonical.addEventListener('input', updateSerp);
       updateSerp();
 
       function escapeHtml(str) {
@@ -444,10 +711,10 @@
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
           const status = document.getElementById('saveStatus');
-          status.textContent = 'Saved locally at ' + new Date().toLocaleTimeString();
+          status.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i>Saved locally at ' + new Date().toLocaleTimeString();
           status.className = 'text-success small fw-semibold';
           setTimeout(() => {
-            status.textContent = 'All changes up to date';
+            status.innerHTML = '<i class="bi bi-check2 me-1"></i>All changes up to date';
             status.className = 'text-muted small';
           }, 3500);
         } catch (e) {

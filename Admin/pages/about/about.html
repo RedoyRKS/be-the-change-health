@@ -52,6 +52,10 @@
       border: 1px solid #e2e8f0;
       border-radius: 10px;
       padding: 1.25rem;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .serp-title {
       color: #1a0dab;
@@ -59,19 +63,120 @@
       font-weight: 500;
       cursor: pointer;
       line-height: 1.3;
-      margin-bottom: 0.2rem;
+      margin-bottom: 6px;
+      overflow-wrap: anywhere;
+      word-break: normal;
     }
     .serp-url {
       color: #006621;
       font-size: 0.85rem;
       line-height: 1.4;
-      margin-bottom: 0.35rem;
+      margin-bottom: 6px;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-sizing: border-box;
     }
     .serp-desc {
       color: #4d5156;
       font-size: 0.875rem;
       line-height: 1.5;
       margin-bottom: 0;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (max-width: 576px) {
+      .serp-preview-section {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+      }
+      .serp-preview-label {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .serp-preview {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 14px 16px !important;
+        border-radius: 12px !important;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+      }
+      .serp-title {
+        font-size: 16px !important;
+        line-height: 1.25 !important;
+        font-weight: 600 !important;
+        margin-bottom: 6px !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+        color: #1a0dab !important;
+      }
+      .serp-url {
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 6px !important;
+        color: #006621 !important;
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+      }
+      .serp-desc {
+        font-size: 12px !important;
+        line-height: 1.45 !important;
+        color: #4d5156 !important;
+        margin-bottom: 0 !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 4 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+    }
+    @media (max-width: 380px) {
+      .serp-preview-label {
+        font-size: 11px !important;
+        margin-bottom: 6px !important;
+      }
+      .serp-preview {
+        padding: 12px 14px !important;
+        border-radius: 10px !important;
+      }
+      .serp-title {
+        font-size: 15px !important;
+        line-height: 1.25 !important;
+        margin-bottom: 5px !important;
+      }
+      .serp-url {
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        margin-bottom: 5px !important;
+      }
+      .serp-desc {
+        font-size: 11px !important;
+        line-height: 1.4 !important;
+      }
     }
   </style>
 </head>
@@ -376,8 +481,8 @@
                       <input type="text" id="seoCanonical" class="form-control" value="https://bethechangehealth.com/about/index.html">
                     </div>
                   </div>
-                  <div class="col-md-5">
-                    <label class="form-label-admin mb-2">Google SERP Snippet Preview</label>
+                  <div class="col-md-5 serp-preview-section">
+                    <label class="form-label-admin mb-2 serp-preview-label">Google SERP Snippet Preview</label>
                     <div class="serp-preview">
                       <div class="serp-title" id="serpTitlePreview">Our Practice | Be The Change Health &amp; Wellness Center</div>
                       <div class="serp-url" id="serpUrlPreview">https://bethechangehealth.com/about/index.html</div>
@@ -565,20 +670,24 @@ Healing Communities</textarea>
       // SERP preview
       const seoTitle = document.getElementById('seoTitle');
       const seoDesc = document.getElementById('seoDesc');
+      const seoCanonical = document.getElementById('seoCanonical');
       const serpTitle = document.getElementById('serpTitlePreview');
       const serpDesc = document.getElementById('serpDescPreview');
+      const serpUrl = document.getElementById('serpUrlPreview');
       const titleCount = document.getElementById('seoTitleCount');
       const descCount = document.getElementById('seoDescCount');
 
       function updateSerp() {
-        serpTitle.textContent = seoTitle.value || 'Our Practice | Be The Change Health & Wellness Center';
-        serpDesc.textContent = seoDesc.value || 'Discovering what makes your body unique...';
-        titleCount.textContent = (seoTitle.value || '').length + ' chars';
-        descCount.textContent = (seoDesc.value || '').length + ' chars';
+        if (serpTitle && seoTitle) serpTitle.textContent = seoTitle.value || 'Our Practice | Be The Change Health & Wellness Center';
+        if (serpDesc && seoDesc) serpDesc.textContent = seoDesc.value || 'Discovering what makes your body unique through personalized medicine & planning a healthier journey together in Columbia, MD.';
+        if (serpUrl && seoCanonical) serpUrl.textContent = seoCanonical.value || 'https://bethechangehealth.com/about/index.html';
+        if (titleCount && seoTitle) titleCount.textContent = (seoTitle.value || '').length + ' chars';
+        if (descCount && seoDesc) descCount.textContent = (seoDesc.value || '').length + ' chars';
       }
 
-      seoTitle.addEventListener('input', updateSerp);
-      seoDesc.addEventListener('input', updateSerp);
+      if (seoTitle) seoTitle.addEventListener('input', updateSerp);
+      if (seoDesc) seoDesc.addEventListener('input', updateSerp);
+      if (seoCanonical) seoCanonical.addEventListener('input', updateSerp);
       updateSerp();
 
       function saveToStorage() {

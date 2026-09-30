@@ -26,6 +26,13 @@
       gap: 0.5rem;
       overflow-x: auto;
       white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .jump-nav::-webkit-scrollbar {
+      display: none;
     }
     .jump-nav a {
       color: #64748b;
@@ -35,8 +42,11 @@
       border-radius: 8px;
       text-decoration: none;
       transition: all 0.15s ease;
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
     }
-    .jump-nav a:hover {
+    .jump-nav a:hover, .jump-nav a.active {
       background: #f1f5f9;
       color: #0f172a;
     }
@@ -52,10 +62,12 @@
       background: #f8fafc;
       padding: 1.15rem 1.5rem;
       cursor: pointer;
-      display: flex;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) 24px;
+      gap: 12px;
       align-items: center;
-      justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
+      transition: background 0.15s ease;
     }
     .step-header:hover {
       background: #f1f5f9;
@@ -63,6 +75,8 @@
     .step-badge {
       width: 38px;
       height: 38px;
+      min-width: 38px;
+      min-height: 38px;
       border-radius: 50%;
       background: #0d9488;
       color: #fff;
@@ -71,8 +85,41 @@
       align-items: center;
       justify-content: center;
       font-size: 0.95rem;
-      margin-right: 1rem;
       flex-shrink: 0;
+    }
+    .step-header-text {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .step-title {
+      font-size: 1.05rem;
+      line-height: 1.25;
+      font-weight: 600;
+      color: #0f172a;
+      overflow-wrap: break-word;
+      word-break: normal;
+      margin: 0;
+    }
+    .step-subtitle {
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: #64748b;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+    .step-chevron {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      justify-self: end;
     }
     .subcard-box {
       background: #f8fafc;
@@ -80,12 +127,18 @@
       border-radius: 10px;
       padding: 1rem;
       margin-bottom: 0.85rem;
+      box-sizing: border-box;
+      max-width: 100%;
     }
     .serp-preview {
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 10px;
       padding: 1.25rem;
+      box-sizing: border-box;
+      max-width: 100%;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
     .serp-title {
       color: #1a0dab;
@@ -94,18 +147,204 @@
       cursor: pointer;
       line-height: 1.3;
       margin-bottom: 0.2rem;
+      overflow-wrap: break-word;
     }
     .serp-url {
       color: #006621;
       font-size: 0.85rem;
       line-height: 1.4;
       margin-bottom: 0.35rem;
+      overflow-wrap: break-word;
+      word-break: break-all;
     }
     .serp-desc {
       color: #4d5156;
       font-size: 0.875rem;
       line-height: 1.5;
       margin-bottom: 0;
+      overflow-wrap: break-word;
+    }
+
+    @media (max-width: 576px) {
+      .jump-nav {
+        top: 60px;
+        padding: 6px 8px;
+        gap: 5px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+      }
+      .jump-nav a {
+        flex: 0 0 auto;
+        height: 38px;
+        padding: 0 11px;
+        font-size: 11.5px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+      }
+      #sec-hero {
+        margin-bottom: 10px !important;
+      }
+      #sec-hero .card-head {
+        padding: 12px 14px;
+      }
+      #sec-hero .card-head h2 {
+        font-size: 16.5px;
+        line-height: 1.3;
+        margin-bottom: 2px;
+      }
+      #sec-hero .card-head p {
+        font-size: 11.5px;
+        line-height: 1.4;
+        margin-bottom: 0;
+      }
+      #sec-hero .card-body-admin {
+        padding: 14px;
+      }
+      #sec-hero .form-label-admin {
+        font-size: 11.5px;
+        margin-bottom: 4px;
+      }
+      #sec-hero .form-control {
+        min-height: 40px;
+        font-size: 12.5px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .step-accordion {
+        border-radius: 12px;
+        margin-bottom: 10px;
+      }
+      .step-header {
+        display: grid !important;
+        grid-template-columns: 38px minmax(0, 1fr) 24px !important;
+        gap: 10px !important;
+        padding: 12px 14px !important;
+        align-items: center !important;
+      }
+      .step-badge {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        border-radius: 50% !important;
+        font-size: 12.5px !important;
+        margin-right: 0 !important;
+        flex-shrink: 0 !important;
+      }
+      .step-header-text {
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+      }
+      .step-title,
+      .step-header-text h5 {
+        font-size: 17px !important;
+        line-height: 1.2 !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+        margin-bottom: 0 !important;
+      }
+      .step-subtitle,
+      .step-header-text span.text-muted {
+        font-size: 10.5px !important;
+        line-height: 1.45 !important;
+        color: #64748b !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+      }
+      .step-chevron {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+      }
+      .step-accordion .collapse {
+        padding: 14px !important;
+        border-top: 1px solid #e2e8f0;
+      }
+      .step-accordion .collapse .form-label-admin {
+        font-size: 11.5px;
+        margin-bottom: 4px;
+      }
+      .step-accordion .collapse .form-control,
+      .step-accordion .collapse input.form-control {
+        min-height: 40px;
+        font-size: 12.5px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .step-accordion .collapse textarea.form-control {
+        min-height: 90px;
+      }
+      .subcard-box {
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+      .subcard-box .btn-group-sm > .btn,
+      .subcard-box .btn-sm {
+        min-height: 34px;
+        min-width: 34px;
+        padding: 0 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+      .serp-preview {
+        padding: 12px;
+        border-radius: 10px;
+      }
+      .serp-title {
+        font-size: 15px;
+        line-height: 1.3;
+      }
+      .serp-url {
+        font-size: 11px;
+        line-height: 1.4;
+      }
+      .serp-desc {
+        font-size: 11.5px;
+        line-height: 1.45;
+      }
+      .sticky-actions {
+        padding: 10px 12px;
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch !important;
+      }
+      .sticky-actions .d-flex.gap-2 {
+        width: 100%;
+      }
+      .sticky-actions .d-flex.gap-2 button {
+        flex: 1;
+        min-height: 40px;
+        font-size: 12.5px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .step-title,
+      .step-header-text h5 {
+        font-size: 16px !important;
+      }
+      .step-subtitle,
+      .step-header-text span.text-muted {
+        font-size: 10px !important;
+      }
+      .jump-nav a {
+        font-size: 11px;
+        padding: 0 9px;
+      }
     }
   </style>
 </head>
@@ -185,14 +424,12 @@
         <!-- Step 1: Consultation -->
         <div id="sec-step1" class="step-accordion">
           <div class="step-header" data-bs-toggle="collapse" data-bs-target="#collapseStep1">
-            <div class="d-flex align-items-center">
-              <span class="step-badge">01</span>
-              <div>
-                <h5 class="mb-0 fw-semibold">Step #1: Consultation</h5>
-                <span class="text-muted small">Listen, Learn &amp; Apply · 3 Sub-Cards</span>
-              </div>
+            <span class="step-badge">01</span>
+            <div class="step-header-text">
+              <h5 class="mb-0 fw-semibold step-title">Step #1: Consultation</h5>
+              <span class="text-muted small step-subtitle">Listen, Learn &amp; Apply · 3 Sub-Cards</span>
             </div>
-            <i class="bi bi-chevron-down"></i>
+            <i class="bi bi-chevron-down step-chevron"></i>
           </div>
           <div id="collapseStep1" class="collapse show p-4">
             <div class="row g-3 mb-3">
@@ -215,14 +452,12 @@
         <!-- Step 2: Laboratory Testing -->
         <div id="sec-step2" class="step-accordion">
           <div class="step-header" data-bs-toggle="collapse" data-bs-target="#collapseStep2">
-            <div class="d-flex align-items-center">
-              <span class="step-badge">02</span>
-              <div>
-                <h5 class="mb-0 fw-semibold">Step #2: Laboratory Testing</h5>
-                <span class="text-muted small">A Closer Look Inside the Body · 3 Sub-Cards + Lab Links</span>
-              </div>
+            <span class="step-badge">02</span>
+            <div class="step-header-text">
+              <h5 class="mb-0 fw-semibold step-title">Step #2: Laboratory Testing</h5>
+              <span class="text-muted small step-subtitle">A Closer Look Inside the Body · 3 Sub-Cards + Lab Links</span>
             </div>
-            <i class="bi bi-chevron-down"></i>
+            <i class="bi bi-chevron-down step-chevron"></i>
           </div>
           <div id="collapseStep2" class="collapse p-4">
             <div class="row g-3 mb-3">
@@ -249,14 +484,12 @@
         <!-- Step 3: Lifestyle Guidance -->
         <div id="sec-step3" class="step-accordion">
           <div class="step-header" data-bs-toggle="collapse" data-bs-target="#collapseStep3">
-            <div class="d-flex align-items-center">
-              <span class="step-badge">03</span>
-              <div>
-                <h5 class="mb-0 fw-semibold">Step #3: Lifestyle Guidance</h5>
-                <span class="text-muted small">Helping You Create Healthy Changes · 3 Sub-Cards</span>
-              </div>
+            <span class="step-badge">03</span>
+            <div class="step-header-text">
+              <h5 class="mb-0 fw-semibold step-title">Step #3: Lifestyle Guidance</h5>
+              <span class="text-muted small step-subtitle">Helping You Create Healthy Changes · 3 Sub-Cards</span>
             </div>
-            <i class="bi bi-chevron-down"></i>
+            <i class="bi bi-chevron-down step-chevron"></i>
           </div>
           <div id="collapseStep3" class="collapse p-4">
             <div class="row g-3 mb-3">
@@ -277,14 +510,12 @@
         <!-- Step 4: Effective Therapies (CRITICAL AUDIT ITEM) -->
         <div id="sec-step4" class="step-accordion">
           <div class="step-header" data-bs-toggle="collapse" data-bs-target="#collapseStep4">
-            <div class="d-flex align-items-center">
-              <span class="step-badge" style="background: #2563eb;">04</span>
-              <div>
-                <h5 class="mb-0 fw-semibold text-primary">Step #4: Effective Therapies (Fully Editable Modalities)</h5>
-                <span class="text-muted small">Detox, Rejuvenate &amp; Heal · 6 Modalities (IV, FSM, CST, Hyperbaric, Ion Foot Detox, Oils)</span>
-              </div>
+            <span class="step-badge">04</span>
+            <div class="step-header-text">
+              <h5 class="mb-0 fw-semibold step-title">Step #4: Effective Therapies (Fully Editable Modalities)</h5>
+              <span class="text-muted small step-subtitle">Detox, Rejuvenate &amp; Heal · 6 Modalities (IV, FSM, CST, Hyperbaric, Ion Foot Detox, Oils)</span>
             </div>
-            <i class="bi bi-chevron-down"></i>
+            <i class="bi bi-chevron-down step-chevron"></i>
           </div>
           <div id="collapseStep4" class="collapse show p-4">
             <div class="row g-3 mb-3">
@@ -312,14 +543,12 @@
         <!-- Step 5: Supplements, Medications & Detoxification -->
         <div id="sec-step5" class="step-accordion">
           <div class="step-header" data-bs-toggle="collapse" data-bs-target="#collapseStep5">
-            <div class="d-flex align-items-center">
-              <span class="step-badge">05</span>
-              <div>
-                <h5 class="mb-0 fw-semibold">Step #5: Supplements, Medications &amp; Detoxification</h5>
-                <span class="text-muted small">Individualized for Your Needs · Featured Image &amp; Copy</span>
-              </div>
+            <span class="step-badge">05</span>
+            <div class="step-header-text">
+              <h5 class="mb-0 fw-semibold step-title">Step #5: Supplements, Medications &amp; Detoxification</h5>
+              <span class="text-muted small step-subtitle">Individualized for Your Needs · Featured Image &amp; Copy</span>
             </div>
-            <i class="bi bi-chevron-down"></i>
+            <i class="bi bi-chevron-down step-chevron"></i>
           </div>
           <div id="collapseStep5" class="collapse p-4">
             <div class="row g-3 mb-3">
@@ -373,14 +602,12 @@
         <!-- Step 6: Follow-Up -->
         <div id="sec-step6" class="step-accordion">
           <div class="step-header" data-bs-toggle="collapse" data-bs-target="#collapseStep6">
-            <div class="d-flex align-items-center">
-              <span class="step-badge">06</span>
-              <div>
-                <h5 class="mb-0 fw-semibold">Step #6: Follow-Up</h5>
-                <span class="text-muted small">We Journey With You · 3 Sub-Cards</span>
-              </div>
+            <span class="step-badge">06</span>
+            <div class="step-header-text">
+              <h5 class="mb-0 fw-semibold step-title">Step #6: Follow-Up</h5>
+              <span class="text-muted small step-subtitle">We Journey With You · 3 Sub-Cards</span>
             </div>
-            <i class="bi bi-chevron-down"></i>
+            <i class="bi bi-chevron-down step-chevron"></i>
           </div>
           <div id="collapseStep6" class="collapse p-4">
             <div class="row g-3 mb-3">

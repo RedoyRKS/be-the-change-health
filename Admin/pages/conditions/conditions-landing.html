@@ -12,14 +12,32 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="../../assets/css/style.css" rel="stylesheet">
   <style>
+    .page-top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .page-top-actions .btn-sm-admin,
+    .page-top-actions .badge-admin {
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 11.5px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
     .card-editor-unit {
       background: #fff;
       border: 1px solid #e2e8f0;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 1.25rem;
       margin-bottom: 1.25rem;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
       position: relative;
+      box-sizing: border-box;
+      max-width: 100%;
     }
     .card-editor-unit:hover {
       border-color: #cbd5e1;
@@ -28,9 +46,46 @@
     .card-editor-unit.active-unit {
       border-left: 4px solid var(--btc-teal);
     }
+    .card-unit-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+    .card-unit-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .card-unit-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .card-unit-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+    .card-unit-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
     .card-badge-num {
       width: 28px;
       height: 28px;
+      min-width: 28px;
+      min-height: 28px;
       background: var(--btc-navy);
       color: #fff;
       font-size: 0.8rem;
@@ -39,6 +94,32 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+    }
+    .card-vis-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin: 0;
+      cursor: pointer;
+    }
+    .card-vis-label {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 500;
+      user-select: none;
+    }
+    .card-move-group {
+      display: inline-flex;
+      align-items: center;
+    }
+    .card-move-group button {
+      min-width: 32px;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
     }
     .thumb-preview-box {
       width: 100px;
@@ -50,8 +131,12 @@
     .serp-card {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 1rem 1.25rem;
+      box-sizing: border-box;
+      max-width: 100%;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
     .serp-title {
       color: #1a0dab;
@@ -60,42 +145,254 @@
       line-height: 1.3;
       margin-bottom: 2px;
       cursor: pointer;
+      overflow-wrap: break-word;
     }
     .serp-url {
       color: #006621;
       font-size: 0.82rem;
       margin-bottom: 4px;
       word-break: break-all;
+      overflow-wrap: break-word;
     }
     .serp-desc {
       color: #4d5156;
       font-size: 0.85rem;
       line-height: 1.4;
       margin-bottom: 0;
+      overflow-wrap: break-word;
     }
     .cms-jump-bar {
       display: flex;
-      flex-wrap: wrap;
       gap: 0.5rem;
       margin-bottom: 1.25rem;
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 0.85rem;
       background: #fff;
       border: 1px solid #e2e8f0;
-      border-radius: 8px;
+      border-radius: 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cms-jump-bar::-webkit-scrollbar {
+      display: none;
     }
     .cms-jump-bar a {
       font-size: 0.82rem;
       font-weight: 500;
       color: #0d9488;
       text-decoration: none;
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
       background: #f0fdfa;
       transition: background 0.15s, color 0.15s;
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
     }
     .cms-jump-bar a:hover {
       background: #0d9488;
       color: #fff;
+    }
+    .bottom-save-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .bottom-save-card button {
+      min-height: 40px;
+      white-space: nowrap;
+      padding: 8px 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 576px) {
+      .page-top-actions {
+        width: 100%;
+        gap: 6px;
+      }
+      .page-top-actions .badge-admin,
+      .page-top-actions .btn-sm-admin {
+        flex: 1 1 auto;
+        justify-content: center;
+        height: 38px;
+        font-size: 11.5px;
+        padding: 0 10px;
+      }
+      #section-overview .card-head {
+        padding: 12px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      #section-overview .card-head h2 {
+        font-size: 18px;
+        line-height: 1.25;
+        margin-bottom: 4px;
+      }
+      #section-overview .card-head p {
+        font-size: 11.5px;
+        line-height: 1.4;
+        margin-bottom: 0;
+      }
+      #section-overview .card-head .btn-btc-ghost {
+        width: 100%;
+        justify-content: center;
+        height: 36px;
+        font-size: 11.5px;
+      }
+      #section-overview .card-body-admin {
+        padding: 12px 14px;
+      }
+      .card-admin {
+        margin-bottom: 12px !important;
+        border-radius: 12px;
+      }
+      .card-admin .card-head {
+        padding: 12px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .card-admin .card-head > div:last-child {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .card-admin .card-head > div:last-child button,
+      .card-admin .card-head > div:last-child a,
+      .card-admin .card-head > button {
+        width: 100%;
+        min-height: 36px;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card-admin .card-head h2 {
+        font-size: 16.5px;
+        line-height: 1.3;
+        margin-bottom: 2px;
+      }
+      .card-admin .card-head p {
+        font-size: 11.5px;
+        line-height: 1.4;
+        margin-bottom: 0;
+      }
+      .card-admin .card-body-admin {
+        padding: 14px;
+      }
+      .card-admin .form-label-admin {
+        font-size: 11.5px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .card-admin .form-control,
+      .card-admin input.form-control,
+      .card-admin select.form-select {
+        min-height: 40px;
+        font-size: 12.5px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .card-admin textarea.form-control {
+        min-height: 85px;
+        font-size: 12.5px;
+      }
+      .card-editor-unit {
+        padding: 12px 14px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+      }
+      .card-unit-title-row {
+        gap: 6px;
+      }
+      .card-unit-title {
+        font-size: 16px;
+        line-height: 1.25;
+      }
+      .card-unit-actions {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 4px;
+      }
+      .card-vis-label {
+        font-size: 11px;
+      }
+      .card-move-group button {
+        min-width: 34px;
+        min-height: 34px;
+      }
+      .cms-image-field .cms-image-btn-row button {
+        min-height: 38px;
+        font-size: 11.5px;
+      }
+      .cms-image-path-group .input-group {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        max-width: 100%;
+      }
+      .cms-image-path-group .input-group input {
+        min-width: 0;
+        flex: 1;
+        font-size: 12px;
+      }
+      .serp-card {
+        padding: 12px;
+        border-radius: 10px;
+      }
+      .serp-title {
+        font-size: 15px;
+        line-height: 1.3;
+      }
+      .serp-url {
+        font-size: 11px;
+        line-height: 1.4;
+      }
+      .serp-desc {
+        font-size: 11.5px;
+        line-height: 1.45;
+      }
+      .bottom-save-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .bottom-save-card button {
+        width: 100%;
+        min-height: 42px;
+        font-size: 12.5px;
+        padding: 8px 12px;
+        white-space: normal;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .card-unit-title {
+        font-size: 15px;
+      }
+      #section-overview .card-head h2 {
+        font-size: 17px;
+      }
+      .page-top-actions .badge-admin,
+      .page-top-actions .btn-sm-admin {
+        font-size: 11px;
+        padding: 0 8px;
+      }
     }
   </style>
 </head>
@@ -115,7 +412,7 @@
             <span>Conditions</span><span class="sep">/</span>
             <span class="text-dark fw-semibold">Conditions Landing Hub</span>
           </nav>
-          <div class="d-flex align-items-center gap-2">
+          <div class="page-top-actions">
             <span class="badge-admin badge-published"><i class="bi bi-broadcast"></i> Live on Website</span>
             <a class="btn-btc-outline btn-sm-admin" href="../../../Frontend/conditions/index.html" target="_blank" rel="noopener">
               <i class="bi bi-box-arrow-up-right me-1"></i> Preview Live Frontend
@@ -361,7 +658,7 @@
         </div>
 
         <!-- Sticky Bottom Bar -->
-        <div class="d-flex justify-content-between align-items-center bg-white p-3 border rounded-3 shadow-sm">
+        <div class="bottom-save-card shadow-sm mb-4">
           <span class="text-muted small"><i class="bi bi-info-circle me-1"></i> Manage all condition cards and hub copy from this screen.</span>
           <button class="btn-btc" type="button" id="btn-save-all-bottom">
             <i class="bi bi-check2 me-1"></i> Save All Conditions Hub Content
@@ -519,6 +816,13 @@
         return el.value;
       }
 
+      function escapeHtml(str) {
+        if (!str) return "";
+        return String(str).replace(/[&<>"']/g, function (m) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m];
+        });
+      }
+
       function updateSerp() {
         var t = val("seo-title") || "Conditions - Be The Change Health and Wellness Center";
         var d = val("seo-desc") || "";
@@ -543,77 +847,91 @@
             ? window.BTCAdmin.resolveAdminImagePath(imgPath)
             : ("../../../Frontend/" + imgPath.replace(/^(\.\.\/)+/, ""));
 
-          unit.innerHTML =
-            '<div class="d-flex justify-content-between align-items-center mb-3">' +
-              '<div class="d-flex align-items-center gap-2">' +
-                '<span class="card-badge-num">' + (idx + 1) + '</span>' +
-                '<h4 class="h6 fw-bold mb-0 text-dark">' + (card.title || "Condition Card") + '</h4>' +
-                '<span class="badge bg-light text-dark border ms-2">' + (card.tag || "Condition") + '</span>' +
-              '</div>' +
-              '<div class="d-flex align-items-center gap-2">' +
-                '<label class="form-check form-switch mb-0">' +
-                  '<input class="form-check-input card-vis-check" type="checkbox"' + (card.visible !== false ? ' checked' : '') + '>' +
-                  '<small class="text-muted ms-1">Visible</small>' +
-                '</label>' +
-                '<button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-up" title="Move Up"><i class="bi bi-arrow-up"></i></button>' +
-                '<button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-down" title="Move Down"><i class="bi bi-arrow-down"></i></button>' +
-                '<button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 btn-remove-card" title="Delete Card"><i class="bi bi-trash"></i></button>' +
-              '</div>' +
-            '</div>' +
-            '<div class="row g-3">' +
-              '<div class="col-md-4">' +
-                '<div class="cms-image-field compact mb-0">' +
-                  '<label class="form-label-admin small">Condition Image</label>' +
-                  '<div class="cms-image-preview-box' + (imgPath ? ' has-image' : '') + '">' +
-                    '<img src="' + resolvedSrc + '" alt="" class="cms-image-preview-img card-img-preview">' +
-                    '<div class="cms-image-empty-state">' +
-                      '<i class="bi bi-image cms-image-empty-icon"></i>' +
-                      '<div class="cms-image-empty-title">No image</div>' +
-                      '<div class="cms-image-empty-subtitle">Upload or gallery</div>' +
-                    '</div>' +
-                    '<div class="cms-image-preview-actions">' +
-                      '<button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>' +
-                      '<button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>' +
-                    '</div>' +
-                  '</div>' +
-                  '<div class="cms-image-btn-row">' +
-                    '<button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>' +
-                    '<button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>' +
-                    '<input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">' +
-                  '</div>' +
-                  '<div class="cms-image-path-group">' +
-                    '<div class="input-group input-group-sm">' +
-                      '<span class="input-group-text"><i class="bi bi-link-45deg"></i></span>' +
-                      '<input type="text" class="form-control js-cms-img-input card-img-input" value="' + (card.image || '') + '" placeholder="Image path">' +
-                    '</div>' +
-                  '</div>' +
-                '</div>' +
-              '</div>' +
-              '<div class="col-md-8">' +
-                '<div class="row g-2">' +
-                  '<div class="col-md-6">' +
-                    '<label class="form-label-admin small">Condition Name / Title</label>' +
-                    '<input type="text" class="form-control form-control-sm card-title-input" value="' + (card.title || '').replace(/"/g, '&quot;') + '">' +
-                  '</div>' +
-                  '<div class="col-md-6">' +
-                    '<label class="form-label-admin small">Tag / Category</label>' +
-                    '<input type="text" class="form-control form-control-sm card-tag-input" value="' + (card.tag || 'Condition').replace(/"/g, '&quot;') + '">' +
-                  '</div>' +
-                  '<div class="col-md-6">' +
-                    '<label class="form-label-admin small">Button Text</label>' +
-                    '<input type="text" class="form-control form-control-sm card-more-input" value="' + (card.moreText || 'Learn More').replace(/"/g, '&quot;') + '">' +
-                  '</div>' +
-                  '<div class="col-md-6">' +
-                    '<label class="form-label-admin small">Page Link</label>' +
-                    '<input type="text" class="form-control form-control-sm card-link-input" value="' + (card.link || '').replace(/"/g, '&quot;') + '">' +
-                  '</div>' +
-                  '<div class="col-12">' +
-                    '<label class="form-label-admin small">Short Excerpt / Description</label>' +
-                    '<textarea class="form-control form-control-sm card-desc-input" rows="2">' + (card.desc || '') + '</textarea>' +
-                  '</div>' +
-                '</div>' +
-              '</div>' +
-            '</div>';
+          var cardTitle = escapeHtml(card.title || "Condition Card");
+          var cardTag = escapeHtml(card.tag || "Condition");
+          var cardMore = escapeHtml(card.moreText || "Learn More");
+          var cardLink = escapeHtml(card.link || "");
+          var cardDesc = escapeHtml(card.desc || "");
+          var cardImg = escapeHtml(imgPath);
+          var previewBoxClass = imgPath ? "cms-image-preview-box has-image" : "cms-image-preview-box";
+          var isChecked = card.visible !== false ? " checked" : "";
+
+          unit.innerHTML = `
+            <div class="card-unit-header">
+              <div class="card-unit-title-row">
+                <div class="card-unit-title-group">
+                  <span class="card-badge-num">${idx + 1}</span>
+                  <h4 class="card-unit-title mb-0 text-dark">${cardTitle}</h4>
+                  <span class="badge bg-light text-dark border d-none d-sm-inline-block">${cardTag}</span>
+                </div>
+                <div class="card-unit-actions">
+                  <span class="badge bg-light text-dark border d-inline-block d-sm-none">${cardTag}</span>
+                  <label class="form-check form-switch mb-0 card-vis-toggle">
+                    <input class="form-check-input card-vis-check" type="checkbox"${isChecked}>
+                    <span class="card-vis-label">Visible</span>
+                  </label>
+                  <div class="btn-group btn-group-sm card-move-group">
+                    <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-up" title="Move Up"><i class="bi bi-arrow-up"></i></button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-down" title="Move Down"><i class="bi bi-arrow-down"></i></button>
+                    <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 btn-remove-card" title="Delete Card"><i class="bi bi-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="cms-image-field compact mb-0">
+                  <label class="form-label-admin small">Condition Image</label>
+                  <div class="${previewBoxClass}">
+                    <img src="${resolvedSrc}" alt="" class="cms-image-preview-img card-img-preview">
+                    <div class="cms-image-empty-state">
+                      <i class="bi bi-image cms-image-empty-icon"></i>
+                      <div class="cms-image-empty-title">No image</div>
+                      <div class="cms-image-empty-subtitle">Upload or gallery</div>
+                    </div>
+                    <div class="cms-image-preview-actions">
+                      <button type="button" class="btn-action btn-change js-cms-img-change"><i class="bi bi-arrow-repeat"></i> Change</button>
+                      <button type="button" class="btn-action btn-remove js-cms-img-remove"><i class="bi bi-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div class="cms-image-btn-row">
+                    <button type="button" class="btn btn-btc-outline js-cms-img-upload-btn"><i class="bi bi-upload me-1"></i> Upload</button>
+                    <button type="button" class="btn btn-btc-outline js-cms-img-gallery-btn"><i class="bi bi-images me-1"></i> Gallery</button>
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/*" class="d-none js-cms-img-file-input">
+                  </div>
+                  <div class="cms-image-path-group">
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                      <input type="text" class="form-control js-cms-img-input card-img-input" value="${cardImg}" placeholder="Image path">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="row g-2">
+                  <div class="col-md-6">
+                    <label class="form-label-admin small">Condition Name / Title</label>
+                    <input type="text" class="form-control form-control-sm card-title-input" value="${cardTitle}">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label-admin small">Tag / Category</label>
+                    <input type="text" class="form-control form-control-sm card-tag-input" value="${cardTag}">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label-admin small">Button Text</label>
+                    <input type="text" class="form-control form-control-sm card-more-input" value="${cardMore}">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label-admin small">Page Link</label>
+                    <input type="text" class="form-control form-control-sm card-link-input" value="${cardLink}">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label-admin small">Short Excerpt / Description</label>
+                    <textarea class="form-control form-control-sm card-desc-input" rows="2">${cardDesc}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>`;
 
           // Event handlers
           unit.querySelector(".btn-remove-card").addEventListener("click", function () {
