@@ -160,6 +160,7 @@
     { type: "link", id: "services", label: "Services", href: PAGES + "services/services.html", icon: "bi-heart-pulse" },
     { type: "link", id: "conditions", label: "Conditions", href: PAGES + "conditions/conditions.html", icon: "bi-clipboard2-pulse" },
     { type: "link", id: "blog", label: "Blog", href: PAGES + "blog/blog.html", icon: "bi-journal-richtext" },
+    { type: "link", id: "notifications", label: "Notifications", href: PAGES + "notifications/notifications.html", icon: "bi-bell" },
     { type: "label", label: "Site" },
     { type: "link", id: "media", label: "Media Library", href: PAGES + "media.html", icon: "bi-images" },
     { type: "link", id: "seo", label: "SEO Settings", href: PAGES + "seo.html", icon: "bi-search" },
@@ -217,6 +218,7 @@
     services: ["Care Operations", "Services"],
     conditions: ["Care Operations", "Conditions"],
     blog: ["Care Operations", "Blog Articles"],
+    notifications: ["Care Operations", "Notifications"],
     media: ["Site", "Media Library"],
     "header-footer": ["Website Pages", "Header & Footer"],
     seo: ["Site", "SEO Settings"],
@@ -241,6 +243,7 @@
     if (id === "contact" && (PAGE === "contact" || PAGE === "contact-preview")) return true;
     if (id === "inquiries" && (PAGE === "inquiries" || PAGE === "inquiry-detail")) return true;
     if (id === "memberships" && (PAGE === "memberships" || PAGE === "membership-edit" || PAGE === "membership-preview")) return true;
+    if (id === "notifications" && PAGE === "notifications") return true;
     if (id === "membership-content" && PAGE === "membership-content") return true;
     if (id === "blog-content" && PAGE === "blog-content") return true;
     if (id === "patients-content" && PAGE === "patients-content") return true;
@@ -373,36 +376,9 @@
       '<button class="notification-mark-read-btn" type="button" id="markAllReadBtn" title="Mark all as read">Mark all read</button>' +
       "</div>" +
       '<div class="notification-list" id="notificationList">' +
-      '<a class="notification-item unread" href="' + PAGES + 'appointments/appointments.html">' +
-      '<div class="notification-item-icon bg-pending"><i class="bi bi-calendar2-plus"></i></div>' +
-      '<div class="notification-item-content">' +
-      '<div class="notification-item-title">New appointment request</div>' +
-      '<div class="notification-item-desc">Elle Adams requested an appointment</div>' +
-      '<div class="notification-item-time"><i class="bi bi-clock me-1"></i>5 minutes ago</div>' +
-      "</div>" +
-      '<span class="notification-unread-dot"></span>' +
-      "</a>" +
-      '<a class="notification-item unread" href="' + PAGES + 'appointments/appointments.html">' +
-      '<div class="notification-item-icon bg-confirmed"><i class="bi bi-check-circle"></i></div>' +
-      '<div class="notification-item-content">' +
-      '<div class="notification-item-title">Appointment confirmed</div>' +
-      '<div class="notification-item-desc">Marcus Vance\'s appointment was confirmed</div>' +
-      '<div class="notification-item-time"><i class="bi bi-clock me-1"></i>20 minutes ago</div>' +
-      "</div>" +
-      '<span class="notification-unread-dot"></span>' +
-      "</a>" +
-      '<a class="notification-item unread" href="' + PAGES + 'appointments/appointments.html">' +
-      '<div class="notification-item-icon bg-conflict"><i class="bi bi-exclamation-triangle"></i></div>' +
-      '<div class="notification-item-content">' +
-      '<div class="notification-item-title">Schedule conflict</div>' +
-      '<div class="notification-item-desc">Conflict detected in today\'s schedule</div>' +
-      '<div class="notification-item-time"><i class="bi bi-clock me-1"></i>1 hour ago</div>' +
-      "</div>" +
-      '<span class="notification-unread-dot"></span>' +
-      "</a>" +
       "</div>" +
       '<div class="notification-panel-footer">' +
-      '<a href="' + PAGES + 'appointments/appointments.html" class="notification-view-all">View all notifications <i class="bi bi-arrow-right ms-1"></i></a>' +
+      '<a href="' + PAGES + 'notifications/notifications.html" class="notification-view-all">View all notifications <i class="bi bi-arrow-right ms-1"></i></a>' +
       "</div>" +
       "</div>" +
       "</div>" +
@@ -457,16 +433,377 @@
     });
   }
 
+  // ==========================================
+  // SHARED NOTIFICATIONS SYSTEM (localStorage)
+  // ==========================================
+  var NOTIF_STORAGE_KEY = "adminNotifications";
+
+  var DEFAULT_NOTIFS = [
+    {
+      id: "notif-1",
+      type: "Appointment",
+      title: "New appointment request",
+      description: "Elle Adams requested an appointment",
+      time: "5 minutes ago",
+      timestamp: "2026-09-30T15:03:00.000Z",
+      status: "Unread",
+      read: false,
+      patient: "Elle Adams",
+      appointment: "Initial Consultation",
+      date: "September 30, 2026",
+      appointmentTime: "10:00 AM",
+      provider: "Sultana Afrooz, D.O.",
+      link: PAGES + "appointments/appointments.html"
+    },
+    {
+      id: "notif-2",
+      type: "Appointment",
+      title: "Appointment confirmed",
+      description: "Marcus Vance's appointment was confirmed",
+      time: "20 minutes ago",
+      timestamp: "2026-09-30T14:48:00.000Z",
+      status: "Unread",
+      read: false,
+      patient: "Marcus Vance",
+      appointment: "Follow-up Consultation",
+      date: "September 30, 2026",
+      appointmentTime: "11:30 AM",
+      provider: "Jessica Needle, N.D.",
+      link: PAGES + "appointments/appointments.html"
+    },
+    {
+      id: "notif-3",
+      type: "Schedule",
+      title: "Schedule conflict",
+      description: "Conflict detected in today's schedule",
+      time: "1 hour ago",
+      timestamp: "2026-09-30T14:00:00.000Z",
+      status: "Unread",
+      read: false,
+      patient: "Dr. Sultana / Dr. Jessica",
+      appointment: "Overlapping Treatment Suite 2",
+      date: "September 30, 2026",
+      appointmentTime: "02:00 PM",
+      provider: "Clinic Facility Manager",
+      link: PAGES + "appointments/appointments.html"
+    },
+    {
+      id: "notif-4",
+      type: "Patient",
+      title: "Patient profile updated",
+      description: "Sophia Davis updated medical history and insurance info",
+      time: "2 hours ago",
+      timestamp: "2026-09-30T13:00:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "Sophia Davis",
+      appointment: "Annual Wellness Check",
+      date: "September 29, 2026",
+      appointmentTime: "09:15 AM",
+      provider: "Sultana Afrooz, D.O.",
+      link: PAGES + "patients/patients-content.html"
+    },
+    {
+      id: "notif-5",
+      type: "Appointment",
+      title: "Appointment reschedule requested",
+      description: "Liam Johnson requested to reschedule visit to Oct 3",
+      time: "3 hours ago",
+      timestamp: "2026-09-30T12:00:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "Liam Johnson",
+      appointment: "Hyperbaric Oxygen Therapy",
+      date: "October 03, 2026",
+      appointmentTime: "03:00 PM",
+      provider: "Jessica Needle, N.D.",
+      link: PAGES + "appointments/appointments.html"
+    },
+    {
+      id: "notif-6",
+      type: "Patient",
+      title: "New patient registration",
+      description: "Emily Martinez registered new account via portal",
+      time: "5 hours ago",
+      timestamp: "2026-09-30T10:00:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "Emily Martinez",
+      appointment: "Intake Questionnaire Pending",
+      date: "September 28, 2026",
+      appointmentTime: "04:30 PM",
+      provider: "Sultana Afrooz, D.O.",
+      link: PAGES + "patients/patients-content.html"
+    },
+    {
+      id: "notif-7",
+      type: "Payment",
+      title: "Payment confirmation",
+      description: "Payment of $245.00 received for Invoice #INV-8842",
+      time: "Yesterday",
+      timestamp: "2026-09-29T16:20:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "David Miller",
+      appointment: "Constitutional Hydrotherapy",
+      date: "September 27, 2026",
+      appointmentTime: "01:00 PM",
+      provider: "Practice Billing",
+      link: PAGES + "appointments/appointments.html"
+    },
+    {
+      id: "notif-8",
+      type: "Reminder",
+      title: "Appointment reminder",
+      description: "Automated SMS/Email reminders sent to 6 patients for tomorrow",
+      time: "Yesterday",
+      timestamp: "2026-09-29T08:00:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "Multiple Patients (6)",
+      appointment: "Daily Clinic Schedule",
+      date: "September 27, 2026",
+      appointmentTime: "08:00 AM",
+      provider: "Automated Clinic Bot",
+      link: PAGES + "appointments/appointments.html"
+    },
+    {
+      id: "notif-9",
+      type: "System",
+      title: "System backup completed",
+      description: "Daily encrypted database backup completed successfully (2.4 GB)",
+      time: "2 days ago",
+      timestamp: "2026-09-28T03:00:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "N/A",
+      appointment: "System Maintenance",
+      date: "September 26, 2026",
+      appointmentTime: "03:00 AM",
+      provider: "System Infrastructure",
+      link: PAGES + "settings.html"
+    },
+    {
+      id: "notif-10",
+      type: "Inquiry",
+      title: "New inquiry received",
+      description: "General inquiry from Rachel Green regarding Ozone Therapy packages",
+      time: "3 days ago",
+      timestamp: "2026-09-27T11:45:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "Rachel Green",
+      appointment: "Prospective Patient Inquiry",
+      date: "September 25, 2026",
+      appointmentTime: "11:45 AM",
+      provider: "Care Coordinator",
+      link: PAGES + "inquiries/inquiries.html"
+    },
+    {
+      id: "notif-11",
+      type: "Patient",
+      title: "Membership renewal notice",
+      description: "James Wilson upgraded to Gold Wellness Membership",
+      time: "4 days ago",
+      timestamp: "2026-09-26T14:15:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "James Wilson",
+      appointment: "Membership Tier Upgrade",
+      date: "September 24, 2026",
+      appointmentTime: "02:15 PM",
+      provider: "Membership Desk",
+      link: PAGES + "memberships/memberships.html"
+    },
+    {
+      id: "notif-12",
+      type: "Patient",
+      title: "Lab results uploaded",
+      description: "New comprehensive metabolic panel results ready for review",
+      time: "5 days ago",
+      timestamp: "2026-09-25T10:30:00.000Z",
+      status: "Read",
+      read: true,
+      patient: "Olivia Bennett",
+      appointment: "Lab Review Session",
+      date: "September 23, 2026",
+      appointmentTime: "10:30 AM",
+      provider: "Sultana Afrooz, D.O.",
+      link: PAGES + "appointments/appointments.html"
+    }
+  ];
+
+  window.AdminNotifications = {
+    getAll: function () {
+      try {
+        var raw = localStorage.getItem(NOTIF_STORAGE_KEY);
+        if (!raw) {
+          localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(DEFAULT_NOTIFS));
+          return DEFAULT_NOTIFS.slice();
+        }
+        var parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(DEFAULT_NOTIFS));
+          return DEFAULT_NOTIFS.slice();
+        }
+        return parsed;
+      } catch (e) {
+        return DEFAULT_NOTIFS.slice();
+      }
+    },
+    save: function (list) {
+      try {
+        localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(list));
+      } catch (e) {}
+      window.dispatchEvent(new CustomEvent("admin-notifications-changed", { detail: { list: list } }));
+    },
+    getUnreadCount: function () {
+      var all = this.getAll();
+      return all.filter(function (n) { return !n.read; }).length;
+    },
+    markAsRead: function (id) {
+      var all = this.getAll();
+      all.forEach(function (n) {
+        if (n.id === id) {
+          n.read = true;
+          n.status = "Read";
+        }
+      });
+      this.save(all);
+    },
+    markAsUnread: function (id) {
+      var all = this.getAll();
+      all.forEach(function (n) {
+        if (n.id === id) {
+          n.read = false;
+          n.status = "Unread";
+        }
+      });
+      this.save(all);
+    },
+    markAllAsRead: function () {
+      var all = this.getAll();
+      all.forEach(function (n) {
+        n.read = true;
+        n.status = "Read";
+      });
+      this.save(all);
+    },
+    delete: function (id) {
+      var all = this.getAll();
+      var filtered = all.filter(function (n) { return n.id !== id; });
+      this.save(filtered);
+    },
+    clearRead: function () {
+      var all = this.getAll();
+      var remaining = all.filter(function (n) { return !n.read; });
+      this.save(remaining);
+    },
+    resetDefaults: function () {
+      this.save(DEFAULT_NOTIFS.slice());
+    }
+  };
+
+  function getNotifIconInfo(type) {
+    switch (type) {
+      case "Appointment":
+        return { icon: "bi-calendar-check", bgClass: "bg-confirmed" };
+      case "Schedule":
+        return { icon: "bi-calendar-event", bgClass: "bg-pending" };
+      case "System":
+        return { icon: "bi-gear", bgClass: "bg-system" };
+      case "Patient":
+        return { icon: "bi-person", bgClass: "bg-patient" };
+      case "Payment":
+        return { icon: "bi-credit-card", bgClass: "bg-payment" };
+      case "Reminder":
+        return { icon: "bi-bell", bgClass: "bg-reminder" };
+      case "Inquiry":
+        return { icon: "bi-envelope", bgClass: "bg-inquiry" };
+      default:
+        return { icon: "bi-bell", bgClass: "bg-confirmed" };
+    }
+  }
+
+  function renderTopbarDropdown() {
+    var badge = document.getElementById("notificationBadge");
+    var countPill = document.getElementById("notificationCountPill");
+    var list = document.getElementById("notificationList");
+    if (!list) return;
+
+    var notifs = window.AdminNotifications.getAll();
+    var unreadCount = notifs.filter(function (n) { return !n.read; }).length;
+
+    if (badge) {
+      if (unreadCount > 0) {
+        badge.textContent = unreadCount;
+        badge.classList.remove("hide");
+      } else {
+        badge.classList.add("hide");
+      }
+    }
+
+    if (countPill) {
+      countPill.textContent = unreadCount + " new";
+      if (unreadCount === 0) {
+        countPill.style.background = "#eef0f2";
+        countPill.style.color = "#666";
+      } else {
+        countPill.style.background = "";
+        countPill.style.color = "";
+      }
+    }
+
+    if (notifs.length === 0) {
+      list.innerHTML =
+        '<div class="notification-empty-state">' +
+        '<i class="bi bi-bell-slash"></i>' +
+        "<h6>No notifications</h6>" +
+        "<p>Your inbox is clear.</p>" +
+        "</div>";
+      return;
+    }
+
+    // Show latest preview notifications (first 5)
+    var previews = notifs.slice(0, 5);
+    var html = "";
+    previews.forEach(function (n) {
+      var iconInfo = getNotifIconInfo(n.type);
+      var unreadClass = n.read ? "" : " unread";
+      html +=
+        '<a class="notification-item' + unreadClass + '" href="' + (n.link || PAGES + 'notifications/notifications.html') + '" data-notif-id="' + n.id + '">' +
+        '<div class="notification-item-icon ' + iconInfo.bgClass + '"><i class="bi ' + iconInfo.icon + '"></i></div>' +
+        '<div class="notification-item-content">' +
+        '<div class="notification-item-title">' + n.title + '</div>' +
+        '<div class="notification-item-desc">' + n.description + '</div>' +
+        '<div class="notification-item-time"><i class="bi bi-clock me-1"></i>' + n.time + '</div>' +
+        '</div>' +
+        '<span class="notification-unread-dot"></span>' +
+        '</a>';
+    });
+
+    list.innerHTML = html;
+
+    // Clicking an item marks it as read
+    list.querySelectorAll(".notification-item").forEach(function (item) {
+      item.addEventListener("click", function () {
+        var id = item.getAttribute("data-notif-id");
+        if (id) {
+          window.AdminNotifications.markAsRead(id);
+        }
+      });
+    });
+  }
+
   function bindNotifications() {
     var bellBtn = document.getElementById("notificationBellBtn");
     var panel = document.getElementById("notificationPanel");
     var wrapper = document.getElementById("notificationWrapper");
     var markAllBtn = document.getElementById("markAllReadBtn");
-    var badge = document.getElementById("notificationBadge");
-    var countPill = document.getElementById("notificationCountPill");
-    var list = document.getElementById("notificationList");
 
     if (!bellBtn || !panel || !wrapper) return;
+
+    renderTopbarDropdown();
 
     bellBtn.addEventListener("click", function (e) {
       e.preventDefault();
@@ -483,18 +820,7 @@
       markAllBtn.addEventListener("click", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        var unreadItems = list ? list.querySelectorAll(".notification-item.unread") : [];
-        unreadItems.forEach(function (item) {
-          item.classList.remove("unread");
-        });
-        if (badge) {
-          badge.classList.add("hide");
-        }
-        if (countPill) {
-          countPill.textContent = "0 new";
-          countPill.style.background = "#eef0f2";
-          countPill.style.color = "#666";
-        }
+        window.AdminNotifications.markAllAsRead();
         if (typeof toast === "function") {
           toast("All notifications marked as read.", "success");
         }
@@ -513,7 +839,18 @@
       }
     });
 
+    window.addEventListener("admin-notifications-changed", function () {
+      renderTopbarDropdown();
+    });
+
+    window.addEventListener("storage", function (e) {
+      if (e.key === NOTIF_STORAGE_KEY) {
+        renderTopbarDropdown();
+      }
+    });
+
     function openNotifications() {
+      renderTopbarDropdown();
       panel.classList.add("show");
       bellBtn.classList.add("active");
       bellBtn.setAttribute("aria-expanded", "true");

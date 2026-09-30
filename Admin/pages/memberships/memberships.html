@@ -27,7 +27,7 @@
             <span>Care Operations</span><span class="sep">/</span>
             <span class="text-dark fw-semibold">Health &amp; Wellness Memberships</span>
           </nav>
-          <div class="d-flex align-items-center gap-2">
+          <div class="action-toolbar memberships-top-actions">
             <button class="btn btn-outline-secondary btn-sm-admin" type="button" id="btn-reset-defaults" title="Restore default 3 clinic membership tiers">
               <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Defaults
             </button>
@@ -44,7 +44,7 @@
         <div class="card-admin mb-4">
           <div class="card-body-admin py-2 px-3">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <div class="btn-group btn-group-sm" role="group">
+              <div class="btn-group btn-group-sm membership-tabs" role="group">
                 <a class="btn btn-secondary active fw-semibold" href="memberships.html">
                   <i class="bi bi-card-checklist me-1"></i> Membership Plans Directory
                 </a>
@@ -52,7 +52,7 @@
                   <i class="bi bi-layout-text-sidebar-reverse me-1"></i> Membership Page
                 </a>
               </div>
-              <div class="d-flex align-items-center gap-2">
+              <div class="d-flex flex-column align-items-start gap-1 membership-subbar-meta">
                 <span class="badge-admin badge-published"><i class="bi bi-broadcast me-1"></i>Care Operations</span>
                 <span class="text-muted small">Frontend · memberships.html</span>
               </div>
@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <div class="note-bar">
+        <div class="note-bar mb-3">
           <i class="bi bi-shield-check me-2"></i> This CMS is the source of truth for <strong>Frontend/memberships.html</strong>. Plans and content saved here dynamically update the patient-facing website in real time.
         </div>
 
@@ -171,12 +171,12 @@
 
         <!-- Introductory Policy Box Card -->
         <div class="card-admin">
-          <div class="card-head">
+          <div class="card-head policy-card-head">
             <div>
               <h3>Page Intro &amp; Requirement Policy Notice</h3>
               <p>Top announcement banner on memberships.html informing patients that membership enrollment is required.</p>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="policy-action-buttons">
               <a class="btn-btc-outline btn-sm-admin" href="membership-content.html">
                 <i class="bi bi-pencil me-1"></i> Edit Membership Page
               </a>
@@ -189,7 +189,7 @@
             <div class="row g-3">
               <div class="col-12">
                 <label class="form-label-admin" for="intro-policy-text">Introductory Policy Copy</label>
-                <textarea class="form-control" id="intro-policy-text" rows="3" placeholder="Enter patient notice text..."></textarea>
+                <textarea class="form-control policy-textarea" id="intro-policy-text" rows="3" placeholder="Enter patient notice text..."></textarea>
                 <p class="help mt-1 text-muted">Words like <strong>REQUIRED</strong> and <strong>ONE</strong> will be automatically emphasized in bold on the live website.</p>
               </div>
             </div>

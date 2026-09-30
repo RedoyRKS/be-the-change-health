@@ -500,6 +500,37 @@
     }
 
     @media (max-width: 576px) {
+      .table-conditions thead {
+        display: none !important;
+      }
+      .table-conditions,
+      .table-conditions tbody,
+      .table-conditions tr,
+      .table-conditions td {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .table-conditions tbody tr {
+        background: #ffffff !important;
+        border: 1px solid var(--cond-border) !important;
+        border-radius: 12px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 10px !important;
+        box-shadow: 0 1px 4px rgba(3, 46, 73, 0.04) !important;
+      }
+      .table-conditions td {
+        padding: 4px 0 !important;
+        border: none !important;
+      }
+      .table-conditions td:last-child {
+        padding-top: 8px !important;
+        margin-top: 8px !important;
+        border-top: 1px solid #f1f5f9 !important;
+      }
+      .table-conditions .actions-group {
+        justify-content: flex-end !important;
+      }
       .condition-upload-grid {
         grid-template-columns: 1fr;
         gap: 0.85rem;

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notification Management | Be The Change Admin</title>
+  <link rel="icon" href="../../../Frontend/assets/uploads/2025/02/fav.jpg" type="image/jpeg">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
+</head>
+<body data-page="notifications">
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="app-main">
+      <header class="topbar" id="topbar"></header>
+      <main class="content pb-5">
+
+        <!-- Top Breadcrumbs -->
+        <nav class="cms-crumb mb-3" aria-label="breadcrumb">
+          <a href="../../index.html">Dashboard</a><span class="sep">/</span>
+          <span>Care Operations</span><span class="sep">/</span>
+          <span class="text-dark fw-semibold">Notifications</span>
+        </nav>
+
+        <!-- Page Intro & Global Bulk Actions -->
+        <div class="notif-page-intro d-flex flex-wrap justify-content-between align-items-center gap-3">
+          <div>
+            <h2>Notifications</h2>
+            <p>Manage appointment requests, confirmations, schedule conflicts, system alerts, and other important clinic notifications.</p>
+          </div>
+          <div class="notif-intro-actions">
+            <button class="btn-btc btn-sm-admin" type="button" id="markAllAsReadBtn" aria-label="Mark all notifications as read">
+              <i class="bi bi-check2-all me-1"></i> Mark All as Read
+            </button>
+            <button class="btn-btc-outline btn-sm-admin" type="button" id="clearReadBtn" aria-label="Clear read notifications">
+              <i class="bi bi-trash3 me-1"></i> Clear Read Notifications
+            </button>
+          </div>
+        </div>
+
+        <!-- Notification Summary Metric Cards -->
+        <div class="stat-grid mb-4">
+          <div class="stat-card">
+            <div class="stat-icon warn"><i class="bi bi-bell-fill"></i></div>
+            <div>
+              <h4 id="statUnreadCount">3</h4>
+              <p>Unread</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon teal"><i class="bi bi-inbox-fill"></i></div>
+            <div>
+              <h4 id="statTotalCount">12</h4>
+              <p>All Notifications</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green"><i class="bi bi-calendar2-check-fill"></i></div>
+            <div>
+              <h4 id="statAppointmentsCount">8</h4>
+              <p>Appointments</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon navy"><i class="bi bi-shield-exclamation"></i></div>
+            <div>
+              <h4 id="statAlertsCount">4</h4>
+              <p>System Alerts</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notification Directory Card -->
+        <div class="notif-directory-card">
+          <div class="notif-directory-header">
+            <h3>
+              <i class="bi bi-bell text-muted"></i>
+              <span>All Notifications</span>
+              <span class="badge bg-light text-dark border ms-1 fw-normal" id="notifTotalBadge" style="font-size:0.75rem;">12</span>
+            </h3>
+            <div class="d-flex align-items-center gap-2">
+              <span class="text-muted small" id="activeFilterSummary">Showing all items</span>
+            </div>
+          </div>
+
+          <!-- Filter & Search Toolbar -->
+          <div class="notif-filter-toolbar">
+            <div class="notif-search-input">
+              <i class="bi bi-search"></i>
+              <input type="search" id="notifSearch" placeholder="Search notifications, patients, keywords..." aria-label="Search notifications">
+            </div>
+            <div>
+              <select class="notif-select form-select form-select-sm" id="typeFilter" aria-label="Filter by Type">
+                <option value="all">All Types</option>
+                <option value="Appointment">Appointment</option>
+                <option value="Schedule">Schedule</option>
+                <option value="System">System</option>
+                <option value="Patient">Patient</option>
+                <option value="Payment">Payment</option>
+                <option value="Reminder">Reminder</option>
+                <option value="Inquiry">Inquiry</option>
+              </select>
+            </div>
+            <div>
+              <select class="notif-select form-select form-select-sm" id="statusFilter" aria-label="Filter by Status">
+                <option value="all">All Status</option>
+                <option value="unread">Unread</option>
+                <option value="read">Read</option>
+              </select>
+            </div>
+            <div>
+              <select class="notif-select form-select form-select-sm" id="timeFilter" aria-label="Filter by Time">
+                <option value="all">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+            </div>
+            <div>
+              <button class="btn-btc-outline btn-sm-admin w-100" type="button" id="resetFiltersBtn">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Filters
+              </button>
+            </div>
+          </div>
+
+          <!-- Notifications List Container -->
+          <div class="notif-items-list" id="notifItemsList">
+            <!-- Dynamic Notification Rows injected here -->
+          </div>
+
+          <!-- Empty State (hidden by default) -->
+          <div class="notif-empty-box d-none" id="notifEmptyState">
+            <div class="notif-empty-icon">
+              <i class="bi bi-bell-slash"></i>
+            </div>
+            <h4>No notifications found</h4>
+            <p>There are no notifications matching your current search or filter criteria.</p>
+            <button class="btn-btc btn-sm-admin" type="button" id="emptyResetBtn">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Filters
+            </button>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="notif-pagination-bar" id="notifPaginationBar">
+            <div class="notif-pagination-info" id="notifPaginationInfo">
+              Showing 1–8 of 12 notifications
+            </div>
+            <div class="notif-pagination-controls" id="notifPaginationControls">
+              <!-- Dynamic page buttons -->
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Notification Details Modal -->
+  <div class="modal fade" id="notifDetailsModal" tabindex="-1" aria-labelledby="notifDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header border-bottom px-4 py-3">
+          <div class="d-flex align-items-center gap-2">
+            <div class="notif-icon-circle notif-icon-appointment" id="modalNotifIcon" style="width:36px;height:36px;min-width:36px;font-size:1rem;">
+              <i class="bi bi-bell"></i>
+            </div>
+            <h5 class="modal-title fs-6 fw-bold text-navy mb-0" id="notifDetailsModalLabel">Notification Details</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-4 py-3">
+          <div class="mb-3">
+            <div class="d-flex align-items-center justify-content-between mb-1">
+              <span class="notif-type-tag Appointment" id="modalNotifTypeBadge">Appointment</span>
+              <span class="notif-status-badge unread" id="modalNotifStatusBadge">
+                <span class="unread-dot"></span> Unread
+              </span>
+            </div>
+            <h6 class="fw-bold text-dark mt-2 mb-1" id="modalNotifTitle">New appointment request</h6>
+            <p class="text-muted small mb-0" id="modalNotifDesc">Elle Adams requested an appointment</p>
+          </div>
+
+          <div class="p-3 bg-light rounded-3 mb-2">
+            <div class="notif-detail-row">
+              <span class="notif-detail-label">Received:</span>
+              <span class="notif-detail-val" id="modalNotifTime">5 minutes ago</span>
+            </div>
+            <div class="notif-detail-row">
+              <span class="notif-detail-label">Patient:</span>
+              <span class="notif-detail-val" id="modalNotifPatient">Elle Adams</span>
+            </div>
+            <div class="notif-detail-row">
+              <span class="notif-detail-label">Appointment:</span>
+              <span class="notif-detail-val" id="modalNotifAppointment">Initial Consultation</span>
+            </div>
+            <div class="notif-detail-row">
+              <span class="notif-detail-label">Date &amp; Time:</span>
+              <span class="notif-detail-val" id="modalNotifDateTime">September 30, 2026 at 10:00 AM</span>
+            </div>
+            <div class="notif-detail-row">
+              <span class="notif-detail-label">Provider:</span>
+              <span class="notif-detail-val" id="modalNotifProvider">Sultana Afrooz, D.O.</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top px-4 py-3 d-flex justify-content-between">
+          <button type="button" class="btn-btc-outline btn-sm-admin" id="modalToggleReadBtn">
+            <i class="bi bi-check2 me-1"></i> Mark as Read
+          </button>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-secondary btn-sm-admin" data-bs-dismiss="modal">Close</button>
+            <a href="../appointments/appointments.html" class="btn-btc btn-sm-admin" id="modalActionLink">
+              <i class="bi bi-calendar-check me-1"></i> View Appointment
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal fade" id="deleteNotifModal" tabindex="-1" aria-labelledby="deleteNotifModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-body text-center p-4">
+          <div class="rounded-circle bg-danger bg-opacity-10 text-danger d-inline-flex align-items-center justify-content-center mb-3" style="width:52px;height:52px;font-size:1.5rem;">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+          <h5 class="fw-bold text-dark fs-6 mb-2" id="deleteNotifModalLabel">Delete this notification?</h5>
+          <p class="text-muted small mb-4">This action will permanently remove this notification from your inbox.</p>
+          <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn-btc-outline btn-sm-admin px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger btn-sm-admin px-3" id="confirmDeleteBtn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clear Read Confirmation Modal -->
+  <div class="modal fade" id="clearReadModal" tabindex="-1" aria-labelledby="clearReadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-body text-center p-4">
+          <div class="rounded-circle bg-warning bg-opacity-10 text-warning d-inline-flex align-items-center justify-content-center mb-3" style="width:52px;height:52px;font-size:1.5rem;">
+            <i class="bi bi-trash3"></i>
+          </div>
+          <h5 class="fw-bold text-dark fs-6 mb-2" id="clearReadModalLabel">Clear read notifications?</h5>
+          <p class="text-muted small mb-4">All notifications marked as read will be permanently removed.</p>
+          <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn-btc-outline btn-sm-admin px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger btn-sm-admin px-3" id="confirmClearReadBtn">Clear All Read</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/script.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var ITEMS_PER_PAGE = 8;
+      var currentPage = 1;
+      var activeNotifForModal = null;
+      var activeNotifIdToDelete = null;
+
+      var detailsModal = null;
+      var deleteModal = null;
+      var clearReadModal = null;
+
+      // DOM Elements
+      var notifItemsList = document.getElementById("notifItemsList");
+      var notifEmptyState = document.getElementById("notifEmptyState");
+      var notifPaginationBar = document.getElementById("notifPaginationBar");
+      var notifPaginationInfo = document.getElementById("notifPaginationInfo");
+      var notifPaginationControls = document.getElementById("notifPaginationControls");
+      var notifTotalBadge = document.getElementById("notifTotalBadge");
+      var activeFilterSummary = document.getElementById("activeFilterSummary");
+
+      // Stat Counters
+      var statUnreadCount = document.getElementById("statUnreadCount");
+      var statTotalCount = document.getElementById("statTotalCount");
+      var statAppointmentsCount = document.getElementById("statAppointmentsCount");
+      var statAlertsCount = document.getElementById("statAlertsCount");
+
+      // Filter Inputs
+      var searchInput = document.getElementById("notifSearch");
+      var typeFilter = document.getElementById("typeFilter");
+      var statusFilter = document.getElementById("statusFilter");
+      var timeFilter = document.getElementById("timeFilter");
+      var resetFiltersBtn = document.getElementById("resetFiltersBtn");
+      var emptyResetBtn = document.getElementById("emptyResetBtn");
+
+      // Bulk Action Buttons
+      var markAllAsReadBtn = document.getElementById("markAllAsReadBtn");
+      var clearReadBtn = document.getElementById("clearReadBtn");
+      var confirmClearReadBtn = document.getElementById("confirmClearReadBtn");
+      var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+      // Modal Elements
+      var modalNotifIcon = document.getElementById("modalNotifIcon");
+      var modalNotifTypeBadge = document.getElementById("modalNotifTypeBadge");
+      var modalNotifStatusBadge = document.getElementById("modalNotifStatusBadge");
+      var modalNotifTitle = document.getElementById("modalNotifTitle");
+      var modalNotifDesc = document.getElementById("modalNotifDesc");
+      var modalNotifTime = document.getElementById("modalNotifTime");
+      var modalNotifPatient = document.getElementById("modalNotifPatient");
+      var modalNotifAppointment = document.getElementById("modalNotifAppointment");
+      var modalNotifDateTime = document.getElementById("modalNotifDateTime");
+      var modalNotifProvider = document.getElementById("modalNotifProvider");
+      var modalToggleReadBtn = document.getElementById("modalToggleReadBtn");
+      var modalActionLink = document.getElementById("modalActionLink");
+
+      function getTypeIcon(type) {
+        switch (type) {
+          case "Appointment":
+            return { icon: "bi-calendar-check", cssClass: "notif-icon-appointment" };
+          case "Schedule":
+            return { icon: "bi-calendar-event", cssClass: "notif-icon-schedule" };
+          case "System":
+            return { icon: "bi-gear", cssClass: "notif-icon-system" };
+          case "Patient":
+            return { icon: "bi-person", cssClass: "notif-icon-patient" };
+          case "Payment":
+            return { icon: "bi-credit-card", cssClass: "notif-icon-payment" };
+          case "Reminder":
+            return { icon: "bi-bell", cssClass: "notif-icon-reminder" };
+          case "Inquiry":
+            return { icon: "bi-envelope", cssClass: "notif-icon-inquiry" };
+          default:
+            return { icon: "bi-bell", cssClass: "notif-icon-appointment" };
+        }
+      }
+
+      function updateStatCards(all) {
+        var unread = all.filter(function (n) { return !n.read; }).length;
+        var total = all.length;
+        var appointments = all.filter(function (n) {
+          return n.type === "Appointment" || n.type === "Schedule" || n.type === "Patient" || n.type === "Reminder";
+        }).length;
+        var alerts = all.filter(function (n) {
+          return n.type === "System" || n.type === "Payment" || n.type === "Inquiry";
+        }).length;
+
+        if (statUnreadCount) statUnreadCount.textContent = unread;
+        if (statTotalCount) statTotalCount.textContent = total;
+        if (statAppointmentsCount) statAppointmentsCount.textContent = appointments;
+        if (statAlertsCount) statAlertsCount.textContent = alerts;
+        if (notifTotalBadge) notifTotalBadge.textContent = total;
+      }
+
+      function matchesTimeFilter(timestamp, filterValue) {
+        if (filterValue === "all") return true;
+        if (!timestamp) return true;
+        var date = new Date(timestamp);
+        var now = new Date("2026-09-30T15:08:57Z"); // Reference clinic date
+        var diffMs = now - date;
+        var diffDays = diffMs / (1000 * 60 * 60 * 24);
+
+        if (filterValue === "today") {
+          return diffDays <= 1;
+        } else if (filterValue === "week") {
+          return diffDays <= 7;
+        } else if (filterValue === "month") {
+          return diffDays <= 30;
+        }
+        return true;
+      }
+
+      function getFilteredNotifications() {
+        var all = window.AdminNotifications.getAll();
+        updateStatCards(all);
+
+        var query = (searchInput.value || "").trim().toLowerCase();
+        var typeVal = typeFilter.value;
+        var statusVal = statusFilter.value;
+        var timeVal = timeFilter.value;
+
+        return all.filter(function (n) {
+          // Query check
+          if (query) {
+            var matchTitle = (n.title || "").toLowerCase().indexOf(query) !== -1;
+            var matchDesc = (n.description || "").toLowerCase().indexOf(query) !== -1;
+            var matchPatient = (n.patient || "").toLowerCase().indexOf(query) !== -1;
+            var matchType = (n.type || "").toLowerCase().indexOf(query) !== -1;
+            var matchAppt = (n.appointment || "").toLowerCase().indexOf(query) !== -1;
+            if (!matchTitle && !matchDesc && !matchPatient && !matchType && !matchAppt) {
+              return false;
+            }
+          }
+
+          // Type check
+          if (typeVal !== "all" && n.type !== typeVal) {
+            return false;
+          }
+
+          // Status check
+          if (statusVal === "unread" && n.read) return false;
+          if (statusVal === "read" && !n.read) return false;
+
+          // Time check
+          if (!matchesTimeFilter(n.timestamp, timeVal)) {
+            return false;
+          }
+
+          return true;
+        });
+      }
+
+      function renderNotifications() {
+        var filtered = getFilteredNotifications();
+        var total = filtered.length;
+
+        // Active filter summary text
+        var activeFilters = [];
+        if (searchInput.value.trim()) activeFilters.push('Search: "' + searchInput.value.trim() + '"');
+        if (typeFilter.value !== "all") activeFilters.push('Type: ' + typeFilter.value);
+        if (statusFilter.value !== "all") activeFilters.push('Status: ' + (statusFilter.value === "unread" ? "Unread" : "Read"));
+        if (timeFilter.value !== "all") activeFilters.push('Time: ' + timeFilter.options[timeFilter.selectedIndex].text);
+
+        if (activeFilters.length > 0) {
+          activeFilterSummary.textContent = "Filtered: " + activeFilters.join(" · ") + " (" + total + " found)";
+        } else {
+          activeFilterSummary.textContent = "Showing all " + total + " notifications";
+        }
+
+        if (total === 0) {
+          notifItemsList.innerHTML = "";
+          notifEmptyState.classList.remove("d-none");
+          notifPaginationBar.classList.add("d-none");
+          return;
+        }
+
+        notifEmptyState.classList.add("d-none");
+        notifPaginationBar.classList.remove("d-none");
+
+        // Calculate pagination
+        var totalPages = Math.ceil(total / ITEMS_PER_PAGE) || 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        var startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+        var endIdx = Math.min(startIdx + ITEMS_PER_PAGE, total);
+        var pageItems = filtered.slice(startIdx, endIdx);
+
+        // Render notification rows
+        var html = "";
+        pageItems.forEach(function (item) {
+          var iconInfo = getTypeIcon(item.type);
+          var unreadClass = item.read ? "" : " unread";
+          var statusBadge = item.read
+            ? '<span class="notif-status-badge read"><i class="bi bi-check2"></i> Read</span>'
+            : '<span class="notif-status-badge unread"><span class="unread-dot"></span> Unread</span>';
+          var toggleReadText = item.read
+            ? '<i class="bi bi-envelope"></i> Mark as Unread'
+            : '<i class="bi bi-check2"></i> Mark as Read';
+
+          var patientMeta = (item.patient && item.patient !== "N/A")
+            ? '<span class="notif-meta-sep">•</span><span><i class="bi bi-person"></i> ' + item.patient + '</span>'
+            : '';
+
+          html +=
+            '<div class="notif-card-row' + unreadClass + '" data-id="' + item.id + '" role="button" tabindex="0" aria-label="' + item.title + '">' +
+              '<div class="notif-card-left">' +
+                '<div class="notif-icon-circle ' + iconInfo.cssClass + '" aria-hidden="true">' +
+                  '<i class="bi ' + iconInfo.icon + '"></i>' +
+                '</div>' +
+                '<div class="notif-card-body">' +
+                  '<div class="notif-title-row">' +
+                    '<h4 class="notif-card-title">' + item.title + '</h4>' +
+                    '<span class="notif-type-tag ' + item.type + '">' + item.type + '</span>' +
+                  '</div>' +
+                  '<div class="notif-card-desc">' + item.description + '</div>' +
+                  '<div class="notif-card-meta">' +
+                    '<span><i class="bi bi-clock"></i> ' + item.time + '</span>' +
+                    patientMeta +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="notif-card-right">' +
+                statusBadge +
+                '<button type="button" class="notif-action-btn toggle-read-btn" data-id="' + item.id + '" aria-label="' + (item.read ? "Mark as unread" : "Mark as read") + '">' +
+                  toggleReadText +
+                '</button>' +
+                '<button type="button" class="notif-action-btn view-btn view-details-btn" data-id="' + item.id + '" aria-label="View details">' +
+                  '<i class="bi bi-eye"></i> View' +
+                '</button>' +
+                '<button type="button" class="notif-action-btn delete-btn delete-single-btn" data-id="' + item.id + '" aria-label="Delete notification" title="Delete notification">' +
+                  '<i class="bi bi-trash"></i>' +
+                '</button>' +
+              '</div>' +
+            '</div>';
+        });
+
+        notifItemsList.innerHTML = html;
+
+        // Render Pagination Info & Controls
+        notifPaginationInfo.textContent = "Showing " + (startIdx + 1) + "–" + endIdx + " of " + total + " notifications";
+
+        var paginationHtml = "";
+        paginationHtml += '<button class="notif-page-btn" id="prevPageBtn" ' + (currentPage === 1 ? 'disabled' : '') + ' aria-label="Previous page"><i class="bi bi-chevron-left"></i></button>';
+        for (var p = 1; p <= totalPages; p++) {
+          paginationHtml += '<button class="notif-page-btn ' + (p === currentPage ? 'active' : '') + '" data-page="' + p + '" aria-label="Page ' + p + '">' + p + '</button>';
+        }
+        paginationHtml += '<button class="notif-page-btn" id="nextPageBtn" ' + (currentPage === totalPages ? 'disabled' : '') + ' aria-label="Next page"><i class="bi bi-chevron-right"></i></button>';
+        notifPaginationControls.innerHTML = paginationHtml;
+
+        bindRowEvents();
+      }
+
+      function bindRowEvents() {
+        // Clicking row opens details modal (unless clicking an action button)
+        notifItemsList.querySelectorAll(".notif-card-row").forEach(function (row) {
+          row.addEventListener("click", function (e) {
+            if (e.target.closest("button") || e.target.closest("a")) return;
+            var id = row.getAttribute("data-id");
+            openDetailsModal(id);
+          });
+          row.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              if (e.target.closest("button") || e.target.closest("a")) return;
+              e.preventDefault();
+              var id = row.getAttribute("data-id");
+              openDetailsModal(id);
+            }
+          });
+        });
+
+        // Toggle Read / Unread button
+        notifItemsList.querySelectorAll(".toggle-read-btn").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute("data-id");
+            var item = window.AdminNotifications.getAll().find(function (n) { return n.id === id; });
+            if (item) {
+              if (item.read) {
+                window.AdminNotifications.markAsUnread(id);
+              } else {
+                window.AdminNotifications.markAsRead(id);
+              }
+              renderNotifications();
+            }
+          });
+        });
+
+        // View Details button
+        notifItemsList.querySelectorAll(".view-details-btn").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute("data-id");
+            openDetailsModal(id);
+          });
+        });
+
+        // Delete Single button
+        notifItemsList.querySelectorAll(".delete-single-btn").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute("data-id");
+            activeNotifIdToDelete = id;
+            if (!deleteModal) {
+              deleteModal = new bootstrap.Modal(document.getElementById("deleteNotifModal"));
+            }
+            deleteModal.show();
+          });
+        });
+
+        // Pagination buttons
+        notifPaginationControls.querySelectorAll(".notif-page-btn[data-page]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            currentPage = parseInt(btn.getAttribute("data-page"), 10);
+            renderNotifications();
+          });
+        });
+
+        var prevBtn = document.getElementById("prevPageBtn");
+        if (prevBtn) {
+          prevBtn.addEventListener("click", function () {
+            if (currentPage > 1) {
+              currentPage--;
+              renderNotifications();
+            }
+          });
+        }
+
+        var nextBtn = document.getElementById("nextPageBtn");
+        if (nextBtn) {
+          nextBtn.addEventListener("click", function () {
+            var filtered = getFilteredNotifications();
+            var totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (currentPage < totalPages) {
+              currentPage++;
+              renderNotifications();
+            }
+          });
+        }
+      }
+
+      function openDetailsModal(id) {
+        var all = window.AdminNotifications.getAll();
+        var item = all.find(function (n) { return n.id === id; });
+        if (!item) return;
+
+        activeNotifForModal = item;
+        var iconInfo = getTypeIcon(item.type);
+
+        modalNotifIcon.className = "notif-icon-circle " + iconInfo.cssClass;
+        modalNotifIcon.innerHTML = '<i class="bi ' + iconInfo.icon + '"></i>';
+
+        modalNotifTypeBadge.className = "notif-type-tag " + item.type;
+        modalNotifTypeBadge.textContent = item.type;
+
+        if (item.read) {
+          modalNotifStatusBadge.className = "notif-status-badge read";
+          modalNotifStatusBadge.innerHTML = '<i class="bi bi-check2"></i> Read';
+          modalToggleReadBtn.innerHTML = '<i class="bi bi-envelope me-1"></i> Mark as Unread';
+        } else {
+          modalNotifStatusBadge.className = "notif-status-badge unread";
+          modalNotifStatusBadge.innerHTML = '<span class="unread-dot"></span> Unread';
+          modalToggleReadBtn.innerHTML = '<i class="bi bi-check2 me-1"></i> Mark as Read';
+        }
+
+        modalNotifTitle.textContent = item.title;
+        modalNotifDesc.textContent = item.description;
+        modalNotifTime.textContent = item.time;
+        modalNotifPatient.textContent = item.patient || "N/A";
+        modalNotifAppointment.textContent = item.appointment || "General Notification";
+        modalNotifDateTime.textContent = (item.date || "September 30, 2026") + (item.appointmentTime ? " at " + item.appointmentTime : "");
+        modalNotifProvider.textContent = item.provider || "Be The Change Practice Admin";
+
+        if (item.link) {
+          modalActionLink.href = item.link;
+          modalActionLink.style.display = "inline-flex";
+          if (item.type === "Inquiry") {
+            modalActionLink.innerHTML = '<i class="bi bi-envelope-open me-1"></i> View Inquiry';
+          } else if (item.type === "System") {
+            modalActionLink.innerHTML = '<i class="bi bi-gear me-1"></i> View Settings';
+          } else if (item.type === "Patient" && item.link.indexOf("memberships") !== -1) {
+            modalActionLink.innerHTML = '<i class="bi bi-card-checklist me-1"></i> View Membership';
+          } else {
+            modalActionLink.innerHTML = '<i class="bi bi-calendar-check me-1"></i> View Appointment';
+          }
+        } else {
+          modalActionLink.style.display = "none";
+        }
+
+        // Auto mark as read on opening details if currently unread
+        if (!item.read) {
+          window.AdminNotifications.markAsRead(item.id);
+          renderNotifications();
+        }
+
+        if (!detailsModal) {
+          detailsModal = new bootstrap.Modal(document.getElementById("notifDetailsModal"));
+        }
+        detailsModal.show();
+      }
+
+      // Modal toggle read/unread button
+      modalToggleReadBtn.addEventListener("click", function () {
+        if (!activeNotifForModal) return;
+        var all = window.AdminNotifications.getAll();
+        var current = all.find(function (n) { return n.id === activeNotifForModal.id; });
+        if (current) {
+          if (current.read) {
+            window.AdminNotifications.markAsUnread(current.id);
+            modalNotifStatusBadge.className = "notif-status-badge unread";
+            modalNotifStatusBadge.innerHTML = '<span class="unread-dot"></span> Unread';
+            modalToggleReadBtn.innerHTML = '<i class="bi bi-check2 me-1"></i> Mark as Read';
+          } else {
+            window.AdminNotifications.markAsRead(current.id);
+            modalNotifStatusBadge.className = "notif-status-badge read";
+            modalNotifStatusBadge.innerHTML = '<i class="bi bi-check2"></i> Read';
+            modalToggleReadBtn.innerHTML = '<i class="bi bi-envelope me-1"></i> Mark as Unread';
+          }
+          renderNotifications();
+        }
+      });
+
+      // Confirm Delete single notification
+      confirmDeleteBtn.addEventListener("click", function () {
+        if (activeNotifIdToDelete) {
+          window.AdminNotifications.delete(activeNotifIdToDelete);
+          activeNotifIdToDelete = null;
+          if (deleteModal) deleteModal.hide();
+          renderNotifications();
+          if (typeof toast === "function") {
+            toast("Notification removed.", "success");
+          }
+        }
+      });
+
+      // Mark All As Read
+      markAllAsReadBtn.addEventListener("click", function () {
+        window.AdminNotifications.markAllAsRead();
+        renderNotifications();
+        if (typeof toast === "function") {
+          toast("All notifications marked as read.", "success");
+        }
+      });
+
+      // Clear Read Notifications Button (shows modal)
+      clearReadBtn.addEventListener("click", function () {
+        var readItems = window.AdminNotifications.getAll().filter(function (n) { return n.read; });
+        if (readItems.length === 0) {
+          if (typeof toast === "function") {
+            toast("No read notifications to clear.", "info");
+          }
+          return;
+        }
+        if (!clearReadModal) {
+          clearReadModal = new bootstrap.Modal(document.getElementById("clearReadModal"));
+        }
+        clearReadModal.show();
+      });
+
+      // Confirm Clear Read
+      confirmClearReadBtn.addEventListener("click", function () {
+        window.AdminNotifications.clearRead();
+        if (clearReadModal) clearReadModal.hide();
+        renderNotifications();
+        if (typeof toast === "function") {
+          toast("Read notifications cleared.", "success");
+        }
+      });
+
+      // Filter change events
+      searchInput.addEventListener("input", function () {
+        currentPage = 1;
+        renderNotifications();
+      });
+
+      typeFilter.addEventListener("change", function () {
+        currentPage = 1;
+        renderNotifications();
+      });
+
+      statusFilter.addEventListener("change", function () {
+        currentPage = 1;
+        renderNotifications();
+      });
+
+      timeFilter.addEventListener("change", function () {
+        currentPage = 1;
+        renderNotifications();
+      });
+
+      function resetFilters() {
+        searchInput.value = "";
+        typeFilter.value = "all";
+        statusFilter.value = "all";
+        timeFilter.value = "all";
+        currentPage = 1;
+        renderNotifications();
+      }
+
+      resetFiltersBtn.addEventListener("click", resetFilters);
+      emptyResetBtn.addEventListener("click", resetFilters);
+
+      // Listen for changes from other tabs or topbar
+      window.addEventListener("admin-notifications-changed", function () {
+        renderNotifications();
+      });
+
+      // Initial render
+      renderNotifications();
+
+    })();
+  </script>
+</body>
+</html>

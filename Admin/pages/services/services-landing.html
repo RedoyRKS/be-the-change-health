@@ -115,7 +115,7 @@
             <span>Services</span><span class="sep">/</span>
             <span class="text-dark fw-semibold">Services Landing Hub</span>
           </nav>
-          <div class="d-flex align-items-center gap-2">
+          <div class="action-toolbar services-top-actions">
             <span class="badge-admin badge-published"><i class="bi bi-broadcast"></i> Live on Website</span>
             <a class="btn-btc-outline btn-sm-admin" href="../../../Frontend/services/index.html" target="_blank" rel="noopener">
               <i class="bi bi-box-arrow-up-right me-1"></i> Preview Live Frontend
@@ -259,7 +259,7 @@
               <h2>Service Cards Grid (11 Services Repeater)</h2>
               <p>Add, edit, reorder, or toggle visibility for all clinical services displayed on the public landing page.</p>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 section-cards-actions">
               <button class="btn-btc-outline btn-sm-admin" type="button" id="btn-add-service-card">
                 <i class="bi bi-plus-lg me-1"></i> Add Service Card
               </button>
@@ -571,20 +571,25 @@
             : ("../../../Frontend/" + imgPath.replace(/^(\.\.\/)+/, ""));
 
           unit.innerHTML =
-            '<div class="d-flex justify-content-between align-items-center mb-3">' +
-              '<div class="d-flex align-items-center gap-2">' +
-                '<span class="card-badge-num">' + (idx + 1) + '</span>' +
-                '<h4 class="h6 fw-bold mb-0 text-dark">' + (card.title || "Service Card") + '</h4>' +
-                '<span class="badge bg-light text-dark border ms-2">' + (card.tag || "Therapy") + '</span>' +
+            '<div class="service-card-header mb-3">' +
+              '<div class="service-card-title-row">' +
+                '<span class="card-badge-num service-index">' + (idx + 1) + '</span>' +
+                '<h4 class="h6 fw-bold mb-0 text-dark service-title">' + (card.title || "Service Card") + '</h4>' +
+                '<span class="badge bg-light text-dark border service-tag d-none d-sm-inline-block">' + (card.tag || "Therapy") + '</span>' +
               '</div>' +
-              '<div class="d-flex align-items-center gap-2">' +
-                '<label class="form-check form-switch mb-0">' +
-                  '<input class="form-check-input card-vis-check" type="checkbox"' + (card.visible !== false ? ' checked' : '') + '>' +
-                  '<small class="text-muted ms-1">Visible</small>' +
-                '</label>' +
-                '<button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-up" title="Move Up"><i class="bi bi-arrow-up"></i></button>' +
-                '<button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-down" title="Move Down"><i class="bi bi-arrow-down"></i></button>' +
-                '<button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 btn-remove-card" title="Delete Card"><i class="bi bi-trash"></i></button>' +
+              '<div class="service-card-actions">' +
+                '<div class="service-meta-group">' +
+                  '<span class="badge bg-light text-dark border service-tag d-sm-none">' + (card.tag || "Therapy") + '</span>' +
+                  '<label class="form-check form-switch mb-0 service-vis-label">' +
+                    '<input class="form-check-input card-vis-check" type="checkbox"' + (card.visible !== false ? ' checked' : '') + '>' +
+                    '<small class="text-muted ms-1">Visible</small>' +
+                  '</label>' +
+                '</div>' +
+                '<div class="service-btn-group">' +
+                  '<button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-up" title="Move Up"><i class="bi bi-arrow-up"></i></button>' +
+                  '<button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2 btn-move-down" title="Move Down"><i class="bi bi-arrow-down"></i></button>' +
+                  '<button type="button" class="btn btn-outline-danger btn-sm py-0 px-2 btn-remove-card" title="Delete Card"><i class="bi bi-trash"></i></button>' +
+                '</div>' +
               '</div>' +
             '</div>' +
             '<div class="row g-3">' +

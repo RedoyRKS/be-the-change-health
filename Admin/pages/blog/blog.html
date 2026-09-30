@@ -27,7 +27,7 @@
             <span>Care Operations</span><span class="sep">/</span>
             <span class="text-dark fw-semibold">Blog CMS</span>
           </nav>
-          <div class="d-flex align-items-center gap-2">
+          <div class="action-toolbar blog-top-actions">
             <button class="btn btn-outline-secondary btn-sm-admin" type="button" id="btn-top-reset-defaults" title="Restore default 4 clinic articles">
               <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Defaults
             </button>
@@ -47,7 +47,7 @@
         <div class="card-admin mb-4">
           <div class="card-body-admin py-2 px-3">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <div class="btn-group btn-group-sm" role="group">
+              <div class="btn-group btn-group-sm blog-tabs" role="group">
                 <a class="btn btn-secondary active fw-semibold" href="blog.html">
                   <i class="bi bi-journal-text me-1"></i> Blog Articles Directory
                 </a>
@@ -55,7 +55,7 @@
                   <i class="bi bi-layout-text-sidebar-reverse me-1"></i> Blog Page CMS
                 </a>
               </div>
-              <div class="d-flex align-items-center gap-2">
+              <div class="d-flex align-items-center gap-2 flex-wrap blog-subbar-meta">
                 <span class="badge-admin badge-published"><i class="bi bi-broadcast me-1"></i>Care Operations</span>
                 <span class="text-muted small">Frontend · blog/index.html</span>
               </div>
@@ -92,8 +92,8 @@
           </div>
           <div class="stat-card">
             <div class="stat-icon navy"><i class="bi bi-star-fill text-warning"></i></div>
-            <div style="overflow:hidden;">
-              <h4 style="font-size:0.95rem; font-weight:700; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" id="stat-featured-title">Frequency Specific Microcurrent</h4>
+            <div style="overflow:hidden; min-width:0;">
+              <h4 style="font-size:0.95rem; font-weight:700; overflow-wrap:anywhere; word-break:normal;" id="stat-featured-title">Frequency Specific Microcurrent</h4>
               <p>Spotlight Featured Article</p>
             </div>
           </div>
@@ -115,14 +115,14 @@
           <div class="card-body-admin">
 
             <!-- Toolbar Filters -->
-            <div class="row g-2 mb-3 align-items-center">
-              <div class="col-lg-3 col-md-6">
+            <div class="row g-2 mb-3 align-items-center blog-filters-row">
+              <div class="col-lg-3 col-md-6 col-12 blog-filter-search">
                 <div class="input-group input-group-sm">
                   <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
                   <input type="search" class="form-control border-start-0" id="blog-search-input" placeholder="Search title, author, slug, excerpt, tags…">
                 </div>
               </div>
-              <div class="col-lg-2 col-md-3 col-6">
+              <div class="col-lg-2 col-md-3 col-6 blog-filter-col">
                 <select class="form-select form-select-sm" id="blog-filter-cat">
                   <option value="all">All Categories</option>
                   <option value="therapies">Therapies</option>
@@ -131,25 +131,25 @@
                   <option value="blog">Blog</option>
                 </select>
               </div>
-              <div class="col-lg-2 col-md-3 col-6">
+              <div class="col-lg-2 col-md-3 col-6 blog-filter-col">
                 <select class="form-select form-select-sm" id="blog-filter-status">
                   <option value="all">All Status</option>
                   <option value="published">Published Only</option>
                   <option value="draft">Drafts Only</option>
                 </select>
               </div>
-              <div class="col-lg-2 col-md-3 col-6">
+              <div class="col-lg-2 col-md-3 col-6 blog-filter-col">
                 <select class="form-select form-select-sm" id="blog-filter-featured">
                   <option value="all">All Articles</option>
                   <option value="featured">★ Featured Only</option>
                 </select>
               </div>
-              <div class="col-lg-2 col-md-3 col-6">
+              <div class="col-lg-2 col-md-3 col-6 blog-filter-col">
                 <select class="form-select form-select-sm" id="blog-filter-author">
                   <option value="all">All Authors</option>
                 </select>
               </div>
-              <div class="col-lg-1 col-md-3 col-6">
+              <div class="col-lg-1 col-md-3 col-6 blog-filter-col">
                 <select class="form-select form-select-sm" id="blog-sort-select">
                   <option value="order">Order</option>
                   <option value="date-desc">Newest</option>
