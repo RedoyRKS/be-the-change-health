@@ -333,6 +333,7 @@
     if (!sidebar || !topbar) return;
 
     sidebar.innerHTML =
+      '<button class="sidebar-close-btn" type="button" id="sidebar-close-btn" aria-label="Close menu"><i class="bi bi-x-lg"></i></button>' +
       '<div class="sidebar-brand">' +
       '<a href="' + ROOT + 'index.html" class="sidebar-brand-card" title="Be The Change Admin CMS">' +
       '<img src="' + ROOT + 'assets/uploads/2024/08/LOGO.jpg" alt="Be The Change Health & Wellness Center" width="528" height="140" loading="eager" onerror="if(this.src.indexOf(\'be-the-change-health.vercel.app\')===-1){this.src=\'https://be-the-change-health.vercel.app/assets/uploads/2024/08/LOGO.jpg\';}">' +
@@ -358,14 +359,78 @@
       "</h1></div></div>" +
       '<div class="topbar-right">' +
       '<div class="top-search"><i class="bi bi-search"></i><input type="search" placeholder="Search CMS…" id="cms-search"></div>' +
-      '<a class="icon-btn" href="' + PAGES + 'appointments/appointments.html" title="Appointments"><i class="bi bi-bell"></i><span class="dot"></span></a>' +
+      '<div class="notification-dropdown-wrapper" id="notificationWrapper">' +
+      '<button class="icon-btn notification-bell-btn" type="button" id="notificationBellBtn" aria-label="Notifications" aria-expanded="false" title="Notifications">' +
+      '<i class="bi bi-bell"></i>' +
+      '<span class="notification-badge" id="notificationBadge">3</span>' +
+      "</button>" +
+      '<div class="notification-dropdown-panel" id="notificationPanel" role="region" aria-labelledby="notificationBellBtn">' +
+      '<div class="notification-panel-header">' +
+      '<div class="d-flex align-items-center gap-2">' +
+      "<h6>Notifications</h6>" +
+      '<span class="notification-count-pill" id="notificationCountPill">3 new</span>' +
+      "</div>" +
+      '<button class="notification-mark-read-btn" type="button" id="markAllReadBtn" title="Mark all as read">Mark all read</button>' +
+      "</div>" +
+      '<div class="notification-list" id="notificationList">' +
+      '<a class="notification-item unread" href="' + PAGES + 'appointments/appointments.html">' +
+      '<div class="notification-item-icon bg-pending"><i class="bi bi-calendar2-plus"></i></div>' +
+      '<div class="notification-item-content">' +
+      '<div class="notification-item-title">New appointment request</div>' +
+      '<div class="notification-item-desc">Elle Adams requested an appointment</div>' +
+      '<div class="notification-item-time"><i class="bi bi-clock me-1"></i>5 minutes ago</div>' +
+      "</div>" +
+      '<span class="notification-unread-dot"></span>' +
+      "</a>" +
+      '<a class="notification-item unread" href="' + PAGES + 'appointments/appointments.html">' +
+      '<div class="notification-item-icon bg-confirmed"><i class="bi bi-check-circle"></i></div>' +
+      '<div class="notification-item-content">' +
+      '<div class="notification-item-title">Appointment confirmed</div>' +
+      '<div class="notification-item-desc">Marcus Vance\'s appointment was confirmed</div>' +
+      '<div class="notification-item-time"><i class="bi bi-clock me-1"></i>20 minutes ago</div>' +
+      "</div>" +
+      '<span class="notification-unread-dot"></span>' +
+      "</a>" +
+      '<a class="notification-item unread" href="' + PAGES + 'appointments/appointments.html">' +
+      '<div class="notification-item-icon bg-conflict"><i class="bi bi-exclamation-triangle"></i></div>' +
+      '<div class="notification-item-content">' +
+      '<div class="notification-item-title">Schedule conflict</div>' +
+      '<div class="notification-item-desc">Conflict detected in today\'s schedule</div>' +
+      '<div class="notification-item-time"><i class="bi bi-clock me-1"></i>1 hour ago</div>' +
+      "</div>" +
+      '<span class="notification-unread-dot"></span>' +
+      "</a>" +
+      "</div>" +
+      '<div class="notification-panel-footer">' +
+      '<a href="' + PAGES + 'appointments/appointments.html" class="notification-view-all">View all notifications <i class="bi bi-arrow-right ms-1"></i></a>' +
+      "</div>" +
+      "</div>" +
+      "</div>" +
       '<div class="user-chip">' +
       '<span class="user-avatar">SA</span>' +
       "<span><strong>Sultana Afrooz</strong><small>Practice Admin</small></span>" +
       '<a class="icon-action" href="' + ROOT + 'login.html" title="Sign out"><i class="bi bi-box-arrow-right"></i></a>' +
       "</div></div>";
 
-    document.getElementById("menu-toggle").addEventListener("click", toggleSidebar);
+    var menuToggle = document.getElementById("menu-toggle");
+    if (menuToggle) menuToggle.addEventListener("click", toggleSidebar);
+
+    var closeBtn = document.getElementById("sidebar-close-btn");
+    if (closeBtn) closeBtn.addEventListener("click", toggleSidebar);
+
+    bindNotifications();
+
+    // Auto-close mobile sidebar when clicking a direct link
+    sidebar.querySelectorAll("a[href]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        if (window.innerWidth < 992) {
+          sidebar.classList.remove("open");
+          var backdrop = document.getElementById("sidebar-backdrop");
+          if (backdrop) backdrop.classList.remove("show");
+        }
+      });
+    });
+
     document.querySelectorAll("[data-toggle-group]").forEach(function (btn) {
       btn.addEventListener("click", function (e) {
         if (e) e.stopPropagation();
@@ -379,12 +444,92 @@
         }
       });
     });
+
+    // Close on Escape key
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        if (sidebar && sidebar.classList.contains("open")) {
+          sidebar.classList.remove("open");
+          var backdrop = document.getElementById("sidebar-backdrop");
+          if (backdrop) backdrop.classList.remove("show");
+        }
+      }
+    });
+  }
+
+  function bindNotifications() {
+    var bellBtn = document.getElementById("notificationBellBtn");
+    var panel = document.getElementById("notificationPanel");
+    var wrapper = document.getElementById("notificationWrapper");
+    var markAllBtn = document.getElementById("markAllReadBtn");
+    var badge = document.getElementById("notificationBadge");
+    var countPill = document.getElementById("notificationCountPill");
+    var list = document.getElementById("notificationList");
+
+    if (!bellBtn || !panel || !wrapper) return;
+
+    bellBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var isShowing = panel.classList.contains("show");
+      if (isShowing) {
+        closeNotifications();
+      } else {
+        openNotifications();
+      }
+    });
+
+    if (markAllBtn) {
+      markAllBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var unreadItems = list ? list.querySelectorAll(".notification-item.unread") : [];
+        unreadItems.forEach(function (item) {
+          item.classList.remove("unread");
+        });
+        if (badge) {
+          badge.classList.add("hide");
+        }
+        if (countPill) {
+          countPill.textContent = "0 new";
+          countPill.style.background = "#eef0f2";
+          countPill.style.color = "#666";
+        }
+        if (typeof toast === "function") {
+          toast("All notifications marked as read.", "success");
+        }
+      });
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!wrapper.contains(e.target)) {
+        closeNotifications();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeNotifications();
+      }
+    });
+
+    function openNotifications() {
+      panel.classList.add("show");
+      bellBtn.classList.add("active");
+      bellBtn.setAttribute("aria-expanded", "true");
+    }
+
+    function closeNotifications() {
+      panel.classList.remove("show");
+      bellBtn.classList.remove("active");
+      bellBtn.setAttribute("aria-expanded", "false");
+    }
   }
 
   function toggleSidebar() {
     var sidebar = document.getElementById("sidebar");
     var backdrop = document.getElementById("sidebar-backdrop");
-    sidebar.classList.toggle("open");
+    if (sidebar) sidebar.classList.toggle("open");
     if (backdrop) backdrop.classList.toggle("show");
   }
 
